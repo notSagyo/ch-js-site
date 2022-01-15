@@ -75,3 +75,86 @@ if (input > Number.MAX_SAFE_INTEGER) {
 	alert('Invalid input!');
 	console.log('Invalid input!');
 }
+
+// Days in a month (switch)
+input = prompt('Enter a month to know how many days has (inglés o español)');
+input = input.toLowerCase();
+
+switch (input) {
+	case 'january':
+	case 'enero':
+		alert('January has 31 days.');
+		console.log('January has 31 days');
+		break;
+
+	case 'february':
+	case 'febrero':
+		alert('February has 28 days (29 in leap years).');
+		console.log('February has 28 days (29 in leap years).');
+		break;
+
+	case 'march':
+	case 'marzo':
+		alert('March has 31 days');
+		console.log('March has 31 days');
+		break;
+
+	case 'april':
+	case 'abril':
+		alert('April has 30 days');
+		console.log('April has 30 days');
+		break;
+
+	case 'may':
+	case 'mayo':
+		alert('May has 31 days');
+		console.log('May has 31 days');
+		break;
+
+	case 'june':
+	case 'junio':
+		alert('June has 30 days');
+		console.log('June has 30 days');
+		break;
+
+	case 'july':
+	case 'julio':
+		alert('July has 31 days');
+		console.log('July has 31 days');
+		break;
+
+	case 'august':
+	case 'agosto':
+		alert('August has 31 days');
+		console.log('August has 31 days');
+		break;
+
+	case 'september':
+	case 'septiembre':
+		alert('September has 30 days');
+		console.log('September has 30 days');
+		break;
+
+	case 'october':
+	case 'octubre':
+		alert('October has 31 days');
+		console.log('October has 31 days');
+		break;
+
+	case 'november':
+	case 'noviembre':
+		alert('November has 30 days');
+		console.log('November has 30 days');
+		break;
+
+	case 'december':
+	case 'diciembre':
+		alert('December has 31 days');
+		console.log('December has 31 days');
+		break;
+
+	default:
+		alert('Invalid input!');
+		console.log('Invalid input!');
+		break;
+}
