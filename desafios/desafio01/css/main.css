@@ -9,10 +9,16 @@ body {
 }
 
 .title {
-	padding: 1rem;
-	margin: 0;
+	margin: 1rem;
 
 	font-size: 5rem;
 	font-weight: lighter;
 	line-height: .75;
+}
+
+.subtitle {
+	margin: 2rem 1rem;
+
+	font-size: 2rem;
+	font-weight: lighter;
 }
