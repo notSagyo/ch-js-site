@@ -14,8 +14,10 @@ if (!isNaN(input) && input != null){
 		currentN = result;
 	}
 
+	alert(message);
 	console.log(message);
 } else {
+	alert('Invalid input!');
 	console.log('Invalid input!');
 }
 
@@ -34,15 +36,18 @@ if (!isNaN(input) && input != null) {
 		currentN = result;
 
 		if (result == input) {
+			alert(input + ' is a Fibonacci number');
 			console.log(input + ' is a Fibonacci number');
 			found = true;
 		}
 	}
 
 	if (!found) {
+		alert(input + ' is not a Fibonacci number');
 		console.log(input + ' is not a Fibonacci number');
 	}
 } else {
+	alert('Invalid input!');
 	console.log('Invalid input!');
 }
 
@@ -52,6 +57,7 @@ if (!isNaN(input) && input != null) {
 input = prompt('Enter a positive number to count its digits');
 
 if (input > Number.MAX_SAFE_INTEGER) {
+	alert('The input exceeds 2^53-1 please try a smaller number');
 	console.log('The input exceeds 2^53-1 please try a smaller number');
 } else if (!isNaN(input) && input != null) {
 	let digits = 0;
@@ -59,11 +65,13 @@ if (input > Number.MAX_SAFE_INTEGER) {
 
 	do {
 		currentN /= 10;
-		currentN = ~~currentN;
+		currentN = Math.trunc(currentN);
 		digits++;
 	} while(currentN > 0);
 
+	alert(input + ' digits: ' + digits);
 	console.log(input + ' digits: ' + digits);
 } else {
+	alert('Invalid input!');
 	console.log('Invalid input!');
 }
