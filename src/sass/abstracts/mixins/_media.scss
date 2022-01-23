@@ -1,0 +1,48 @@
+// Imports
+@use '../variables/variables' as var;
+
+// Mobile first ------------------------------------------------------------- //
+@mixin media-xs {
+	@media only screen and(max-width: var.$sm) { @content; }
+}
+
+@mixin media-sm {
+	@media only screen and(min-width: var.$sm) { @content; }
+}
+
+@mixin media-md {
+	@media only screen and(min-width: var.$md) { @content; }
+}
+
+@mixin media-lg {
+	@media only screen and(min-width: var.$lg) { @content; }
+}
+
+@mixin media-xl {
+	@media only screen and(min-width: var.$xl) { @content; }
+}
+
+@mixin media-xxl {
+	@media only screen and(min-width: var.$xxl) { @content; }
+}
+
+// Desktop first ------------------------------------------------------------ //
+// @mixin media-sm {
+// 	@media only screen and(max-width: var.$sm) { @content; }
+// }
+
+// @mixin media-md {
+// 	@media only screen and(max-width: var.$md) { @content; }
+// }
+
+// @mixin media-lg {
+// 	@media only screen and(max-width: var.$lg) { @content; }
+// }
+
+// @mixin media-xl {
+// 	@media only screen and(max-width: var.$xl) { @content; }
+// }
+
+// @mixin media-xxl {
+// 	@media only screen and(max-width: var.$xxl) { @content; }
+// }

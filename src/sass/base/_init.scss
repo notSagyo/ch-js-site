@@ -1,0 +1,14 @@
+// General initial styling used mostly in all my projects
+@use 'fonts';
+@use 'reset';
+@use '../abstracts/abstracts' as a;
+
+body {
+	line-height: 100%;
+	background-color: a.$background-color;
+	color: a.$foreground-color;
+}
+
+button { padding: 2px; }
+
+a { color: a.$terciary-color; }
