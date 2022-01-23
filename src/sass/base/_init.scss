@@ -4,7 +4,6 @@
 @use '../abstracts/abstracts' as a;
 
 body {
-	line-height: 100%;
 	background-color: a.$background-color;
 	color: a.$foreground-color;
 }
