@@ -1,0 +1,42 @@
+body {
+	padding: 0;
+	margin: 0;
+
+	/* Fondo oscuro para cuidar la vista :) */
+	color: #f8f9fa;
+	background-color: #212529;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a, a:visited {
+	color: coral;
+	text-decoration: none;
+}
+
+.title {
+	margin: 1rem;
+
+	font-size: 5rem;
+	font-weight: lighter;
+	line-height: .75;
+}
+
+.subtitle {
+	margin: 2rem 1rem;
+
+	font-size: 2rem;
+	font-weight: lighter;
+}
+
+.desafios {
+	margin: 2rem 0;
+}
+
+.desafios-title {
+	margin: 1rem 0;
+
+	font-size: 1.5rem;
+	font-weight: lighter;
+}
+
+.desafio { font-size: 1.25rem; }
