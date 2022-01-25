@@ -57,8 +57,8 @@ input, select, button {
 
 /* END STYLE RESET ---------------------------------------------------------- */
 body {
-  background-color: black;
-  color: white;
+  background-color: #212529;
+  color: #f8f9fa;
 }
 
 button {
@@ -66,22 +66,15 @@ button {
 }
 
 a {
-  color: blue;
+  color: coral;
 }
 
 body {
   padding: 0;
   margin: 0;
-  color: #f8f9fa;
-  background-color: #212529;
   font-family: "Josefin Sans", sans-serif;
   font-weight: 300;
   line-height: 1.25;
-}
-
-a, a:visited {
-  color: coral;
-  text-decoration: none;
 }
 
 .title {
