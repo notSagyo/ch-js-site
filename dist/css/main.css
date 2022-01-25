@@ -1,42 +1,102 @@
-body {
-	padding: 0;
-	margin: 0;
-
-	/* Fondo oscuro para cuidar la vista :) */
-	color: #f8f9fa;
-	background-color: #212529;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+/* STYLE RESET -------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-a, a:visited {
-	color: coral;
-	text-decoration: none;
+html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, code, em, img, small, strike, strong, sub, sup, tt, b,
+u, i, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead,
+tr, th, td, main, canvas, embed, footer, header, nav, section, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: none;
+     -moz-text-size-adjust: none;
+          text-size-adjust: none;
+}
+
+footer, header, nav, section, main {
+  display: block;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote::before, blockquote::after, q::before, q::after {
+  content: "";
+  content: none;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input, select, button {
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-size: 100%;
+}
+
+/* END STYLE RESET ---------------------------------------------------------- */
+body {
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
+button {
+  padding: 2px;
+}
+
+a {
+  color: coral;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 300;
+  line-height: 1.25;
 }
 
 .title {
-	margin: 1rem;
-
-	font-size: 5rem;
-	font-weight: lighter;
-	line-height: .75;
+  margin: 1rem;
+  font-size: 5rem;
+  line-height: 0.75;
 }
 
 .subtitle {
-	margin: 2rem 1rem;
-
-	font-size: 2rem;
-	font-weight: lighter;
+  margin: 2rem 1rem;
+  font-size: 2rem;
 }
 
-.desafios {
-	margin: 2rem 0;
+.desafios__title {
+  margin: 1rem 0;
+  font-size: 1.5rem;
 }
 
-.desafios-title {
-	margin: 1rem 0;
-
-	font-size: 1.5rem;
-	font-weight: lighter;
+.desafio {
+  font-size: 1.25rem;
 }
 
-.desafio { font-size: 1.25rem; }
+ul.desafios {
+  margin: 2rem;
+}

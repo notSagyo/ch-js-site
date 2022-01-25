@@ -4,13 +4,39 @@
 @use '../abstracts/abstracts' as *;
 
 // Styling -------------------------------------------------------------------//
+body {
+	padding: 0;
+	margin: 0;
+
+	font-family: 'Josefin Sans', sans-serif;
+	font-weight: 300;
+	line-height: 1.25;
+}
+
+.title {
+	margin: 1rem;
+	font-size: 5rem;
+	line-height: 0.75;
+}
+
+.subtitle {
+	margin: 2rem 1rem;
+	font-size: 2rem;
+}
+
+.desafios__title {
+	margin: 1rem 0;
+	font-size: 1.5rem;
+}
+
+.desafio { font-size: 1.25rem; }
 
 // Small+
 // @media only screen and(min-width: $sm) { }
 // Medium+
 // @media only screen and(min-width: $md) { }
 // Large+
-// @media only screen and(min-width: $xl) { }
+// @media only screen and(min-width: $lg) { }
 
 // Small-
 // @media only screen and(max-width: $sm) { }

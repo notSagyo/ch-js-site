@@ -19,7 +19,7 @@ var distProcessors = processors.concat([(cssnano())]);
 //URLs
 var paths = {
 	src: 'src/**',
-	dest: 'public/css'
+	dest: 'dist/css'
 };
 
 //Tasks -------------------------------------------------------------------- //
@@ -63,13 +63,13 @@ gulp.task('buildsassdist', buildSassDist);
 
 //Watch ----------------------------------------------------------  ---------- //
 const watchCss = function(){
-    gulp.watch(paths.src + '/*.css', gulp.series(['buildCSS']))
+    gulp.watch(paths.src + '/*.css', gulp.series(['buildCss']))
 };
 gulp.task('watchCss', watchCss);
 gulp.task('watchcss', watchCss);
 
 const watchSass = function(){
-    gulp.watch(paths.src + '/*.scss', gulp.series(['buildSASS']))
+    gulp.watch(paths.src + '/*.scss', gulp.series(['buildSass']))
 };
 gulp.task('watchSass', watchSass);
 gulp.task('watchsass', watchSass);
