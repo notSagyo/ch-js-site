@@ -6,20 +6,84 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<link rel="stylesheet" href="css/main.css">
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Materialize JS -->
+	<script src="js/materialize/materialize.min.js" defer></script>
 	<script src="js/utils.js" defer></script>
 </head>
 <body>
+	<!------ HEADER ------>
 	<header>
+		<!-- NAVBAR -->
 		<nav>
-			<ul>
-				<li><a href="#">Home</a></li>
-				<li><a href="pages/products.html">Products</a></li>
-				<li><a href="pages/contact.html">Contact</a></li>
-				<li><a href="pages/about.html">About</a></li>
-			</ul>
+			<div class="nav-wrapper container">
+				<a href="#!" class="brand-logo truncate">E-Commerce</a>
+				<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+				<ul class="right hide-on-med-and-down">
+					<li><a class="waves-effect waves-classic" href="#">HOME</a></li>
+					<li><a class="waves-effect waves-classic" href="pages/products.html">PRODUCTS</a></li>
+					<li><a class="waves-effect waves-classic" href="pages/contact.html">CONTACT</a></li>
+					<li><a class="waves-effect waves-classic" href="pages/about.html">ABOUT</a></li>
+					<li><a class="waves-effect waves-classic" href="pages/cart.html"><i class="material-icons">shopping_cart</i></a></li>
+				</ul>
+			</div>
 		</nav>
 	</header>
-	<h1 class="title">E-Commerce</h1>
+
+	<!------ MAIN ------>
+	<main>
+		<!-- SIDENAV -->
+		<div class="sidenav" id="slide-out">
+			<div class="sidenav-header">
+				<a href="#" class="sidenav-close white-text close-button">
+					<i class="material-icons">close</i>
+				</a>
+				<span class="white-text josefin-descender-ignore">E-COMMERCE</span>
+			</div>
+			<ul>
+				<li class=""><a class="waves-effect waves-classic light-blue white-text" href="#"><span class="a josefin-descender-ignore">HOME</span><i class="material-icons white-text">home</i></a></li>
+				<li><a class="waves-effect waves-classic" href="pages/products.html"><span class="a josefin-descender-ignore">PRODUCTS</span><i class="material-icons">shopping_bag</i></a></li>
+				<li><a class="waves-effect waves-classic" href="pages/cart.html"><span class="a josefin-descender-ignore">CART</span><i class="material-icons">shopping_cart</i></a></li>
+				<li><a class="waves-effect waves-classic" href="pages/contact.html"><span class="a josefin-descender-ignore">CONTACT</span><i class="material-icons">contact_support</i></a></li>
+				<li><a class="waves-effect waves-classic" href="pages/about.html"><span class="a josefin-descender-ignore">ABOUT</span><i class="material-icons">info</i></a></li>
+			</ul>
+		</div>
+
+		<div class="main__wrapper">
+			<h1 class="h1">E-Commerce</h1>
+		</div>
+	</main>
+
+	<!------ FOOTER ------>
+	<footer class="page-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col l4 s12">
+					<h5 class="white-text">Links</h5>
+					<ul>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+					</ul>
+				</div>
+				<div class="col l6 s12">
+					<h5 class="white-text">E-Commerce</h5>
+					<p class="grey-text text-lighten-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut neque voluptates nam nihil excepturi est quos itaque. Dolorum, mollitia natus?</p>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				<div class="">
+					<!-- <a class="grey-text text-lighten-4 right" href="#!">More Links</a> -->
+					<span class="center center-block">© 2022 E-Commerce</span>
+				</div>
+			</div>
+		</div>
+	</footer>
+
 	<script src="js/cart.js" defer></script>
 	<script src="js/main.js" defer></script>
 </body>
