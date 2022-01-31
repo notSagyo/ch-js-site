@@ -1,12 +1,12 @@
 // Import every other file that should be compiled into the main CSS
+// Vendor
+@use 'vendor/materialize/materialize';
+
 // Abstracts
 @use 'abstracts/abstracts';
 
 // Base
 @use 'base/base';
-
-// Vendor
-// @use 'vendor/';
 
 // Components
 // @use 'components/';

@@ -1,35 +1,37 @@
 // This file will be used in every page in the site!
 // Imports -------------------------------------------------------------------//
-@use 'init';
+@use 'fonts' as *;
 @use '../abstracts/abstracts' as *;
 
 // Styling -------------------------------------------------------------------//
 body {
-	padding: 0;
-	margin: 0;
-
-	font-family: 'Josefin Sans', sans-serif;
-	font-weight: 300;
-	line-height: 1.25;
+	display: flex;
+	flex-direction: column;
+	font-family: 'Josefin Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	min-height: 100vh;
 }
 
-.title {
-	margin: 1rem;
-	font-size: 5rem;
-	line-height: 0.75;
+main {
+	// Footer on bottom
+	flex-grow: 1;
+
+	.main__wrapper {
+		width: 80%;
+		margin: 0 auto;
+	}
 }
 
-.subtitle {
-	margin: 2rem 1rem;
-	font-size: 2rem;
+.josefin-descender-ignore {
+	display: inline-block;
+	transform: translateY(7.5%);
 }
 
-.desafios__title {
-	margin: 1rem 0;
-	font-size: 1.5rem;
-}
+.close-button {
+	cursor: pointer;
+	font-size: 0;
 
-.desafio { font-size: 1.25rem; }
+	.material-icons { font-size: 24px; }
+}
 
 // Small+
 // @media only screen and(min-width: $sm) { }
