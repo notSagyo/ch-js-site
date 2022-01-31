@@ -640,3 +640,8 @@ td, th{
 .no-padding {
   padding: 0 !important;
 }
+
+.primary { background-color: $primary-color !important; }
+.primary-text { color: $primary-color !important; }
+.secondary { background-color: $secondary-color !important; }
+.secondary-text { color: $secondary-color !important; }

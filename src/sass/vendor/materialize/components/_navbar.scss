@@ -110,6 +110,8 @@ nav {
   // Navbar Links
   ul {
     margin: 0;
+	max-height: 100%;
+	overflow: hidden;
 
     li {
       transition: background-color .3s;

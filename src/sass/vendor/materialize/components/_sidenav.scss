@@ -1,6 +1,7 @@
 .sidenav {
   position: fixed;
   width: $sidenav-width;
+  max-width: 100vw;
   left: 0;
   top: 0;
   margin: 0;
@@ -15,6 +16,19 @@
   transform: translateX(-105%);
 
   @extend .z-depth-1;
+
+  &-header {
+    @extend .z-depth-1;
+
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    height: $sidenav-item-height;
+    padding: 0 ($sidenav-padding);
+    background-color: $primary-color;
+
+    & > * { margin-right: 0.5rem;}
+  }
 
   // Right Align
   &.right-aligned {
