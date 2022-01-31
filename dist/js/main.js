@@ -49,6 +49,3 @@ let debugMode = true;
 	// Log cart status
 	cart.log();
 })();
-
-//#region Utils
-//
