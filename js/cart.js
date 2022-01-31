@@ -201,7 +201,8 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 	// Other ------------------------ //
 	// Log the cart in readable format
 	this.log = () => {
-		console.log(`${this.constructor.name}: `, {
+		console.groupCollapsed(this.constructor.name);
+		let msg = {
 			_productCount,
 			_itemQuantity,
 			_total,
@@ -211,7 +212,9 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 			_payments,
 			_monthFee,
 			_itemList
-		});
+		}
+		console.log(`${JSON.stringify(msg, null, '	')}`);
+		console.groupEnd();
 	}
 };
 
