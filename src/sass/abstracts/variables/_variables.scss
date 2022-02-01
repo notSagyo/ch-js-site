@@ -1,0 +1,30 @@
+// Imports
+@use 'colors' as *;
+@forward 'colors';
+
+// Colors ------------------------------------------------------------------- //
+// Good contrast against secondary.
+// $primary-color: #212529;
+// Good contrast against primary.
+// $secondary-color: #f8f9fa;
+// Color usually used for accents like links.
+// $terciary-color: coral;
+
+// $background-color: $primary-color;
+// $foreground-color: $secondary-color;
+
+// Shortforms
+// $primary: $primary-color;
+// $secondary: $secondary-color;
+// $terciary: $terciary-color;
+// $background: $background-color;
+// $foreground: $foreground-color;
+// $bg: $background-color;
+// $fg: $foreground-color;
+
+// Breakpoints -------------------------------------------------------------- //
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;

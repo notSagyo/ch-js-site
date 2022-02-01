@@ -1,0 +1,19 @@
+// Import every other file that should be compiled into the main CSS
+// Vendor
+@use 'vendor/materialize/materialize';
+
+// Abstracts
+@use 'abstracts/abstracts';
+
+// Base
+@use 'base/base';
+
+// Components
+// @use 'components/';
+
+// Layout
+@use 'layout/footer';
+@use 'layout/header';
+@use 'layout/navigation';
+@use 'layout/sidebar';
+@use 'layout/home';

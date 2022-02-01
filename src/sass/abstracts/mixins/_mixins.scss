@@ -1,0 +1,53 @@
+// Add and import mixins to be available in every files that use "abstracts".
+@mixin size($width, $height: $width) {
+	width: $width;
+	height: $height;
+}
+
+// Padding / Margin --------------------------------------------------------- //
+@mixin reset-pm($size) {
+	padding: 0;
+	margin: 0;
+}
+
+// Margins -------------------------- //
+@mixin mx($size) {
+	margin-left: $size;
+	margin-right: $size;
+}
+
+@mixin my($size) {
+	margin-top: $size;
+	margin-bottom: $size;
+}
+
+@mixin mx-auto {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@mixin my-auto {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+// Paddings ------------------------- //
+@mixin px($size) {
+	padding-left: $size;
+	padding-right: $size;
+}
+
+@mixin py($size) {
+	padding-top: $size;
+	padding-bottom: $size;
+}
+
+@mixin px-auto {
+	padding-left: auto;
+	padding-right: auto;
+}
+
+@mixin py-auto {
+	padding-top: auto;
+	padding-bottom: auto;
+}
