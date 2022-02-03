@@ -1,51 +1,49 @@
 // Log extra info if debug
 let debugMode = true;
 
-(() => {
-	// Create a new cart
-	let cart = new Cart();
+// Create new cart and product list
+let productList = new ProductList();
+let cart = new Cart();
 
-	//#region Interactive --------------------------------------------------- //
-	// let interactiveCart = () => {
-	// 	let name = prompt('Para agregar un producto al carrito ingrese el nombre:');
+//#region Interactive --------------------------------------------------- //
+// let interactiveCart = () => {
+// 	let name = prompt('Para agregar un producto al carrito ingrese el nombre:');
 
-	// 	let price = Number(prompt('Ingrese: el precio:'));
-	// 	if (isNaN(price))
-	// 		return console.log('Entrada inválida');
+// 	let price = Number(prompt('Ingrese: el precio:'));
+// 	if (isNaN(price))
+// 		return console.log('Entrada inválida');
 
-	// 	let qty = Number(prompt('Ingrese cuántas unidades:'));
-	// 	if (!Number.isInteger(qty))
-	// 		return console.log('Entrada inválida');
+// 	let qty = Number(prompt('Ingrese cuántas unidades:'));
+// 	if (!Number.isInteger(qty))
+// 		return console.log('Entrada inválida');
 
-	// 	let item = new CartItem(name, price, qty);
-	// 	cart.addItem(item);
-	// }
+// 	let item = new CartItem(name, price, qty);
+// 	cart.addItem(item);
+// }
 
-	// let keepShopping = true;
-	// while(keepShopping) {
-	// 	interactiveCart();
-	// 	keepShopping = confirm(
-	// 		'• Si desea agregar otro producto, seleccione aceptar. ' +
-	// 		'\n• Por el contrario seleccione cancelar.');
-	// }
-	//#endregion
+// let keepShopping = true;
+// while(keepShopping) {
+// 	interactiveCart();
+// 	keepShopping = confirm(
+// 		'• Si desea agregar otro producto, seleccione aceptar. ' +
+// 		'\n• Por el contrario seleccione cancelar.');
+// }
+//#endregion
 
-	//#region Sapmle Cart ---------------------------------------------------//
-	let shirt = new CartItem('T-Shirt', 15, 12);
-	let jeans = new CartItem('Jeans', 30, 5);
-	let shoes = new CartItem('Shoes', 50, 2);
-	let belt = new CartItem('Belt', 20, 2);
-	let items = [shirt, jeans, shoes];
+//#region Example --------------------------------------------------------//
+let shirt = new Product('T-Shirt', 15, 'This is a simple T-Shirt.');
+let jeans = new Product('Jeans', 30, 'These are simple Jeans.');
+let shoes = new Product('Shoes', 50, 'These are simple Shoes.');
+let belt = new Product('Belt', 20, 'This is a simple Belt.');
+let prods = [shirt, jeans, shoes, belt];
 
-	cart.addItem(shirt);
-	cart.addItem(jeans);
-	cart.addItem(shoes);
-	cart.setItemList(items);
-	cart.findItem(shoes);
-	cart.removeItem(belt);
-	cart.removeItem(shoes);
-	//#endregion
+productList.setProducts(prods);
+productList.updateDom();
 
-	// Log cart status
-	cart.log();
-})();
+cart.setItemList(prods);
+cart.removeItem(belt);
+cart.removeItem(shoes);
+//#endregion
+
+// Log cart status
+cart.log();

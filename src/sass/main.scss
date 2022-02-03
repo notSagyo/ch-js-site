@@ -1,6 +1,7 @@
 // Import every other file that should be compiled into the main CSS
 // Vendor
 @use 'vendor/materialize/materialize';
+@use 'vendor/sass-flexbox/main';
 
 // Abstracts
 @use 'abstracts/abstracts';
@@ -9,7 +10,7 @@
 @use 'base/base';
 
 // Components
-// @use 'components/';
+@use 'components/products';
 
 // Layout
 @use 'layout/footer';

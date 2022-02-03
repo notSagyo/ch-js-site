@@ -1,0 +1,82 @@
+@use '../vendor/materialize/materialize' as M;
+@use '../vendor/sass-flexbox/main' as flex;
+@use '../abstracts' as *;
+
+.products-layout {
+	display: flex;
+	flex-direction: column;
+
+	@include md-up {
+		flex-direction: row;
+	}
+}
+
+.product-filters {
+	[class^='product-filters__filter--'] {
+		margin-bottom: flex.$gutter;
+		width: 100%;
+
+		@include md-up { width: 16rem; }
+	}
+
+	&__filter--menu &__menu-item {
+		padding: 0;
+
+		a {
+			display: inline-block;
+			width: 100%;
+			padding: 10px 20px;
+			color: inherit;
+
+			&:hover {
+				background-color: rgba(0 0 0 / 5%);
+			}
+		}
+	}
+}
+
+.product-list {
+	width: 100%;
+	// max-width: 40rem;
+}
+
+.product-li {
+	display: flex;
+	margin-bottom: flex.$gutter * 2;
+
+	// LEFT SIDE
+	&__image img {
+		@extend .materialboxed;
+		width: 100%;
+		height: 100%;
+	}
+
+	// RIGHT SIDE
+	&__details {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__title, &__description, &__footer {
+		padding: flex.$gutter;
+		margin: 0;
+	}
+
+	&__title { @extend .h5; }
+
+	&__footer {
+		display: flex;
+		justify-content: space-between;
+		margin-top: auto;
+
+		.product-li__price, .product-li__add { margin: auto 0; }
+	}
+
+	@include sm-down {
+		@include mx-auto;
+		max-width: 24rem;
+
+		&__details { @include my(flex.$gutter); }
+		&__title, &__description, &__footer { @include px(0); }
+	}
+}
