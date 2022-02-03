@@ -12,10 +12,10 @@
 
 // components
 @import "components/global";
-// @import "components/collection";
+@import "components/collection";
 // @import "components/badges";
 @import "components/icons-material-design";
-@import "components/grid";
+// @import "components/grid";
 @import "components/navbar";
 @import "components/typography";
 @import "components/transitions";
@@ -27,9 +27,9 @@
 // @import "components/dropdown";
 @import "components/waves";
 // @import "components/modal";
-// @import "components/collapsible";
+@import "components/collapsible";
 // @import "components/chips";
-// @import "components/materialbox";
+@import "components/materialbox";
 // @import "components/forms/forms";
 @import "components/table_of_contents";
 @import "components/sidenav";
