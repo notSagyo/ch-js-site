@@ -1,7 +1,7 @@
 // TODO: convert to ES6 classes?
 // TODO: manipulate quantity from cart
 // Stores cart status and (todavia no) item list
-const Cart = function({discount, payments, monthlyInterest} = {}) {
+const Cart = function({discount, payments, monthInterestRate} = {}) {
 	let _itemList = [];
 	let _productCount = 0;
 	let _itemQuantity = 0;
@@ -9,14 +9,14 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 	let _total = 0;
 	let _subtotal = 0;
 	let _discount = discount || 0;
-	let _monthInterest = monthlyInterest || 0.03;
+	let _monthInterest = monthInterestRate || 0.03;
 	let _payments = payments || 1;
 	let _monthFee = 0;
 
 	//#region Item Methods ---------- //
 	// Add item to cart
 	this.addItem = (item) => {
-		if (!(item instanceof CartItem)) {
+		if (!(item instanceof Product)) {
 			console.warn('Invalid arguments: CartItem expected');
 			return null;
 		} else if (item.getQuantity() < 1) {
@@ -69,6 +69,7 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 	// After modifying a field, should call this
 	this.updateCart = () => {
 		_subtotal = _itemList.reduce((a, b) => a + b.getTotal(), 0);
+		_itemQuantity = _itemList.reduce((a, b) => a + b.getQuantity(), 0);
 		_productCount = _itemList.length;
 		_total = _subtotal + this.calcInterest(_payments, _monthInterest);
 		_total = this.calcDiscount(_discount);
@@ -88,7 +89,7 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 			item = item.toLowerCase();
 			result = _itemList.find(x => x.name.toLowerCase() == item);
 		}
-		else if (item instanceof CartItem) {
+		else if (item instanceof Product) {
 			result = _itemList.find(x => x === result);
 		} else {
 			console.warn('Invalid arguments: CartItem or string expected');
@@ -139,7 +140,7 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 
 	//#region Get / Set ------------- //
 	this.setItemList = (items) => {
-		if (!Array.isArray(items) || !items.every(x => x instanceof CartItem)) {
+		if (!Array.isArray(items) || !items.every(x => x instanceof Product)) {
 			console.warn('Invalid arguments: CartItems[] expected');
 			return null;
 		}
@@ -216,66 +217,4 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 		console.log(`${JSON.stringify(msg, null, '	')}`);
 		console.groupEnd();
 	}
-};
-
-// Stores product related info
-const CartItem = function(name = 'Item', price = 0, quantity = 1) {
-	this.name = name;
-	let _price = price;
-	let _quantity = quantity;
-	let _total = price * quantity;
-
-	//#region Quantity methods ------ //
-	this.increaseQuantity = (amount) => {
-		return this.setQuantity(_quantity + (amount || 1));
-	}
-
-	this.decreaseQuantity = (amount) => {
-		return this.setQuantity(_quantity + (amount || -1));
-	}
-
-	this.resetQuantity = () => { return this.setQuantity(1); }
-	//#endregion
-
-	// Price methods ---------------- //
-	this.updateTotal = () => {
-		_total = _price * _quantity;
-		return _total;
-	}
-
-	//#region Get / Set ------------- //
-	this.setPrice = (amount) => {
-		if (!Number.isInteger(amount) || amount < 0) {
-			console.warn('Invalid arguments: positive integer expected');
-			return null;
-		}
-		_price = amount;
-		this.updateTotal();
-		return _price;
-	}
-
-	this.setQuantity = (amount) => {
-		if (!Number.isInteger(amount) || amount < 0) {
-			console.warn('Invalid arguments: positive integer expected');
-			return null;
-		}
-		_quantity = amount;
-		this.updateTotal();
-		return _quantity;
-	}
-
-	this.setTotal = (amount) => {
-		if (!Number.isInteger(amount) || amount < 0) {
-			console.warn('Invalid arguments: positive integer expected');
-			return null;
-		}
-		console.warn('Warning: total should not be manually set.');
-		_total = amount;
-		return _total;
-	}
-
-	this.getPrice = () => { return _price }
-	this.getQuantity = () => { return _quantity; }
-	this.getTotal = () => { return _total; }
-	//#endregion
 };
