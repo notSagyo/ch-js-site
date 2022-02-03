@@ -16,13 +16,13 @@ let postCssProcessors = [
 	lost(),
 	presetEnv()
 ];
-let postCssDistProcessors = postCssProcessors.concat([(cssnano())]);
+let postCssProdProcessors = postCssProcessors.concat([cssnano()]);
 
 //URLs
 let paths = {
 	cssSource: 'src/**',
 	cssDest: 'dist/css',
-	htmlSource: ['dist/**/*.html'],
+	purgeCss: ['dist/**/*.html', 'dist/**/*.js'],
 	excludeVendor: '!src/**/vendor/**'
 };
 
@@ -36,15 +36,15 @@ const buildCss = function() {
 gulp.task('buildcss', buildCss);
 gulp.task('buildCss', buildCss);
 
-const buildCssDist = function() {
+const buildCssProd = function() {
     return gulp.src([paths.cssSource + '/*.css', paths.excludeVendor])
-        .pipe(postcss(postCssDistProcessors))
-		.pipe(purgecss({ content: paths.htmlSource }))
+        .pipe(postcss(postCssProdProcessors))
+		.pipe(purgecss({ content: paths.purgeCss }))
         .pipe(rename({dirname:''}))
         .pipe(gulp.dest(paths.cssDest));
 };
-gulp.task('buildcssdist', buildCssDist);
-gulp.task('buildCssDist', buildCssDist);
+gulp.task('buildcssprod', buildCssProd);
+gulp.task('buildCssProd', buildCssProd);
 
 const buildSass = function() {
     return gulp.src([paths.cssSource + '/*.scss', paths.excludeVendor])
@@ -58,16 +58,16 @@ const buildSass = function() {
 gulp.task('buildSass', buildSass);
 gulp.task('buildsass', buildSass);
 
-const buildSassDist = function() {
+const buildSassProd = function() {
     return gulp.src([paths.cssSource + '/*.scss', paths.excludeVendor])
 		.pipe(sass().on('error', sass.logError))
-        .pipe(postcss(postCssDistProcessors))
-		.pipe(purgecss({ content: paths.htmlSource }))
+        .pipe(postcss(postCssProdProcessors))
+		.pipe(purgecss({ content: paths.purgeCss }))
         .pipe(rename({dirname:''}))
         .pipe(gulp.dest(paths.cssDest));
 };
-gulp.task('buildSassDist', buildSassDist);
-gulp.task('buildsassdist', buildSassDist);
+gulp.task('buildSassProd', buildSassProd);
+gulp.task('buildsassprod', buildSassProd);
 
 // Watch -------------------------------------------------------------------- //
 const watchCss = function() {
