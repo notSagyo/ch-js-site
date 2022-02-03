@@ -62,14 +62,12 @@
     flex-grow: 1;
     flex-basis: 0;
     max-width: 100%;
-    padding: $gutter;
   }
   @for $i from 1 through $grid-columns {
     .col-#{$thisPrefix}-#{$i} {
       box-sizing: border-box;
       flex-basis: math.div(100%, $grid-columns) * $i;
       max-width: math.div(100%, $grid-columns) * $i;
-      padding: $gutter;
     }
     .col-#{$thisPrefix}-offset-#{$i} {
       margin-left: math.div(100%, $grid-columns) * $i;
@@ -134,6 +132,6 @@
     padding: 0 $gutter;
 }
 
-.col-no-gutter {
-    padding: 0;
+.col-gutter {
+    padding: $gutter !important;
 }

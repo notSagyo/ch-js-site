@@ -40,7 +40,6 @@
       box-sizing: border-box;
       flex-basis: 100% / $grid-columns * $col-number;
       max-width: 100% / $grid-columns * $col-number;
-      padding: $gutter;
     }
   // If no col number is passed then arg is set to "auto" by default
   // "auto" mode fills the horizontal space with evenly sized containers
@@ -49,7 +48,6 @@
     flex-grow: 1;
     flex-basis: 0;
     max-width: 100%;
-    padding: $gutter;
   } @else {
     @warn "Column number argument must either be the string 'auto' or a number greater than 0 and less than or equal to total number of columns in the grid (#{$grid-columns})";
   }
