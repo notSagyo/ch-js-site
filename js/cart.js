@@ -1,3 +1,4 @@
+
 // TODO: convert to ES6 classes?
 // TODO: manipulate quantity from cart
 // Stores cart status and (todavia no) item list
@@ -75,6 +76,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		_total = this.calcDiscount(_discount);
 		_monthFee = _total / _payments;
 
+		this.updateDom();
 		if (debugMode)
 			console.log(`Cart price now is: $${this.getTotal()}`);
 		return this.total;
@@ -135,6 +137,24 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 	// Calc. the monthly tax ($) for the current subtotal
 	this.calcMonthInterest = (payments = _payments, tax = _monthInterest) => {
 		return this.calcInterest(payments, tax) / payments;
+	}
+	//#endregion
+
+	//#region DOM Methods
+	this.updateDom = () => {
+		// Update cart badges to show product count
+		let cartBadges = document.querySelectorAll('.cart-badge');
+		if (_productCount > 0) {
+			cartBadges.forEach(elem => {
+				elem.innerText = _productCount
+				elem.classList.remove('hide');
+			});
+		} else {
+			cartBadges.forEach(elem => {
+				if (!elem.classList.contains('hide'))
+					elem.classList.add('hide');
+			});
+		}
 	}
 	//#endregion
 
@@ -218,3 +238,10 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		console.groupEnd();
 	}
 };
+
+// Active cart used globally
+let activeCart = new Cart();
+function addToCart(product) {
+	activeCart.addItem(product);
+	M.toast({text: `${product.name} added to cart.`, displayLength: 2000});
+}

@@ -85,6 +85,14 @@ const ProductList = function(products) {
 		this.productsHTML = this.getHTML();
 		productListElem.innerHTML = this.productsHTML;
 
+		// Add add to cart function
+		let productElems = document.querySelectorAll('.product-li__add');
+		console.log(productElems);
+		for (const key in this.products) {
+			productElems[key].addEventListener(
+				'click', () => addToCart(this.products[key]))
+		}
+
 		// New products aren't zoomable; initialize zoomable elements again
 		initMaterialboxed();
 	}
@@ -115,7 +123,7 @@ function productToHTML(product) {
 					<!-- Price -->
 					<span class="product-li__price">$${price}</span>
 					<!-- Add to cart -->
-					<a href="#" class="product-li__add"><i class="material-icons">add_shopping_cart</i></a>
+					<a href="javascript://addToCart" class="product-li__add indigo-text text-accent-2"><i class="material-icons">add_shopping_cart</i></a>
 				</div>
 			</div>
 		</li>
