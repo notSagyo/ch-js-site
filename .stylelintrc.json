@@ -3,9 +3,10 @@
 				"stylelint-config-lost"],
 	"rules": {
 		"at-rule-no-unknown": null,
-		"at-rule-empty-line-before": ["always", {"except": ["after-same-name"], "ignore": ["after-comment"]}],
+		"at-rule-empty-line-before": null,
 		"custom-property-no-missing-var-function": null,
 		"declaration-empty-line-before": null,
+		"function-name-case": ["lower", {"ignoreFunctions": ["/\\./"]}],
 		"indentation": "tab",
 		"max-empty-lines": null,
 		"no-invalid-position-at-import-rule": null,
