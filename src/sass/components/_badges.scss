@@ -1,0 +1,27 @@
+@use '../abstracts' as *;
+@use '../vendor/materialize/materialize' as M;
+
+.cart-badge {
+	position: absolute;
+
+	top: 50%;
+	left: 80%;
+	min-width: 1.25rem;
+	min-height: 1.25rem;
+	border-radius: 1000px;
+	padding: 0 0.25rem;
+
+	color: white;
+	font-family: M.$font-stack;
+	font-size: 1rem;
+	line-height: 1.25rem;
+	text-align: center;
+
+	transform: translateX(-50%);
+	background: M.color('materialize-red', 'lighten-1');
+}
+
+.badge-container {
+	position: relative;
+	overflow: visible;
+}

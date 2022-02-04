@@ -4,8 +4,9 @@ let debugMode = true;
 // Create new cart and product list
 let productList = new ProductList();
 let cart = new Cart();
+activeCart = cart;
 
-//#region Interactive --------------------------------------------------- //
+//#region Interactive ------------------------------------------------------- //
 // let interactiveCart = () => {
 // 	let name = prompt('Para agregar un producto al carrito ingrese el nombre:');
 
@@ -30,19 +31,19 @@ let cart = new Cart();
 // }
 //#endregion
 
-//#region Example --------------------------------------------------------//
-let shirt = new Product('T-Shirt', 15, 'This is a simple T-Shirt.');
-let jeans = new Product('Jeans', 30, 'These are simple Jeans.');
-let shoes = new Product('Shoes', 50, 'These are simple Shoes.');
-let belt = new Product('Belt', 20, 'This is a simple Belt.');
+//#region Example ----------------------------------------------------------- //
+let shirt = new Product('T-Shirt', 15, 'This is a simple T-Shirt.', '..//img/shirt.webp');
+let jeans = new Product('Jeans', 30, 'These are simple Jeans.', '..//img/jeans.webp');
+let shoes = new Product('Shoes', 50, 'These are simple Shoes.', '..//img/shoes.webp');
+let belt = new Product('Belt', 20, 'This is a simple Belt.', '..//img/belt.webp');
 let prods = [shirt, jeans, shoes, belt];
 
 productList.setProducts(prods);
 productList.updateDom();
 
-cart.setItemList(prods);
-cart.removeItem(belt);
-cart.removeItem(shoes);
+// cart.setItemList(prods);
+// cart.removeItem(belt);
+// cart.removeItem(shoes);
 //#endregion
 
 // Log cart status
