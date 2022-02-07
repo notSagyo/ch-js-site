@@ -1,0 +1,41 @@
+@use '../vendor/materialize/materialize' as M;
+@use '../vendor/sass-flexbox/main' as flex;
+@use '../abstracts' as *;
+
+.cart-item {
+	padding: flex.$gutter 0;
+	border-bottom: solid 1px M.color('grey', 'lighten-2');
+
+	// Image ------------------------ //
+	&__image {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		height: 5rem;
+		width: 4rem;
+
+		overflow: hidden;
+
+		img {
+			@extend .materialboxed;
+
+			width: 100%;
+		}
+	}
+
+	// Details ---------------------- //
+	&__details {
+		display: flex;
+		flex-grow: 1;
+	}
+
+	&__footer {
+		display: flex;
+		align-items: center;
+		margin-left: auto;
+	}
+
+	// Pseudo ---------------------- //
+	&:last-child { border: none; }
+}
