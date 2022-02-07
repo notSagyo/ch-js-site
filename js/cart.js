@@ -1,7 +1,7 @@
-
 // TODO: convert to ES6 classes?
 // TODO: manipulate quantity from cart
-// Stores cart status and (todavia no) item list
+
+// Stores cart status and item list
 const Cart = function({discount, payments, monthInterestRate} = {}) {
 	let _itemList = [];
 	let _productCount = 0;
@@ -17,6 +17,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 	//#region Item Methods ---------- //
 	// Add item to cart
 	this.addItem = (item) => {
+		// Return if not valid argument
 		if (!(item instanceof Product)) {
 			console.warn('Invalid arguments: CartItem expected');
 			return null;
@@ -25,20 +26,22 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 			return null;
 		}
 
+		// Add product
 		_itemList.push(item);
-		_productCount++;
-		_itemQuantity += item.getQuantity();
 
 		if (debugMode)
 			console.log(`%cAdded to cart: ${item.name} ` +
 				`(${item.getQuantity()})`,
-				`color: ${colorSuccess}`);
+				`color: ${colors.success}`);
+
+		M.toast({text: `${item.name} added to cart.`, displayLength: 2000});
 		this.updateCart();
 		return item;
 	}
 
-	// Remove item from cart (CartItem or name accepted)
+	// Remove item from cart (Product or string)
 	this.removeItem = (item) => {
+		// Check if item exists
 		let removedItem = this.findItem(item);
 		if (!removedItem) {
 			console.warn('Item not found, no item removed ');
@@ -46,14 +49,14 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		}
 		let removedIndex = _itemList.indexOf(removedItem)
 
-		_itemQuantity -= removedItem.getQuantity();
+		// Remove item
 		_itemList.splice(removedIndex, 1);
 
 		if (debugMode) {
 			console.log(
 				`%cRemoved from cart: ${removedItem.name} ` +
 				`(${removedItem.getQuantity()})`,
-				`color: ${colorDanger};`);
+				`color: ${colors.danger};`);
 		}
 		this.updateCart();
 		return removedItem;
@@ -63,7 +66,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 	this.clearCart = () => {
 		_itemQuantity = 0;
 		_itemList = [];
-		if (debugMode) console.log('%cCART CLEARED', `color: ${colorDanger};`);
+		if (debugMode) console.log('%cCART CLEARED', `color: ${colors.danger};`);
 		this.updateCart();
 	}
 
@@ -82,29 +85,28 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		return this.total;
 	}
 
-	// Find an item in the cart
+	// Find an item in the cart (Product or string)
 	this.findItem = (item) => {
 		let result = item;
-		let itemIndex = 0;
 
 		if (typeof item == "string"){
 			item = item.toLowerCase();
 			result = _itemList.find(x => x.name.toLowerCase() == item);
 		}
 		else if (item instanceof Product) {
-			result = _itemList.find(x => x === result);
+			result = _itemList.find(x => x === item);
 		} else {
 			console.warn('Invalid arguments: CartItem or string expected');
 			return null;
 		}
 
 		let notFound = (name) => console.log(
-			`%cItem not found: ${name}`, `color: ${colorInfo};`);
+			`%cItem not found: ${name}`, `color: ${colors.info};`);
 
 		if (debugMode && result)
 			console.log(
-				`%cItem ${result.name} found at position [${itemIndex}].`,
-				`color: ${colorInfo}`);
+				`%cItem ${result.name} found.`,
+				`color: ${colors.info}`);
 		else if (debugMode && typeof item === "string")
 			notFound(item);
 		else if (debugMode)
@@ -155,6 +157,33 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 					elem.classList.add('hide');
 			});
 		}
+
+		// Update displayed cart items
+		let itemListElem = document.querySelector('#cart-list');
+		if (!itemListElem) return;
+
+		let itemsHTML = productsHTML = this.getHTML();
+		itemListElem.innerHTML = itemsHTML;
+
+		// Add the remove from cart function to buttons
+		let removeElems = document.querySelectorAll('.cart-item__remove');
+		for (const key in _itemList) {
+			removeElems[key].addEventListener(
+				'click', () => activeCart.removeItem(_itemList[key]))
+		}
+
+		// New products aren't zoomable; initialize zoomable elements again
+		if (debugMode)
+			console.log('%cUpdating cart DOM.', `color: ${colors.info};`);
+		initMaterialboxed();
+	}
+
+	this.getHTML = () => {
+		let html = ''
+		_itemList.forEach(elem => {
+			html += cartItemToHTML(elem);
+		});
+		return html;
 	}
 	//#endregion
 
@@ -167,7 +196,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 
 		if (debugMode) {
 			console.groupCollapsed(
-				`%cItem list set to:`, `color: ${colorSuccess};`)
+				`%cItem list set to:`, `color: ${colors.success};`)
 			console.log(items);
 			console.groupEnd();
 		}
@@ -240,8 +269,4 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 };
 
 // Active cart used globally
-let activeCart = new Cart();
-function addToCart(product) {
-	activeCart.addItem(product);
-	M.toast({text: `${product.name} added to cart.`, displayLength: 2000});
-}
+let activeCart = undefined;

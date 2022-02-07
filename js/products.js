@@ -1,5 +1,4 @@
 // Stores product related info
-// TODO: Functioning add to cart button
 const Product = function(name, price, description, image, quantity = 1) {
 	this.name = name;
 	this.description = description;
@@ -68,7 +67,10 @@ const ProductList = function(products) {
 	this.productsHTML = '';
 
 	this.addProduct = (product) => { this.products.push(product); }
-	this.setProducts = (products) => { this.products = products; }
+	this.setProducts = (products) => {
+		this.products = products;
+		this.updateDom();
+	}
 
 	// Get HTML for the current product list
 	this.getHTML = () => {
@@ -82,51 +84,19 @@ const ProductList = function(products) {
 	// Update the list in the DOM with the current products
 	this.updateDom = () => {
 		let productListElem = document.querySelector('#product-list');
+		if (!productListElem) return;
+
 		this.productsHTML = this.getHTML();
 		productListElem.innerHTML = this.productsHTML;
 
 		// Add add to cart function
 		let productElems = document.querySelectorAll('.product-li__add');
-		console.log(productElems);
 		for (const key in this.products) {
 			productElems[key].addEventListener(
-				'click', () => addToCart(this.products[key]))
+				'click', () => activeCart.addItem(this.products[key]))
 		}
 
 		// New products aren't zoomable; initialize zoomable elements again
 		initMaterialboxed();
 	}
 };
-
-// Converts a product info to an HTML element
-function productToHTML(product) {
-	let title = product.name;
-	let price = product.getPrice();
-	let description = product.description || 'No description';
-	let image = product.image || 'https://via.placeholder.com/256';
-
-	let template =
-		/* html */
-		`<!-- PRODUCT -->
-		<li class="product-li row">
-			<!-- Left side: image -->
-			<div class="product-li__image col-xs-12 col-sm-4 col-xl-3">
-				<img src="${image}" alt="">
-			</div>
-			<!-- Right side: details -->
-			<div class="product-li__details col-xs-12 col-sm">
-				<!-- Title -->
-				<span class="product-li__title">${title}</span>
-				<!-- Description -->
-				<p class="product-li__description">${description}</p>
-				<div class="product-li__footer">
-					<!-- Price -->
-					<span class="product-li__price">$${price}</span>
-					<!-- Add to cart -->
-					<a href="javascript://addToCart" class="product-li__add indigo-text text-accent-2"><i class="material-icons">add_shopping_cart</i></a>
-				</div>
-			</div>
-		</li>
-		`;
-	return template;
-}
