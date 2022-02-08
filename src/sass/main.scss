@@ -1,4 +1,7 @@
 // Import every other file that should be compiled into the main CSS
+// Reset
+@use 'base/reset';
+
 // Vendor
 @use 'vendor/materialize/materialize';
 @use 'vendor/sass-flexbox/main';
