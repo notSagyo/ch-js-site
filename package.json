@@ -18,6 +18,7 @@
   "homepage": "https://github.com/notSagyo/template#readme",
   "devDependencies": {
     "cssnano": "^5.0.15",
+    "eslint": "^8.8.0",
     "gulp": "^4.0.2",
     "gulp-postcss": "^9.0.1",
     "gulp-purgecss": "^4.1.3",

@@ -98,7 +98,6 @@ nav {
     }
   }
 
-
   // Title
   .nav-title {
     display: inline-block;
@@ -111,7 +110,7 @@ nav {
   ul {
     margin: 0;
 	max-height: 100%;
-	overflow: hidden;
+	// overflow: hidden;
 
     li {
       transition: background-color .3s;

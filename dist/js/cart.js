@@ -1,7 +1,8 @@
 // TODO: convert to ES6 classes?
 // TODO: manipulate quantity from cart
-// Stores cart status and (todavia no) item list
-const Cart = function({discount, payments, monthlyInterest} = {}) {
+
+// Stores cart status and item list
+const Cart = function({discount, payments, monthInterestRate} = {}) {
 	let _itemList = [];
 	let _productCount = 0;
 	let _itemQuantity = 0;
@@ -9,14 +10,15 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 	let _total = 0;
 	let _subtotal = 0;
 	let _discount = discount || 0;
-	let _monthInterest = monthlyInterest || 0.03;
+	let _monthInterest = monthInterestRate || 0.03;
 	let _payments = payments || 1;
 	let _monthFee = 0;
 
 	//#region Item Methods ---------- //
 	// Add item to cart
 	this.addItem = (item) => {
-		if (!(item instanceof CartItem)) {
+		// Return if not valid argument
+		if (!(item instanceof Product)) {
 			console.warn('Invalid arguments: CartItem expected');
 			return null;
 		} else if (item.getQuantity() < 1) {
@@ -24,20 +26,22 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 			return null;
 		}
 
+		// Add product
 		_itemList.push(item);
-		_productCount++;
-		_itemQuantity += item.getQuantity();
 
 		if (debugMode)
 			console.log(`%cAdded to cart: ${item.name} ` +
 				`(${item.getQuantity()})`,
-				`color: ${colorSuccess}`);
+				`color: ${colors.success}`);
+
+		M.toast({text: `${item.name} added to cart.`, displayLength: 2000});
 		this.updateCart();
 		return item;
 	}
 
-	// Remove item from cart (CartItem or name accepted)
+	// Remove item from cart (Product or string)
 	this.removeItem = (item) => {
+		// Check if item exists
 		let removedItem = this.findItem(item);
 		if (!removedItem) {
 			console.warn('Item not found, no item removed ');
@@ -45,14 +49,14 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 		}
 		let removedIndex = _itemList.indexOf(removedItem)
 
-		_itemQuantity -= removedItem.getQuantity();
+		// Remove item
 		_itemList.splice(removedIndex, 1);
 
 		if (debugMode) {
 			console.log(
 				`%cRemoved from cart: ${removedItem.name} ` +
 				`(${removedItem.getQuantity()})`,
-				`color: ${colorDanger};`);
+				`color: ${colors.danger};`);
 		}
 		this.updateCart();
 		return removedItem;
@@ -62,46 +66,47 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 	this.clearCart = () => {
 		_itemQuantity = 0;
 		_itemList = [];
-		if (debugMode) console.log('%cCART CLEARED', `color: ${colorDanger};`);
+		if (debugMode) console.log('%cCART CLEARED', `color: ${colors.danger};`);
 		this.updateCart();
 	}
 
 	// After modifying a field, should call this
 	this.updateCart = () => {
 		_subtotal = _itemList.reduce((a, b) => a + b.getTotal(), 0);
+		_itemQuantity = _itemList.reduce((a, b) => a + b.getQuantity(), 0);
 		_productCount = _itemList.length;
 		_total = _subtotal + this.calcInterest(_payments, _monthInterest);
 		_total = this.calcDiscount(_discount);
 		_monthFee = _total / _payments;
 
+		this.updateDom();
 		if (debugMode)
 			console.log(`Cart price now is: $${this.getTotal()}`);
 		return this.total;
 	}
 
-	// Find an item in the cart
+	// Find an item in the cart (Product or string)
 	this.findItem = (item) => {
 		let result = item;
-		let itemIndex = 0;
 
 		if (typeof item == "string"){
 			item = item.toLowerCase();
 			result = _itemList.find(x => x.name.toLowerCase() == item);
 		}
-		else if (item instanceof CartItem) {
-			result = _itemList.find(x => x === result);
+		else if (item instanceof Product) {
+			result = _itemList.find(x => x === item);
 		} else {
 			console.warn('Invalid arguments: CartItem or string expected');
 			return null;
 		}
 
 		let notFound = (name) => console.log(
-			`%cItem not found: ${name}`, `color: ${colorInfo};`);
+			`%cItem not found: ${name}`, `color: ${colors.info};`);
 
 		if (debugMode && result)
 			console.log(
-				`%cItem ${result.name} found at position [${itemIndex}].`,
-				`color: ${colorInfo}`);
+				`%cItem ${result.name} found.`,
+				`color: ${colors.info}`);
 		else if (debugMode && typeof item === "string")
 			notFound(item);
 		else if (debugMode)
@@ -137,16 +142,61 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 	}
 	//#endregion
 
+	//#region DOM Methods
+	this.updateDom = () => {
+		// Update cart badges to show product count
+		let cartBadges = document.querySelectorAll('.cart-badge');
+		if (_productCount > 0) {
+			cartBadges.forEach(elem => {
+				elem.innerText = _productCount
+				elem.classList.remove('hide');
+			});
+		} else {
+			cartBadges.forEach(elem => {
+				if (!elem.classList.contains('hide'))
+					elem.classList.add('hide');
+			});
+		}
+
+		// Update displayed cart items
+		let itemListElem = document.querySelector('#cart-list');
+		if (!itemListElem) return;
+
+		let itemsHTML = productsHTML = this.getHTML();
+		itemListElem.innerHTML = itemsHTML;
+
+		// Add the remove from cart function to buttons
+		let removeElems = document.querySelectorAll('.cart-item__remove');
+		for (const key in _itemList) {
+			removeElems[key].addEventListener(
+				'click', () => activeCart.removeItem(_itemList[key]))
+		}
+
+		// New products aren't zoomable; initialize zoomable elements again
+		if (debugMode)
+			console.log('%cUpdating cart DOM.', `color: ${colors.info};`);
+		initMaterialboxed();
+	}
+
+	this.getHTML = () => {
+		let html = ''
+		_itemList.forEach(elem => {
+			html += cartItemToHTML(elem);
+		});
+		return html;
+	}
+	//#endregion
+
 	//#region Get / Set ------------- //
 	this.setItemList = (items) => {
-		if (!Array.isArray(items) || !items.every(x => x instanceof CartItem)) {
+		if (!Array.isArray(items) || !items.every(x => x instanceof Product)) {
 			console.warn('Invalid arguments: CartItems[] expected');
 			return null;
 		}
 
 		if (debugMode) {
 			console.groupCollapsed(
-				`%cItem list set to:`, `color: ${colorSuccess};`)
+				`%cItem list set to:`, `color: ${colors.success};`)
 			console.log(items);
 			console.groupEnd();
 		}
@@ -218,64 +268,5 @@ const Cart = function({discount, payments, monthlyInterest} = {}) {
 	}
 };
 
-// Stores product related info
-const CartItem = function(name = 'Item', price = 0, quantity = 1) {
-	this.name = name;
-	let _price = price;
-	let _quantity = quantity;
-	let _total = price * quantity;
-
-	//#region Quantity methods ------ //
-	this.increaseQuantity = (amount) => {
-		return this.setQuantity(_quantity + (amount || 1));
-	}
-
-	this.decreaseQuantity = (amount) => {
-		return this.setQuantity(_quantity + (amount || -1));
-	}
-
-	this.resetQuantity = () => { return this.setQuantity(1); }
-	//#endregion
-
-	// Price methods ---------------- //
-	this.updateTotal = () => {
-		_total = _price * _quantity;
-		return _total;
-	}
-
-	//#region Get / Set ------------- //
-	this.setPrice = (amount) => {
-		if (!Number.isInteger(amount) || amount < 0) {
-			console.warn('Invalid arguments: positive integer expected');
-			return null;
-		}
-		_price = amount;
-		this.updateTotal();
-		return _price;
-	}
-
-	this.setQuantity = (amount) => {
-		if (!Number.isInteger(amount) || amount < 0) {
-			console.warn('Invalid arguments: positive integer expected');
-			return null;
-		}
-		_quantity = amount;
-		this.updateTotal();
-		return _quantity;
-	}
-
-	this.setTotal = (amount) => {
-		if (!Number.isInteger(amount) || amount < 0) {
-			console.warn('Invalid arguments: positive integer expected');
-			return null;
-		}
-		console.warn('Warning: total should not be manually set.');
-		_total = amount;
-		return _total;
-	}
-
-	this.getPrice = () => { return _price }
-	this.getQuantity = () => { return _quantity; }
-	this.getTotal = () => { return _total; }
-	//#endregion
-};
+// Active cart used globally
+let activeCart = undefined;

@@ -1,13 +1,14 @@
 // This file will be used in every page in the site!
 // Imports -------------------------------------------------------------------//
 @use 'fonts' as *;
-@use '../abstracts/abstracts' as *;
+@use '../abstracts' as *;
 
 // Styling -------------------------------------------------------------------//
 body {
 	display: flex;
 	flex-direction: column;
-	font-family: 'Josefin Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #f7f7f7;
+	// font-family: 'Josefin Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	min-height: 100vh;
 }
 
@@ -16,9 +17,20 @@ main {
 	flex-grow: 1;
 
 	.main__wrapper {
-		width: 80%;
+		@extend .container;
 		margin: 0 auto;
 	}
+}
+
+ul { margin: 0; }
+
+.container {
+	margin: 0 auto;
+	max-width: 1280px;
+	width: 90%;
+
+	@include md-up { width: 85%; }
+	@include lg-up { width: 70%; }
 }
 
 .josefin-descender-ignore {
@@ -30,19 +42,8 @@ main {
 	cursor: pointer;
 	font-size: 0;
 
-	.material-icons { font-size: 24px; }
+	&.material-icons, .material-icons { font-size: 24px; }
 }
 
-// Small+
-// @media only screen and(min-width: $sm) { }
-// Medium+
-// @media only screen and(min-width: $md) { }
-// Large+
-// @media only screen and(min-width: $lg) { }
-
-// Small-
-// @media only screen and(max-width: $sm) { }
-// Medium-
-// @media only screen and(max-width: $md) { }
-// Large-
-// @media only screen and(max-width: $lg) { }
+.noselect { user-select: none; }
+.p-0 { padding: 0 !important; }

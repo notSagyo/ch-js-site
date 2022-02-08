@@ -6,18 +6,102 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<link rel="stylesheet" href="../css/main.css">
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Materialize JS -->
+	<script defer src="../js/materialize.min.js"></script>
+	<script defer src="../js/utils.js"></script>
 </head>
 <body>
-	<header>
+	<!------ HEADER ------>
+	<header class="navbar-fixed">
+		<!-- NAVBAR -->
 		<nav>
-			<ul>
-				<li><a href="../index.html">Home</a></li>
-				<li><a href="products.html">Products</a></li>
-				<li><a href="contact.html">Contact</a></li>
-				<li><a href="about.html">About</a></li>
-			</ul>
+			<div class="nav-wrapper container">
+				<a href="#!" class="brand-logo truncate">E-Commerce</a>
+				<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+				<ul class="right hide-on-med-and-down">
+					<li><a class="waves-effect waves-classic" href="../index.html">HOME</a></li>
+					<li><a class="waves-effect waves-classic" href="products.html">PRODUCTS</a></li>
+					<li><a class="waves-effect waves-classic" href="contact.html">CONTACT</a></li>
+					<li><a class="waves-effect waves-classic" href="about.html">ABOUT</a></li>
+					<li><a class="waves-effect waves-classic" href="#">
+							<i class="material-icons badge-container">
+								<span class="cart-badge hide">0</span>
+								shopping_cart
+							</i>
+					</a></li>
+				</ul>
+			</div>
 		</nav>
 	</header>
-	<h1 class="title">Cart</h1>
+
+	<!------ MAIN ------>
+	<main>
+		<!-- SIDENAV -->
+		<div class="sidenav" id="slide-out">
+			<div class="sidenav-header">
+				<a href="#" class="sidenav-close white-text close-button">
+					<i class="material-icons">close</i>
+				</a>
+				<span class="white-text">E-COMMERCE</span>
+			</div>
+			<ul>
+				<li><a class="waves-effect waves-classic" href="../index.html"><span class="a">HOME</span><i class="material-icons">home</i></a></li>
+				<li><a class="waves-effect waves-classic" href="products.html"><span class="a">PRODUCTS</span><i class="material-icons">shopping_bag</i></a></li>
+				<li><a class="waves-effect waves-classic indigo white-text" href="#"><span class="a">CART</span>
+					<i class="material-icons badge-container white-text">
+						<span class="cart-badge hide">0</span>
+						shopping_cart
+					</i>
+				</a></li>
+				<li><a class="waves-effect waves-classic" href="contact.html"><span class="a">CONTACT</span><i class="material-icons">contact_support</i></a></li>
+				<li><a class="waves-effect waves-classic" href="about.html"><span class="a">ABOUT</span><i class="material-icons">info</i></a></li>
+			</ul>
+		</div>
+
+		<div class="main__wrapper">
+			<h1 class="h1">Shopping Cart</h1>
+			<!-- <div class="cart"> -->
+				<!-- Cart product list -->
+				<ul id="cart-list" class="cart-list col-gutter">
+					<!-- This list is populated with JS -->
+				</ul>
+			<!-- </div> -->
+		</div>
+	</main>
+
+	<!------ FOOTER ------>
+	<footer class="page-footer">
+		<div class="container">
+			<!-- FIXME: Vertical margin -->
+			<div class="row">
+				<div class="col l4 s12">
+					<h5 class="white-text">Links</h5>
+					<ul>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+						<li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+					</ul>
+				</div>
+				<div class="col l6 s12">
+					<h5 class="white-text">E-Commerce</h5>
+					<p class="grey-text text-lighten-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut neque voluptates nam nihil excepturi est quos itaque. Dolorum, mollitia natus?</p>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				<div class="">
+					<span class="center center-block">© 2022 E-Commerce</span>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script defer src="../js/cart.js"></script>
+	<script defer src="../js/products.js"></script>
+	<script defer src="../js/main.js"></script>
 </body>
 </html>

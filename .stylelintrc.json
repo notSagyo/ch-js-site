@@ -3,14 +3,17 @@
 				"stylelint-config-lost"],
 	"rules": {
 		"at-rule-no-unknown": null,
+		"at-rule-empty-line-before": null,
 		"custom-property-no-missing-var-function": null,
 		"declaration-empty-line-before": null,
+		"function-name-case": ["lower", {"ignoreFunctions": ["/\\./"]}],
 		"indentation": "tab",
 		"max-empty-lines": null,
 		"no-invalid-position-at-import-rule": null,
 		"selector-class-pattern": null,
 		"selector-list-comma-newline-after": null,
 		"string-quotes": "single",
+		"scss/at-extend-no-missing-placeholder": null,
 		"scss/at-rule-no-unknown": true,
 		"scss/double-slash-comment-empty-line-before": null,
 		"scss/dollar-variable-empty-line-before": null

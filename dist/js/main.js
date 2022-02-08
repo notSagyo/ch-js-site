@@ -1,51 +1,27 @@
-// Log extra info if debug
-let debugMode = true;
+// Create new cart and product list
+let productList = new ProductList();
+let cart = new Cart();
 
-(() => {
-	// Create a new cart
-	let cart = new Cart();
+// Set the active cart to the new cart
+activeCart = cart;
 
-	//#region Interactive --------------------------------------------------- //
-	// let interactiveCart = () => {
-	// 	let name = prompt('Para agregar un producto al carrito ingrese el nombre:');
+//#region Example ----------------------------------------------------------- //
+// Create some products
+let shirt = new Product('T-Shirt', 15, 'This is a simple T-Shirt.',
+	'..//img/shirt.webp');
+let jeans = new Product('Jeans', 30, 'These are simple Jeans.',
+	'..//img/jeans.webp');
+let shoes = new Product('Shoes', 50, 'These are simple Shoes.',
+	'..//img/shoes.webp');
+let belt = new Product('Belt', 20, 'This is a simple Belt.',
+	'..//img/belt.webp');
+let prods = [shirt, jeans, shoes, belt];
 
-	// 	let price = Number(prompt('Ingrese: el precio:'));
-	// 	if (isNaN(price))
-	// 		return console.log('Entrada inválida');
+// Update the product list
+productList.setProducts(prods);
 
-	// 	let qty = Number(prompt('Ingrese cuántas unidades:'));
-	// 	if (!Number.isInteger(qty))
-	// 		return console.log('Entrada inválida');
+cart.setItemList(prods);
+//#endregion
 
-	// 	let item = new CartItem(name, price, qty);
-	// 	cart.addItem(item);
-	// }
-
-	// let keepShopping = true;
-	// while(keepShopping) {
-	// 	interactiveCart();
-	// 	keepShopping = confirm(
-	// 		'• Si desea agregar otro producto, seleccione aceptar. ' +
-	// 		'\n• Por el contrario seleccione cancelar.');
-	// }
-	//#endregion
-
-	//#region Sapmle Cart ---------------------------------------------------//
-	let shirt = new CartItem('T-Shirt', 15, 12);
-	let jeans = new CartItem('Jeans', 30, 5);
-	let shoes = new CartItem('Shoes', 50, 2);
-	let belt = new CartItem('Belt', 20, 2);
-	let items = [shirt, jeans, shoes];
-
-	cart.addItem(shirt);
-	cart.addItem(jeans);
-	cart.addItem(shoes);
-	cart.setItemList(items);
-	cart.findItem(shoes);
-	cart.removeItem(belt);
-	cart.removeItem(shoes);
-	//#endregion
-
-	// Log cart status
-	cart.log();
-})();
+// Log cart status
+cart.log();
