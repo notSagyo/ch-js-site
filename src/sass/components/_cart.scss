@@ -28,7 +28,8 @@
 		}
 	}
 
-	// Details ---------------------- //
+	// Details Left ----------------- //
+	// LEFT
 	&__details {
 		display: flex;
 		flex-grow: 1;
@@ -42,6 +43,9 @@
 		padding: 0 flex.$gutter;
 	}
 
+	// &__price { @include price-tag; }
+
+	// RIGHT
 	&__details-right {
 		display: flex;
 		align-items: flex-end;

@@ -1,5 +1,6 @@
 // TODO: convert to ES6 classes?
-// TODO: manipulate quantity from cart
+// TODO: manipulate qty from DOM
+// TODO: Add taxes (not only monthly interest)
 
 // Stores cart status and item list
 const Cart = function({discount, payments, monthInterestRate} = {}) {
@@ -114,6 +115,40 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 			notFound(item.name);
 		return result;
 	}
+
+	// Quantity Methods ------------- //
+	this.increaseItemQuantity = (item, amount = 1) => {
+		let res = this.findItem(item);
+		if (!res) return -1;
+
+		res.setQuantity(res.getQuantity() + amount);
+		this.updateCart();
+		return amount;
+	}
+
+	this.decreaseItemQuantity = (item, amount = 1) => {
+		let res = this.findItem(item);
+		if (!res) return -1;
+
+		res.setQuantity(res.getQuantity() - amount);
+		this.updateCart();
+		return amount;
+	}
+
+	this.setItemQuantity = (item, amount) => {
+		if (!Number.isInteger(amount) || amount < 0) {
+			console.warn('Invalid arguments: positive integer expected');
+			return -1;
+		}
+
+		let res = this.findItem(item);
+		if (!res) return -1;
+
+		res.setQuantity(amount);
+		this.updateCart();
+		return amount;
+	}
+
 	//#endregion
 
 	//#region Price Methods --------- //
@@ -215,7 +250,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 
 	this.setSubtotal = (amount) => {
 		_subtotal = amount;
-		this.updateCart();
+		this.updateDom();
 		return _subtotal;
 	}
 
@@ -237,7 +272,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		return _payments;
 	}
 
-	this.getItems = () => { return _itemList; }
+	this.getItemList = () => { return _itemList; }
 	this.getProductCount = () => { return _productCount; }
 	this.getItemQuantity = () => { return _itemQuantity; }
 

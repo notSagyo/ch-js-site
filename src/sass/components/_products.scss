@@ -42,9 +42,9 @@
 
 .product-li {
 	display: flex;
-	margin-bottom: flex.$gutter * 3;
+	margin-bottom: flex.$gutter * 2;
 
-	// LEFT SIDE
+	// LEFT ------------------------- //
 	&__image {
 		@include product-bg;
 
@@ -63,8 +63,7 @@
 		}
 	}
 
-	// RIGHT SIDE
-	// TODO: style details
+	// RIGHT ------------------------ //
 	&__details {
 		display: flex;
 		flex-direction: column;
@@ -77,15 +76,18 @@
 
 	&__title { @extend .h5; }
 
+	// Footer ----------------------- //
 	&__footer {
 		display: flex;
 		justify-content: space-between;
 		margin-top: auto;
+	}
 
-		.product-li__price {
-			margin: auto 0;
-			line-height: 1;
-		}
+	&__price {
+		@include price-tag;
+
+		margin: auto 0;
+		line-height: 1;
 	}
 
 	@include sm-down {

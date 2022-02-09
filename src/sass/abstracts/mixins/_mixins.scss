@@ -2,6 +2,16 @@
 @use 'media' as media;
 @use '../../vendor/materialize/materialize' as M;
 
+@mixin price-tag {
+	width: fit-content;
+	padding: 0.25rem;
+	padding-right: 1rem;
+
+	font-weight: 500;
+	color: white;
+	background-color: M.$primary-color;
+}
+
 @mixin product-bg {
 	border-radius: 0.25rem;
 	background: M.color('indigo', 'lighten-5');

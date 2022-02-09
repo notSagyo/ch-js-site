@@ -13,7 +13,7 @@ const Product = function(name, price, description, image, quantity = 1) {
 	}
 
 	this.decreaseQuantity = (amount) => {
-		return this.setQuantity(_quantity + (amount || -1));
+		return this.setQuantity(_quantity + (-amount || -1));
 	}
 
 	this.resetQuantity = () => { return this.setQuantity(1); }
