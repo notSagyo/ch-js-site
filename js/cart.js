@@ -33,8 +33,8 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 			console.log(`%cAdded to cart: ${item.name} ` +
 				`(${item.getQuantity()})`,
 				`color: ${colors.success}`);
-
 		M.toast({text: `${item.name} added to cart.`, displayLength: 2000});
+
 		this.updateCart();
 		return item;
 	}
@@ -52,12 +52,13 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		// Remove item
 		_itemList.splice(removedIndex, 1);
 
-		if (debugMode) {
+		if (debugMode)
 			console.log(
 				`%cRemoved from cart: ${removedItem.name} ` +
 				`(${removedItem.getQuantity()})`,
 				`color: ${colors.danger};`);
-		}
+		M.toast({text: `${item.name} removed from cart.`, displayLength: 2000});
+
 		this.updateCart();
 		return removedItem;
 	}
