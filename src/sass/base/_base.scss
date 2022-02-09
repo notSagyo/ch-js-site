@@ -1,6 +1,6 @@
 // This file will be used in every page in the site!
 // Imports -------------------------------------------------------------------//
-@use 'fonts' as *;
+@use 'typography' as *;
 @use '../abstracts' as *;
 
 // Styling -------------------------------------------------------------------//
@@ -17,21 +17,14 @@ main {
 	flex-grow: 1;
 
 	.main__wrapper {
-		@extend .container;
+		@include container;
 		margin: 0 auto;
 	}
 }
 
 ul { margin: 0; }
 
-.container {
-	margin: 0 auto;
-	max-width: 1280px;
-	width: 90%;
-
-	@include md-up { width: 85%; }
-	@include lg-up { width: 70%; }
-}
+.container { @include container; }
 
 .josefin-descender-ignore {
 	display: inline-block;
@@ -45,5 +38,6 @@ ul { margin: 0; }
 	&.material-icons, .material-icons { font-size: 24px; }
 }
 
+.page-title { padding: 1rem; }
 .noselect { user-select: none; }
 .p-0 { padding: 0 !important; }

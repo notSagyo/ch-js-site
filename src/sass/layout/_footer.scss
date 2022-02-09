@@ -2,17 +2,14 @@
 @use '../abstracts/abstracts' as *;
 
 // Styling -------------------------------------------------------------------//
+.page-footer {
+	.footer-container {
+		@include container;
 
-// Small+
-// @media only screen and(min-width: $sm) { }
-// Medium+
-// @media only screen and(min-width: $md) { }
-// Large+
-// @media only screen and(min-width: $lg) { }
+		padding: 2rem 0;
+	}
 
-// Small-
-// @media only screen and(max-width: $sm) { }
-// Medium-
-// @media only screen and(max-width: $md) { }
-// Large-
-// @media only screen and(max-width: $lg) { }
+	.footer-header {
+		margin-bottom: 1rem;
+	}
+}
