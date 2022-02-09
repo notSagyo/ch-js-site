@@ -1,0 +1,13 @@
+@use '../vendor/materialize/materialize' as M;
+
+.cart-btn {
+	@extend .btn-floating;
+
+	background-color: M.$primary-color;
+	line-height: 1;
+	.material-icons { font-size: 1.5rem; }
+
+	&:hover {
+		background-color: lighten($color: M.$primary-color, $amount: 10%);
+	}
+}

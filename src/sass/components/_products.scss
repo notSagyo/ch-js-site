@@ -42,16 +42,15 @@
 
 .product-li {
 	display: flex;
-	margin-bottom: flex.$gutter * 2;
+	margin-bottom: flex.$gutter * 3;
 
 	// LEFT SIDE
 	&__image {
+		@include product-bg;
+
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
-		border-radius: 0.25rem;
-		background: M.color('indigo', 'lighten-5');
 
 		img {
 			@extend .materialboxed;
@@ -65,7 +64,7 @@
 	}
 
 	// RIGHT SIDE
-	// TODO: Style details. Add FAB ?
+	// TODO: style details
 	&__details {
 		display: flex;
 		flex-direction: column;
@@ -83,7 +82,10 @@
 		justify-content: space-between;
 		margin-top: auto;
 
-		.product-li__price, .product-li__add { margin: auto 0; }
+		.product-li__price {
+			margin: auto 0;
+			line-height: 1;
+		}
 	}
 
 	@include sm-down {

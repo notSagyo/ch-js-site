@@ -11,7 +11,7 @@ let colors = {
 // Converts a product info to an HTML element
 function productToHTML(product, type = 'productItem') {
 	let title = product.name;
-	let price = product.getPrice();
+	let price = product.getTotal();
 	let description = product.description || 'No description';
 	let image = product.image || 'https://via.placeholder.com/256';
 
@@ -35,7 +35,7 @@ function productToHTML(product, type = 'productItem') {
 					<!-- Price -->
 					<span class="product-li__price">$${price}</span>
 					<!-- Add to cart -->
-					<a href="javascript:(0)" class="product-li__add indigo-text text-accent-2"><i class="material-icons">add_shopping_cart</i></a>
+					<a href="javascript:(0)" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart"><i class="material-icons">add_shopping_cart</i></a>
 				</div>
 			</div>
 		</li>
@@ -50,14 +50,15 @@ function productToHTML(product, type = 'productItem') {
 			</div>
 			<!-- Details -->
 			<div class="cart-item__details">
-				<!-- Title -->
-				<span class="cart-item__title">${title}</span>
-				<!-- Footer -->
-				<div class="cart-item__footer">
-					<!-- Price -->
-					<span class="cart-item__price">$${price}</span>
+				<!-- Left Side -->
+				<div class="cart-item__details-left">
+					<span class="h5">${title}</span>
+					<span class="h6 cart-item__price">$${price}</span>
+				</div>
+				<!-- Right side -->
+				<div class="cart-item__details-right">
 					<!-- Remove from cart -->
-					<a href="javascript:(0)" class="cart-item__remove"><i class="material-icons">remove_shopping_cart</i></a>
+					<a href="javascript:(0)" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"><i class="material-icons">remove_shopping_cart</i></a>
 				</div>
 			</div>
 		</li>
