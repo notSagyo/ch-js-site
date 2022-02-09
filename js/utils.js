@@ -14,6 +14,7 @@ function productToHTML(product, type = 'productItem') {
 	let price = product.getTotal();
 	let description = product.description || 'No description';
 	let image = product.image || 'https://via.placeholder.com/256';
+	let quantity = product.getQuantity();
 
 	let html = '';
 
@@ -33,7 +34,7 @@ function productToHTML(product, type = 'productItem') {
 				<p class="product-li__description">${description}</p>
 				<div class="product-li__footer">
 					<!-- Price -->
-					<span class="product-li__price">$${price}</span>
+					<span class="product-li__price h6">$${price}</span>
 					<!-- Add to cart -->
 					<a href="javascript:(0)" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart"><i class="material-icons">add_shopping_cart</i></a>
 				</div>
@@ -52,7 +53,10 @@ function productToHTML(product, type = 'productItem') {
 			<div class="cart-item__details">
 				<!-- Left Side -->
 				<div class="cart-item__details-left">
-					<span class="h5">${title}</span>
+					<div>
+						<span class="h5">${title}</span>
+						<span class="quantity">${quantity > 1 ? `x${quantity}` : ''}</span>
+					</div>
 					<span class="h6 cart-item__price">$${price}</span>
 				</div>
 				<!-- Right side -->
