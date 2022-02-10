@@ -10,15 +10,17 @@ let colors = {
 
 // Converts a product info to an HTML element
 function productToHTML(product, type = 'productItem') {
+	type = type.toLowerCase();
+	let html = '';
+
 	let title = product.name;
 	let price = product.getTotal();
 	let description = product.description || 'No description';
 	let image = product.image || 'https://via.placeholder.com/256';
 	let quantity = product.getQuantity();
 
-	let html = '';
 
-	if (type.toLowerCase() == 'productitem') {
+	if (type == 'productitem') {
 		html = /* html */
 		`<!-- PRODUCT -->
 		<li class="product-li row">
@@ -41,7 +43,7 @@ function productToHTML(product, type = 'productItem') {
 			</div>
 		</li>
 		`;
-	} else if (type.toLowerCase() == 'cartitem') {
+	} else if (type == 'cartitem') {
 		html = /* html */
 		`<!-- PRODUCT -->
 		<li class="cart-item row">

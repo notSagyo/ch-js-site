@@ -5,8 +5,8 @@
 // Stores cart status and item list
 const Cart = function({discount, payments, monthInterestRate} = {}) {
 	let _itemList = [];
-	let _productCount = 0;
-	let _itemQuantity = 0;
+	let _itemCount = 0;
+	let _totalQuantity = 0;
 
 	let _total = 0;
 	let _subtotal = 0;
@@ -27,8 +27,11 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 			return null;
 		}
 
-		// Add product
-		_itemList.push(item);
+		// If already in cart only increase quantity
+		if (this.findItem(item.name))
+			item.increaseQuantity();
+		else
+			_itemList.push(item);
 
 		if (debugMode)
 			console.log(`%cAdded to cart: ${item.name} ` +
@@ -45,7 +48,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		// Check if item exists
 		let removedItem = this.findItem(item);
 		if (!removedItem) {
-			console.warn('Item not found, no item removed ');
+			console.warn('Item not found, no item removed');
 			return null;
 		}
 		let removedIndex = _itemList.indexOf(removedItem)
@@ -58,7 +61,10 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 				`%cRemoved from cart: ${removedItem.name} ` +
 				`(${removedItem.getQuantity()})`,
 				`color: ${colors.danger};`);
-		M.toast({text: `${item.name} removed from cart.`, displayLength: 2000});
+
+		M.toast({
+			text: `${removedItem.name} removed from cart.`,
+			displayLength: 2000});
 
 		this.updateCart();
 		return removedItem;
@@ -66,7 +72,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 
 	// Remove all items from cart
 	this.clearCart = () => {
-		_itemQuantity = 0;
+		_totalQuantity = 0;
 		_itemList = [];
 		if (debugMode) console.log('%cCART CLEARED', `color: ${colors.danger};`);
 		this.updateCart();
@@ -75,8 +81,8 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 	// After modifying a field, should call this
 	this.updateCart = () => {
 		_subtotal = _itemList.reduce((a, b) => a + b.getTotal(), 0);
-		_itemQuantity = _itemList.reduce((a, b) => a + b.getQuantity(), 0);
-		_productCount = _itemList.length;
+		_totalQuantity = _itemList.reduce((a, b) => a + b.getQuantity(), 0);
+		_itemCount = _itemList.length;
 		_total = _subtotal + this.calcInterest(_payments, _monthInterest);
 		_total = this.calcDiscount(_discount);
 		_monthFee = _total / _payments;
@@ -89,30 +95,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 
 	// Find an item in the cart (Product or string)
 	this.findItem = (item) => {
-		let result = item;
-
-		if (typeof item == "string"){
-			item = item.toLowerCase();
-			result = _itemList.find(x => x.name.toLowerCase() == item);
-		}
-		else if (item instanceof Product) {
-			result = _itemList.find(x => x === item);
-		} else {
-			console.warn('Invalid arguments: CartItem or string expected');
-			return null;
-		}
-
-		let notFound = (name) => console.log(
-			`%cItem not found: ${name}`, `color: ${colors.info};`);
-
-		if (debugMode && result)
-			console.log(
-				`%cItem ${result.name} found.`,
-				`color: ${colors.info}`);
-		else if (debugMode && typeof item === "string")
-			notFound(item);
-		else if (debugMode)
-			notFound(item.name);
+		result = Product.findProduct(item, _itemList);
 		return result;
 	}
 
@@ -148,33 +131,21 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		this.updateCart();
 		return amount;
 	}
-
 	//#endregion
 
 	//#region Price Methods --------- //
-	// Add amount to subtotal
-	this.subtotalAdd = (amount) => {
-		this.setSubtotal(_subtotal + amount)
-		return this.subtotal;
-	}
-
-	// Subtract amount from subtotal
-	this.subtotalSubtract = (amount) => {
-		return this.subtotalAdd(-amount);
-	}
-
 	this.calcDiscount = (discount = _discount) => {
 		return _total * (1 - discount);
 	}
 
-	// Calc. the tax ($) for the current subtotal
+	// Calc. the interest tax (flat $) for the subtotal
 	this.calcInterest = (payments = _payments, interest = _monthInterest) => {
 		return (payments > 1) ? (_subtotal * interest * (payments - 1)) : 0;
 	}
 
-	// Calc. the monthly tax ($) for the current subtotal
-	this.calcMonthInterest = (payments = _payments, tax = _monthInterest) => {
-		return this.calcInterest(payments, tax) / payments;
+	// Calc. the monthly interest tax (flat $) for the subtotal
+	this.calcMonthInterest = (payments = _payments, intereset = _monthInterest) => {
+		return this.calcInterest(payments, intereset) / payments;
 	}
 	//#endregion
 
@@ -182,9 +153,9 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 	this.updateDom = () => {
 		// Update cart badges to show product count
 		let cartBadges = document.querySelectorAll('.cart-badge');
-		if (_productCount > 0) {
+		if (_itemCount > 0) {
 			cartBadges.forEach(elem => {
-				elem.innerText = _productCount
+				elem.innerText = _itemCount
 				elem.classList.remove('hide');
 			});
 		} else {
@@ -198,7 +169,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		let itemListElem = document.querySelector('#cart-list');
 		if (!itemListElem) return;
 
-		let itemsHTML = productsHTML = this.getHTML();
+		let itemsHTML = productsHTML = this.generateHtml();
 		itemListElem.innerHTML = itemsHTML;
 
 		// Add the remove from cart function to buttons
@@ -214,7 +185,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		initMaterialboxed();
 	}
 
-	this.getHTML = () => {
+	this.generateHtml = () => {
 		let html = ''
 		_itemList.forEach(elem => {
 			html += cartItemToHTML(elem);
@@ -224,6 +195,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 	//#endregion
 
 	//#region Get / Set ------------- //
+	// Setters
 	this.setItemList = (items) => {
 		if (!Array.isArray(items) || !items.every(x => x instanceof Product)) {
 			console.warn('Invalid arguments: CartItems[] expected');
@@ -242,46 +214,35 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		return _itemList;
 	}
 
-	this.setTotal = (amount) => {
-		console.warn('Warning: total should not be manually set.');
-		_total = amount;
-		return _total;
-	}
-
-	this.setSubtotal = (amount) => {
-		_subtotal = amount;
-		this.updateDom();
-		return _subtotal;
-	}
-
 	this.setDiscount = (amount) => {
 		_discount = amount;
 		this.updateCart();
-		return _discount;
+		return amount;
 	}
 
 	this.setMonthInterest = (amount) => {
 		_monthInterest = amount;
 		this.updateCart();
-		return _monthInterest;
+		return amount;
 	}
 
 	this.setPayments = (amount) => {
 		_payments = amount;
 		this.updateCart();
-		return _payments;
+		return amount;
 	}
 
-	this.getItemList = () => { return _itemList; }
-	this.getProductCount = () => { return _productCount; }
-	this.getItemQuantity = () => { return _itemQuantity; }
+	// Getters
+	this.getItemList = () => _itemList;
+	this.getItemCount = () => _itemCount;
+	this.getTotalQuantity = () => _totalQuantity;
 
-	this.getTotal = () => { return _total; }
-	this.getSubtotal = () => { return _subtotal; }
-	this.getDiscount = () => { return _discount; }
-	this.getMonthInterest = () => { return _monthInterest };
-	this.getPayments = () => { return _payments; }
-	this.getMonthFee = () => { return _monthFee; }
+	this.getTotal = () => _total;
+	this.getSubtotal = () => _subtotal;
+	this.getDiscount = () => _discount;
+	this.getMonthInterest = () => _monthInterest;
+	this.getPayments = () => _payments;
+	this.getMonthFee = () => _monthFee;
 	//#endregion
 
 	// Other ------------------------ //
@@ -289,8 +250,8 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 	this.log = () => {
 		console.groupCollapsed(this.constructor.name);
 		let msg = {
-			_productCount,
-			_itemQuantity,
+			_itemCount,
+			_totalQuantity,
 			_total,
 			_subtotal,
 			_discount,
@@ -299,7 +260,7 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 			_monthFee,
 			_itemList
 		}
-		console.log(`${JSON.stringify(msg, null, '	')}`);
+		console.log(`${JSON.stringify(msg, null, 2)}`);
 		console.groupEnd();
 	}
 };
