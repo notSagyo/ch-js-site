@@ -1,73 +1,105 @@
 // Stores product related info
-const Product = function(name, price, description, image, quantity = 1) {
-	this.name = name;
-	this.description = description;
-	this.image = image || 'https://via.placeholder.com/256';
+class Product {
+	constructor(name, price, description, image, quantity = 1) {
+		this.name = name;
+		this.description = description;
+		this.image = image || 'https://via.placeholder.com/256';
 
-	let _price = price;
-	let _quantity = quantity;
-	let _total = price * quantity;
-
-	this.updateTotal = () => {
-		_total = _price * _quantity;
-		return _total;
+		this.price = price;
+		this.quantity = quantity;
+		this.total = price * quantity;
 	}
 
-	//#region Quantity methods ------ //
-	this.increaseQuantity = (amount) => {
-		return this.setQuantity(_quantity + (amount || 1));
+	updateTotal() {
+		this.total = this.price * this.quantity;
+		return this.total;
 	}
 
-	this.decreaseQuantity = (amount) => {
-		return this.setQuantity(_quantity + (-amount || -1));
+	// Quantity methods ------------- //
+	increaseQuantity(amount) {
+		return this.setQuantity(this.quantity + (amount || 1));
 	}
 
-	this.resetQuantity = () => { return this.setQuantity(1); }
-	//#endregion
+	decreaseQuantity(amount) {
+		return this.setQuantity(this.quantity + (-amount || -1));
+	}
 
 	//#region Get / Set ------------- //
-	this.setPrice = (amount) => {
+	setPrice(amount) {
 		if (!Number.isInteger(amount) || amount < 0) {
 			console.warn('Invalid arguments: positive integer expected');
 			return null;
 		}
-		_price = amount;
+		this.price = amount;
 		this.updateTotal();
-		return _price;
+		return this.price;
 	}
 
-	this.setQuantity = (amount) => {
+	setQuantity(amount) {
 		if (!Number.isInteger(amount) || amount < 0) {
 			console.warn('Invalid arguments: positive integer expected');
 			return null;
 		}
-		_quantity = amount;
+		this.quantity = amount;
 		this.updateTotal();
-		return _quantity;
+		return this.quantity;
 	}
 
-	this.setTotal = (amount) => {
+	setTotal(amount) {
 		if (!Number.isInteger(amount) || amount < 0) {
 			console.warn('Invalid arguments: positive integer expected');
 			return null;
 		}
 		console.warn('Warning: total should not be manually set.');
-		_total = amount;
-		return _total;
+		this.total = amount;
+		return this.total;
 	}
 
-	this.getPrice = () => _price
-	this.getQuantity = () => _quantity;
-	this.getTotal = () => _total;
+	getPrice() { return this.price; }
+	getQuantity() { return this.quantity; }
+	getTotal() { return this.total; }
 	//#endregion
-};
 
-const ProductList = function(products) {
-	let _products = products || [];
-	let _productsHtml = '';
+	// Find product in an array
+	static findProduct(product, arr) {
+		let result = product;
+
+		if (typeof product == "string") {
+			product = product.toLowerCase();
+			result = arr.find(x => x.name.toLowerCase() == product);
+		}
+		else if (product instanceof Product) {
+			result = arr.find(x => x === product);
+		} else {
+			console.warn('Invalid arguments: Product or String expected');
+			return null;
+		}
+
+		if (debugMode) {
+			let notFound = (name) => console.log(
+				`%cNot found: ${name}`, `color: ${colors.info};`);
+
+			if (result)
+				console.log(
+					`%c${result.name} found.`, `color: ${colors.info}`);
+			else if (typeof product === "string")
+				notFound(product);
+
+			else
+				notFound(product.name);
+		}
+		return result;
+	}
+}
+
+class ProductList {
+	constructor(products) {
+		this.products = products || [];
+		this.productsHtml = '';
+	}
 
 	//#region Product Methods ------- //
-	this.addProduct = (product) => {
+	addProduct(product) {
 		// Return if not valid argument
 		if (!(product instanceof Product)) {
 			console.warn('Invalid arguments: Product expected');
@@ -81,28 +113,28 @@ const ProductList = function(products) {
 		}
 
 		// Add product
-		_products.push(product);
+		this.products.push(product);
 
 		if (debugMode)
-		console.log(`%cAdded to product list: ${product.name} ` +
-			`(${product.getQuantity()})`,
-			`color: ${colors.success}`);
+			console.log(`%cAdded to product list: ${product.name} ` +
+				`(${product.getQuantity()})`,
+				`color: ${colors.success}`);
 
 		this.updateDom();
 		return product;
 	}
 
-	this.removeProduct = (product) => {
+	removeProduct(product) {
 		// Check if product exists
 		let removedProduct = this.findProduct(product);
 		if (!removedProduct) {
 			console.warn('Product not found, no product removed');
 			return null;
 		}
-		let removedIndex = _products.indexOf(removedProduct)
+		let removedIndex = this.products.indexOf(removedProduct);
 
 		// Remove product
-		_products.splice(removedIndex, 1);
+		this.products.splice(removedIndex, 1);
 
 		if (debugMode)
 			console.log(
@@ -114,76 +146,46 @@ const ProductList = function(products) {
 		return removedProduct;
 	}
 
-	this.findProduct = (product)  => {
-		return Product.findProduct(product, _products);
-	}
+	findProduct(product) { return Product.findProduct(product, this.products); }
 	//#endregion
 
+	//#region DOM Methods ----------- //
 	// Generate HTML for the current product list
-	this.generateHtml = () => {
-		let html = ''
-		_products.forEach(elem => {
+	generateHtml() {
+		let html = '';
+		this.products.forEach(elem => {
 			html += productToHTML(elem);
 		});
 		return html;
 	}
 
-	//#region Getters/Setters ------- //
-	this.setProducts = (products) => {
-		_products = products;
-		this.updateDom();
-	}
-
-	this.getProducts = () => _products;
-	this.getProductsHtml = () => _productsHtml;
-	//#endregion
-
 	// Update the list in the DOM with the current products
-	this.updateDom = () => {
+	updateDom() {
 		let productListElem = document.querySelector('#product-list');
-		if (!productListElem) return;
+		if (!productListElem)
+			return;
 
-		_productsHtml = this.generateHtml();
-		productListElem.innerHTML = _productsHtml;
+		this.productsHtml = this.generateHtml();
+		productListElem.innerHTML = this.productsHtml;
 
 		// Add the "add to cart" function to buttons
 		let addBtns = document.querySelectorAll('.product-li__add');
-		for (const key in _products) {
+		for (const key in this.products) {
 			addBtns[key].addEventListener(
-				'click', () => activeCart.addItem(_products[key]));
+				'click', () => activeCart.addItem(this.products[key]));
 		}
 
 		// New prods aren't zoomable; initialize again
 		initMaterialboxed();
 	}
-};
+	//#endregion
 
-// Static method in Product to find a product in an array
-Product.findProduct = function (product, arr) {
-	let result = product;
-
-	if (typeof product == "string") {
-		product = product.toLowerCase();
-		result = arr.find(x => x.name.toLowerCase() == product);
-	}
-	else if (product instanceof Product) {
-		result = arr.find(x => x === product);
-	} else {
-		console.warn('Invalid arguments: Product or String expected');
-		return null;
+	// Getters/Setters -------------- //
+	setProducts (products) {
+		this.products = products;
+		this.updateDom();
 	}
 
-	if (debugMode) {
-		let notFound = (name) => console.log(
-			`%cNot found: ${name}`, `color: ${colors.info};`);
-
-		if (result)
-			console.log(
-				`%c${result.name} found.`, `color: ${colors.info}`);
-		else if (typeof product === "string")
-			notFound(product);
-		else
-			notFound(product.name);
-	}
-	return result;
+	getProducts() { return this.products; }
+	getProductsHtml() { return this.productsHtml; }
 }
