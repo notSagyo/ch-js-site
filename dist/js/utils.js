@@ -8,6 +8,7 @@ let colors = {
 	danger: 'indianred'
 }
 
+// TODO: make this a Product's static method
 // Converts a product info to an HTML element
 function productToHTML(product, type = 'productItem') {
 	type = type.toLowerCase();
