@@ -172,11 +172,11 @@ const Cart = function({discount, payments, monthInterestRate} = {}) {
 		let itemsHTML = productsHTML = this.generateHtml();
 		itemListElem.innerHTML = itemsHTML;
 
-		// Add the remove from cart function to buttons
-		let removeElems = document.querySelectorAll('.cart-item__remove');
+		// Add the "remove from cart" function to buttons
+		let removeBtns = document.querySelectorAll('.cart-item__remove');
 		for (const key in _itemList) {
-			removeElems[key].addEventListener(
-				'click', () => activeCart.removeItem(_itemList[key]))
+			removeBtns[key].addEventListener(
+				'click', () => activeCart.removeItem(_itemList[key]));
 		}
 
 		// New products aren't zoomable; initialize zoomable elements again

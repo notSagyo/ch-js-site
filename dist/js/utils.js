@@ -38,7 +38,7 @@ function productToHTML(product, type = 'productItem') {
 					<!-- Price -->
 					<span class="product-li__price h6">$${price}</span>
 					<!-- Add to cart -->
-					<a href="javascript:(0)" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart"><i class="material-icons">add_shopping_cart</i></a>
+					<a href="javascript://" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart"><i class="material-icons">add_shopping_cart</i></a>
 				</div>
 			</div>
 		</li>
@@ -64,7 +64,7 @@ function productToHTML(product, type = 'productItem') {
 				<!-- Right side -->
 				<div class="cart-item__details-right">
 					<!-- Remove from cart -->
-					<a href="javascript:(0)" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"><i class="material-icons">remove_shopping_cart</i></a>
+					<a href="javascript://" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"><i class="material-icons">remove_shopping_cart</i></a>
 				</div>
 			</div>
 		</li>
