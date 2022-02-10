@@ -89,7 +89,7 @@
 	body.innerHTML = body.innerHTML.replace('{{pageFooter}}', pageFooter);
 
 	function setHref(currentPage, path) {
-		return isActivePage(`${currentPage}.html`) ? '#' : `${path}${currentPage}.html`;
+		return isActivePage(`${currentPage}`) ? '#' : `${path}${currentPage}.html`;
 	}
 
 	function sidenavActiveClass(page) {
