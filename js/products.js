@@ -146,12 +146,12 @@ const ProductList = function(products) {
 		_productsHtml = this.generateHtml();
 		productListElem.innerHTML = _productsHtml;
 
-		// Add add to cart function
-		let productElems = document.querySelectorAll('.product-li__add');
+		// Add the "add to cart" function to buttons
+		let addBtns = document.querySelectorAll('.product-li__add');
 		for (const key in _products) {
-			productElems[key].addEventListener(
-				'click', () => activeCart.addItem(_products[key]))
-			}
+			addBtns[key].addEventListener(
+				'click', () => activeCart.addItem(_products[key]));
+		}
 
 		// New prods aren't zoomable; initialize again
 		initMaterialboxed();
