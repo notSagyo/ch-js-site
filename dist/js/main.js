@@ -26,4 +26,4 @@ cart.setItemList(prods.concat([shirt2]));
 //#endregion
 
 // Log cart status
-cart.log();
+console.log(cart);
