@@ -9,7 +9,8 @@
         "sourceType": "module"
     },
     "rules": {
-		"no-undef": "warn",
-		"no-unused-vars": "warn"
+		// Off because project isn't properly modularized
+		"no-undef": "off",
+		"no-unused-vars": "off"
     }
 }
