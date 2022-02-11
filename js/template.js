@@ -1,8 +1,10 @@
 // Me cansé de modificar los html todo el rato así que le mando esto
 
 (() => {
-	let pagesPath = window.location.href.includes('index.html') ? 'pages/' : '';
+	let pagesPath = '';
 	let currentPage = getCurrentPage();
+	if (currentPage == 'index')
+		pagesPath = 'pages/';
 
 	let pageHeader = /* HTML */
 		`<!------ HEADER ------>
@@ -102,10 +104,14 @@
 	}
 
 	function getCurrentPage() {
+		// Github index is the only that doesn't include .html
+		let page = window.location.href;
+		if (!page.includes('html')) return 'index';
+
 		// Así porque soy malísimo con Regex
-		let page = window.location.href.split('/');
+		page = page.split('/');
 		page = page[page.length - 1].split('.html');
-		page = page[0]
+		page = page[0];
 		return page;
 	}
 })();
