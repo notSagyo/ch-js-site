@@ -16,8 +16,8 @@ function productToHTML(product, type = 'productItem') {
 
 	let title = product.name;
 	let price = product.getTotal();
-	let description = product.description || 'No description';
-	let image = product.image || 'https://via.placeholder.com/256';
+	let description = product.description;
+	let image = product.image;
 	let quantity = product.getQuantity();
 
 

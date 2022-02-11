@@ -1,11 +1,6 @@
-// Create new cart and product list
+// Create new product list
 let clothesList = new ProductList();
-let cart = new Cart();
 
-// Set the active cart to the new cart
-activeCart = cart;
-
-//#region Example ----------------------------------------------------------- //
 // Create some products
 let shirt = new Product('T-Shirt', 15, 'This is a simple T-Shirt.',
 	'../img/shirt.webp');
@@ -21,9 +16,3 @@ let prods = [shirt, jeans, shoes, belt];
 
 // Update the product list
 clothesList.setProducts(prods);
-
-cart.setItemList(prods.concat([shirt2]));
-//#endregion
-
-// Log cart status
-console.log(cart);

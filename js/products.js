@@ -2,7 +2,7 @@
 class Product {
 	constructor(name, price, description, image, quantity = 1) {
 		this.name = name;
-		this.description = description;
+		this.description = description || 'No description';
 		this.image = image || 'https://via.placeholder.com/256';
 
 		this.price = price;
@@ -16,12 +16,12 @@ class Product {
 	}
 
 	// Quantity methods ------------- //
-	increaseQuantity(amount) {
-		return this.setQuantity(this.quantity + (amount || 1));
+	increaseQuantity(amount = 1) {
+		return this.setQuantity(this.quantity + amount);
 	}
 
-	decreaseQuantity(amount) {
-		return this.setQuantity(this.quantity + (-amount || -1));
+	decreaseQuantity(amount = 1) {
+		return this.setQuantity(this.quantity - amount);
 	}
 
 	//#region Get / Set ------------- //
@@ -153,8 +153,8 @@ class ProductList {
 	// Generate HTML for the current product list
 	generateHtml() {
 		let html = '';
-		this.products.forEach(elem => {
-			html += productToHTML(elem);
+		this.products.forEach(e => {
+			html += productToHTML(e);
 		});
 		return html;
 	}
