@@ -1,9 +1,8 @@
 // TODO: manipulate qty from DOM
-// TODO: Add taxes (not only monthly interest)
 
 // Stores cart status and item list
 class Cart {
-	constructor({ discount, payments, monthInterestRate, itemList } = {}) {
+	constructor({ discount, payments, monthInterestRate, tax, itemList } = {}) {
 		this.itemList = itemList || [];
 		this.itemCount = 0;
 		this.totalQuantity = 0;
@@ -13,6 +12,7 @@ class Cart {
 		this.discount = discount || 0;
 		this.monthInterest = monthInterestRate || 0.03;
 		this.payments = payments || 1;
+		this.taxRate = tax || 0;
 		this.monthFee = 0;
 	}
 
@@ -89,7 +89,7 @@ class Cart {
 	}
 
 	// Quantity Methods ------------- //
-	increaseItemQuantity (item, amount = 1) {
+	increaseItemQuantity(item, amount = 1) {
 		let result = this.findItem(item);
 		if (!result)
 			return -1;
@@ -100,7 +100,7 @@ class Cart {
 		return amount;
 	}
 
-	decreaseItemQuantity (item, amount = 1) {
+	decreaseItemQuantity(item, amount = 1) {
 		let result = this.findItem(item);
 		if (!result)
 			return -1;
@@ -133,12 +133,17 @@ class Cart {
 
 	// Calc. the interest tax (flat $) for the subtotal
 	calcInterest(payments = this.payments, interest = this.monthInterest) {
-		return (payments > 1) ? (this.subtotal * interest * (payments - 1)) : 0;
+		return (payments > 1) ? this.total * (1 + (interest * (payments - 1))) : this.total;
 	}
 
 	// Calc. the monthly interest tax (flat $) for the subtotal
-	calcMonthInterest(payments = this.payments, intereset = this.monthInterest) {
-		return this.calcInterest(payments, intereset) / payments;
+	calcMonthInterest(payments = this.payments, interest = this.monthInterest) {
+		return this.calcInterest(payments, interest) / payments;
+	}
+
+	// Calc. the total with tax rate applied
+	calcTax(tax = this.taxRate) {
+		return this.total * (1 + tax);
 	}
 	//#endregion
 
@@ -200,8 +205,10 @@ class Cart {
 		this.subtotal = this.itemList.reduce((a, b) => a + b.getTotal(), 0);
 		this.totalQuantity = this.itemList.reduce((a, b) => a + b.getQuantity(), 0);
 		this.itemCount = this.itemList.length;
-		this.total = this.subtotal + this.calcInterest(this.payments, this.monthInterest);
-		this.total = this.calcDiscount(this.discount);
+		this.total = this.subtotal
+		this.total = this.calcInterest();
+		this.total = this.calcDiscount();
+		this.total = this.calcTax();
 		this.monthFee = this.total / this.payments;
 
 		Cart.saveCart();
@@ -286,6 +293,12 @@ class Cart {
 		return amount;
 	}
 
+	setTaxRate(amount) {
+		this.taxRate = amount;
+		this.updateCart();
+		return amount;
+	}
+
 	// Getters
 	getItemList() { return this.itemList; }
 	getItemCount() { return this.itemCount; }
@@ -296,6 +309,7 @@ class Cart {
 	getDiscount() { return this.discount; }
 	getMonthInterest() { return this.monthInterest; }
 	getPayments() { return this.payments; }
+	getTaxRate() { return this.taxRate; }
 	getMonthFee() { return this.monthFee; }
 	//#endregion
 }
