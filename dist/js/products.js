@@ -55,16 +55,20 @@ class Product {
 		return this.total;
 	}
 
+	getName() { return this.name; }
+	getDescription() { return this.description; }
+	getImage() { return this.image; }
 	getPrice() { return this.price; }
 	getQuantity() { return this.quantity; }
 	getTotal() { return this.total; }
 	//#endregion
 
+	//#region Static methods -------- //
 	// Find product in an array
 	static findProduct(product, arr) {
 		let result = product;
 
-		if (typeof product == "string") {
+		if (typeof product == 'string') {
 			product = product.toLowerCase();
 			result = arr.find(x => x.name.toLowerCase() == product);
 		}
@@ -82,7 +86,7 @@ class Product {
 			if (result)
 				console.log(
 					`%c${result.name} found.`, `color: ${colors.info}`);
-			else if (typeof product === "string")
+			else if (typeof product === 'string')
 				notFound(product);
 
 			else
@@ -90,6 +94,72 @@ class Product {
 		}
 		return result;
 	}
+
+	// Product info represented as HTML element as string
+	static productToHTML(product, type = 'productItem') {
+		type = type.toLowerCase();
+		let html = '';
+
+		let title = product.name;
+		let price = product.getTotal();
+		let description = product.description;
+		let image = product.image;
+		let quantity = product.getQuantity();
+
+
+		if (type == 'productitem') {
+			html = /* html */
+			`<!-- PRODUCT -->
+			<li class="product-li row">
+				<!-- Left side: image -->
+				<div class="product-li__image col-xs-12 col-sm-4 col-xl-3">
+					<img src="${image}" alt="">
+				</div>
+				<!-- Right side: details -->
+				<div class="product-li__details col-xs-12 col-sm">
+					<!-- Title -->
+					<span class="product-li__title">${title}</span>
+					<!-- Description -->
+					<p class="product-li__description">${description}</p>
+					<div class="product-li__footer">
+						<!-- Price -->
+						<span class="product-li__price h6">$${price}</span>
+						<!-- Add to cart -->
+						<a href="javascript://" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart"><i class="material-icons">add_shopping_cart</i></a>
+					</div>
+				</div>
+			</li>
+			`;
+		} else if (type == 'cartitem') {
+			html = /* html */
+			`<!-- PRODUCT -->
+			<li class="cart-item row">
+				<!-- Image  -->
+				<div class="cart-item__image">
+					<img src="${image}" alt="">
+				</div>
+				<!-- Details -->
+				<div class="cart-item__details">
+					<!-- Left Side -->
+					<div class="cart-item__details-left">
+						<div>
+							<span class="h5">${title}</span>
+							<span class="quantity">${quantity > 1 ? `x${quantity}` : ''}</span>
+						</div>
+						<span class="h6 cart-item__price">$${price}</span>
+					</div>
+					<!-- Right side -->
+					<div class="cart-item__details-right">
+						<!-- Remove from cart -->
+						<a href="javascript://" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"><i class="material-icons">remove_shopping_cart</i></a>
+					</div>
+				</div>
+			</li>
+			`;
+		}
+		return html;
+	}
+	//#endregion
 }
 
 class ProductList {
@@ -116,8 +186,9 @@ class ProductList {
 		this.products.push(product);
 
 		if (debugMode)
-			console.log(`%cAdded to product list: ${product.name} ` +
-				`(${product.getQuantity()})`,
+			console.log(
+				`%cAdded to product list: ${product.name}
+				(${product.getQuantity()})`,
 				`color: ${colors.success}`);
 
 		this.updateDom();
@@ -153,9 +224,7 @@ class ProductList {
 	// Generate HTML for the current product list
 	generateHtml() {
 		let html = '';
-		this.products.forEach(e => {
-			html += productToHTML(e);
-		});
+		this.products.forEach(e => html += Product.productToHTML(e));
 		return html;
 	}
 
@@ -165,6 +234,7 @@ class ProductList {
 		if (!productListElem)
 			return;
 
+		// Update the products in the HTML
 		this.productsHtml = this.generateHtml();
 		productListElem.innerHTML = this.productsHtml;
 
