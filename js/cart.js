@@ -31,15 +31,17 @@ class Cart {
 		// If already in cart only increase quantity
 		let result = this.findItem(item.name);
 		if (result)
-			this.increaseItemQuantity(result);
+			result.increaseQuantity();
 		else
 			this.itemList.push(item);
 
+		M.toast({ text: `${item.name} added to cart.`, displayLength: 2000 });
+
 		if (debugMode)
-			console.log(`%cAdded to cart: ${item.name} ` +
+			console.log(
+				`%cAdded to cart: ${item.name} ` +
 				`(${item.getQuantity()})`,
 				`color: ${colors.success}`);
-		M.toast({ text: `${item.name} added to cart.`, displayLength: 2000 });
 
 		this.updateCart();
 		return item;
@@ -58,16 +60,15 @@ class Cart {
 		// Remove item
 		this.itemList.splice(removedIndex, 1);
 
+		M.toast({
+			text: `${removedItem.name} removed from cart.`,
+			displayLength: 2000 });
+
 		if (debugMode)
 			console.log(
 				`%cRemoved from cart: ${removedItem.name} ` +
 				`(${removedItem.getQuantity()})`,
 				`color: ${colors.danger};`);
-
-		M.toast({
-			text: `${removedItem.name} removed from cart.`,
-			displayLength: 2000
-		});
 
 		this.updateCart();
 		return removedItem;
@@ -148,53 +149,69 @@ class Cart {
 	//#endregion
 
 	//#region DOM Methods
-	// TODO: guard clause this
 	updateDom() {
-		// If the modified cart is not active, don't change DOM
-		if (this != activeCart) return '';
+		let cartListElem = document.querySelector('#cart-list');
+		let itemsHTML = '';
+		let removeBtns = '';
 
-		// Update cart badges to show product count
-		let cartBadges = document.querySelectorAll('.cart-badge');
+		Cart.updateCartBadges();
 
-		if (this.itemCount > 0) {
-			cartBadges.forEach(e => {
-				e.innerText = this.itemCount;
-				e.classList.remove('hide');
-			});
-		} else {
-			cartBadges.forEach(e => {
-				if (!e.classList.contains('hide')) e.classList.add('hide');
-			});
-		}
+		// If this is not activeCart or there's no cart-list in HTML return
+		if (this != activeCart || !cartListElem)
+			return '';
 
-		// Update displayed cart items
-		let itemListElem = document.querySelector('#cart-list');
-		if (!itemListElem)
-			return;
+		// Update the cart items in HTML
+		itemsHTML = this.generateHtml();
+		cartListElem.innerHTML = itemsHTML;
 
-		let itemsHTML = this.generateHtml();
-		itemListElem.innerHTML = itemsHTML;
-
-		// Add the "remove from cart" function to buttons
-		let removeBtns = document.querySelectorAll('.cart-item__remove');
+		// Add the "remove from cart" functionality to buttons
+		removeBtns = document.querySelectorAll('.cart-item__remove');
+		console.log(removeBtns);
 		for (const key in this.itemList) {
 			removeBtns[key].addEventListener(
 				'click', () => activeCart.removeItem(this.itemList[key]));
 		}
 
-		// New products aren't zoomable; initialize zoomable elements again
+		// New products aren't zoomable, initialize again
+		initMaterialboxed();
+
 		if (debugMode)
 			console.log('%cUpdating cart DOM.', `color: ${colors.info};`);
-		initMaterialboxed();
 
 		return itemsHTML;
 	}
 
+	// Generate HTML for the cart
 	generateHtml() {
 		let html = '';
-		this.itemList.forEach(elem => {
-			html += cartItemToHTML(elem);
-		});
+		this.itemList.forEach(e => html += Cart.cartItemToHTML(e));
+		return html;
+	}
+
+	// Update cart icons to show a badge with the prod count
+	static updateCartBadges() {
+		let cartBadges = document.querySelectorAll('.cart-badge');
+
+		// If at least 1 item in cart, remove hidden from badges
+		// Else if the elem isn't hidden, hide it
+		if (activeCart.itemCount > 0) {
+			cartBadges.forEach(e => {
+				e.innerText = activeCart.itemCount;
+				e.classList.remove('hide');
+			});
+		} else {
+			cartBadges.forEach(e => {
+				if (!e.classList.contains('hide'))
+					e.classList.add('hide');
+			});
+		}
+
+		return cartBadges;
+	}
+
+	// Cart item info represented as HTML element as string
+	static cartItemToHTML(item) {
+		let html = Product.productToHTML(item, 'cartItem');
 		return html;
 	}
 	//#endregion
@@ -205,7 +222,7 @@ class Cart {
 		this.subtotal = this.itemList.reduce((a, b) => a + b.getTotal(), 0);
 		this.totalQuantity = this.itemList.reduce((a, b) => a + b.getQuantity(), 0);
 		this.itemCount = this.itemList.length;
-		this.total = this.subtotal
+		this.total = this.subtotal;
 		this.total = this.calcInterest();
 		this.total = this.calcDiscount();
 		this.total = this.calcTax();
@@ -265,7 +282,8 @@ class Cart {
 
 		if (debugMode) {
 			console.groupCollapsed(
-				`%cItem list set to:`, `color: ${colors.success};`);
+				'%cItem list set to:',
+				`color: ${colors.success};`);
 			console.log(items);
 			console.groupEnd();
 		}
