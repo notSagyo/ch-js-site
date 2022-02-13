@@ -9,6 +9,10 @@
         "sourceType": "module"
     },
     "rules": {
+		"indent": [ "error", "tab" ],
+        "linebreak-style": [ "error", "windows" ],
+        "quotes": [ "error", "single" ],
+        "semi": [ "error", "always" ],
 		// Off because project isn't properly modularized
 		"no-undef": "off",
 		"no-unused-vars": "off"

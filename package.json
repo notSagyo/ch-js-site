@@ -1,5 +1,5 @@
 {
-  "name": "template",
+  "name": "ch-js-site",
   "version": "1.0.0",
   "description": "Template to quickly initialize personal web projects.",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/notSagyo/template.git"
+    "url": "git+https://github.com/notSagyo/ch-js-site.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/notSagyo/template/issues"
+    "url": "https://github.com/notSagyo/ch-js-site/issues"
   },
-  "homepage": "https://github.com/notSagyo/template#readme",
+  "homepage": "https://github.com/notSagyo/ch-js-site#readme",
   "devDependencies": {
     "cssnano": "^5.0.15",
     "eslint": "^8.8.0",
