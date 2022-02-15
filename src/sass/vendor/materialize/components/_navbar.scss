@@ -83,12 +83,20 @@ nav {
         right: 0.5rem;
         left: auto;
       }
+
+      &.vertical-align {
+        transform: translate(-50%, -50%);
+      }
     }
 
     &.right {
       right: 0.5rem;
       padding: 0;
     }
+
+	&.vertical-align {
+		line-height: 0;
+	}
 
     i,
     [class^="mdi-"], [class*="mdi-"],

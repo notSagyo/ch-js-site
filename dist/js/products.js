@@ -106,7 +106,6 @@ class Product {
 		let image = product.image;
 		let quantity = product.getQuantity();
 
-
 		if (type == 'productitem') {
 			html = /* html */
 			`<!-- PRODUCT -->

@@ -1,7 +1,0 @@
-// Used to fill flexboxes with empty elements to keep structure
-@mixin flex-fill($width, $margin: 0) {
-	width: $width;
-	margin: $margin;
-	height: 0;
-	visibility: hidden;
-}

@@ -134,7 +134,10 @@ class Cart {
 
 	// Calc. the interest tax (flat $) for the subtotal
 	calcInterest(payments = this.payments, interest = this.monthInterest) {
-		return (payments > 1) ? this.total * (1 + (interest * (payments - 1))) : this.total;
+		interest = (payments > 1)
+			? this.total * (1 + (interest * (payments - 1)))
+			: this.total;
+		return interest;
 	}
 
 	// Calc. the monthly interest tax (flat $) for the subtotal
@@ -252,6 +255,7 @@ class Cart {
 		let itemListFlat = '';
 		let itemListRecovered = [];
 
+		// TODO: replace with spread operator
 		// Load cart properties
 		for (const prop in cartParsed)
 			cartRecovered[prop] = cartParsed[prop];

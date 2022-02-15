@@ -26,6 +26,13 @@
 	@include media.lg-up { width: 70%; }
 }
 
+// TODO: Add this to template
+@mixin v-align {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
 @mixin size($width, $height: $width) {
 	width: $width;
 	height: $height;
