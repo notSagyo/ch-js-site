@@ -29,3 +29,9 @@
     color: $color_value !important;
   }
 }
+
+// Material Design Classes
+@each $color-name, $color-value in $material-color {
+  .#{$color-name} { background-color: $color-value !important; }
+  .#{$color-name}-text { color: $color-value !important; }
+}
