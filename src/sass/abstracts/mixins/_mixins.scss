@@ -1,5 +1,6 @@
 // Add and import mixins to be available in every files that use "abstracts".
 @use 'media' as media;
+@use '../variables' as var;
 @use '../../vendor/materialize/materialize' as M;
 
 @mixin price-tag {
@@ -13,7 +14,7 @@
 }
 
 @mixin product-bg {
-	border-radius: 0.25rem;
+	border-radius: var.$br;
 	background: M.color('indigo', 'lighten-5');
 }
 
