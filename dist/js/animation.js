@@ -35,20 +35,22 @@
 	//#endregion
 
 	//#region Background animation ------------------------------------------ //
-	let screentCenterX = window.screen.width / 2 ;
+	let screentCenterX = window.screen.width / 2;
 	let screenCenterY = window.screen.height / 2;
 	let bgForce = 0.05;
 
-	document.addEventListener('mousemove', (e) => {
-		let posX = (e.clientX - screentCenterX) * bgForce  + 'px';
-		let posY = (e.clientY - screenCenterY) * bgForce  + 'px';
+	if (window.screen.width > mediaMd) {
+		document.addEventListener('mousemove', (e) => {
+			let posX = (e.clientX - screentCenterX) * bgForce  + 'px';
+			let posY = (e.clientY - screenCenterY) * bgForce  + 'px';
 
-		gsap.to(heroBackground, {
-			backgroundPositionX: posX,
-			backgroundPositionY: posY,
-			duration: 0.35,
-			ease: 'ease-in-out'
+			gsap.to(heroBackground, {
+				backgroundPositionX: posX,
+				backgroundPositionY: posY,
+				duration: 0.35,
+				ease: 'ease-in-out'
+			});
 		});
-	});
+	}
 	//#endregion
 })();
