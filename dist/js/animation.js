@@ -29,12 +29,13 @@
 
 	// Cursor anim
 	gsap.set(line, { strokeWidth: 4 });
-	tl = gsap.timeline({ repeat: -1, yoyo: true, delay: tl.totalDuration() })
+	tl = gsap.timeline({ repeat: -1, yoyo: true, delay: tl.totalDuration() * 0.75 })
 		.to(line, { opacity: 0, duration: 0.25 })
 		.to(line, { opacity: 1, duration: 0.5 });
 	//#endregion
 
 	//#region Background animation ------------------------------------------ //
+	// Recuerdos de guerra de Algebra y hacer gráficos en Pascal
 	let screentCenterX = window.screen.width / 2;
 	let screenCenterY = window.screen.height / 2;
 	let bgForce = 0.05;
