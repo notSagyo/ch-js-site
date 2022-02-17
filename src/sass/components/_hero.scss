@@ -8,21 +8,26 @@
 	position: relative;
 
 	width: 100%;
-	height: 35rem;
+	height: 560px;
 	max-height: 80vh;
 
 	overflow: hidden;
 
 	&__background {
-		width: inherit;
-		height: inherit;
-		z-index: -3;
+		@include size(100%);
 
-		background-color: M.$primary-color-dark;
-		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1920' height='560' preserveAspectRatio='none' viewBox='0 0 1920 560'%3e%3cg clip-path='url(%26quot%3b%23SvgjsClipPath1533%26quot%3b)' fill='none'%3e%3crect width='1920' height='560' x='0' y='0' fill='%2332325d'%3e%3c/rect%3e%3ccircle r='22.12' cx='1375.01' cy='19.44' fill='url(%23SvgjsLinearGradient1534)'%3e%3c/circle%3e%3ccircle r='46.965' cx='204.6' cy='122.83' fill='url(%23SvgjsLinearGradient1535)'%3e%3c/circle%3e%3ccircle r='25.89' cx='228.87' cy='313.17' fill='url(%23SvgjsLinearGradient1536)'%3e%3c/circle%3e%3ccircle r='45.86' cx='185.83' cy='274.53' fill='url(%23SvgjsLinearGradient1537)'%3e%3c/circle%3e%3ccircle r='26.48' cx='689.22' cy='308.79' fill='%2343468b'%3e%3c/circle%3e%3ccircle r='22.605' cx='420.68' cy='60.3' fill='url(%23SvgjsLinearGradient1538)'%3e%3c/circle%3e%3ccircle r='33.35' cx='1814.7' cy='10.35' fill='url(%23SvgjsLinearGradient1539)'%3e%3c/circle%3e%3ccircle r='38.225' cx='762.27' cy='446.75' fill='url(%23SvgjsLinearGradient1540)'%3e%3c/circle%3e%3ccircle r='24.855' cx='262.4' cy='270.73' fill='url(%23SvgjsLinearGradient1541)'%3e%3c/circle%3e%3ccircle r='46.43' cx='1445.86' cy='377.87' fill='url(%23SvgjsLinearGradient1542)'%3e%3c/circle%3e%3ccircle r='28.52' cx='931.9' cy='237.07' fill='url(%23SvgjsLinearGradient1543)'%3e%3c/circle%3e%3ccircle r='55.975' cx='1632.35' cy='448.29' fill='url(%23SvgjsLinearGradient1544)'%3e%3c/circle%3e%3ccircle r='30.715' cx='1732.1' cy='84.24' fill='url(%23SvgjsLinearGradient1545)'%3e%3c/circle%3e%3ccircle r='32.125' cx='806.96' cy='337.45' fill='url(%23SvgjsLinearGradient1546)'%3e%3c/circle%3e%3ccircle r='48.06' cx='386.06' cy='549.91' fill='url(%23SvgjsLinearGradient1547)'%3e%3c/circle%3e%3c/g%3e%3cdefs%3e%3cclipPath id='SvgjsClipPath1533'%3e%3crect width='1920' height='560' x='0' y='0'%3e%3c/rect%3e%3c/clipPath%3e%3clinearGradient x1='1330.77' y1='19.44' x2='1419.25' y2='19.44' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1534'%3e%3cstop stop-color='%23ab3c51' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%234f4484' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='110.66999999999999' y1='122.83' x2='298.53' y2='122.83' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1535'%3e%3cstop stop-color='%2384b6e0' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23464a8f' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='177.09' y1='313.16999999999996' x2='280.65' y2='313.16999999999996' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1536'%3e%3cstop stop-color='%23f29b7c' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%237e6286' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='94.11000000000001' y1='274.53' x2='277.55' y2='274.53' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1537'%3e%3cstop stop-color='%23ab3c51' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%234f4484' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='375.47' y1='60.3' x2='465.89000000000004' y2='60.3' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1538'%3e%3cstop stop-color='%23f29b7c' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%237e6286' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='1748' y1='10.350000000000001' x2='1881.4' y2='10.350000000000001' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1539'%3e%3cstop stop-color='%23f29b7c' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%237e6286' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='685.8199999999999' y1='446.75' x2='838.7199999999999' y2='446.75' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1540'%3e%3cstop stop-color='%23ab3c51' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%234f4484' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='212.68999999999997' y1='270.73' x2='312.10999999999996' y2='270.73' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1541'%3e%3cstop stop-color='%2332325d' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23424488' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='1353' y1='377.87' x2='1538.72' y2='377.87' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1542'%3e%3cstop stop-color='%2332325d' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23424488' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='874.86' y1='237.07' x2='988.94' y2='237.07' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1543'%3e%3cstop stop-color='%23e298de' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23484687' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='1520.3999999999999' y1='448.29' x2='1744.3' y2='448.29' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1544'%3e%3cstop stop-color='%2384b6e0' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23464a8f' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='1670.6699999999998' y1='84.24' x2='1793.5299999999997' y2='84.24' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1545'%3e%3cstop stop-color='%2332325d' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23424488' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='742.71' y1='337.45' x2='871.21' y2='337.45' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1546'%3e%3cstop stop-color='%23e298de' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23484687' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='289.94' y1='549.91' x2='482.18' y2='549.91' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1547'%3e%3cstop stop-color='%23e298de' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23484687' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
-		background-attachment: fixed;
-		background-size: cover;
-		filter: saturate(90%);
+		z-index: -3;
+		background-color: #323259;
+
+		&-img {
+			width: 1920px;
+			height: 560px;
+			overflow: visible;
+
+			background-image: url('../img/hero-bg.svg');
+			background-attachment: fixed;
+			background-repeat: repeat;
+		}
 	}
 
 	&__svg-container {
@@ -34,6 +39,10 @@
 		z-index: -1;
 
 		color: white;
+
+		#svg-logo {
+			opacity: 0;
+		}
 	}
 
 	// Images ------------------------------------------------------------------------- //
