@@ -23,7 +23,8 @@ class Cart {
 		if (!(item instanceof Product)) {
 			console.warn('Invalid arguments: CartItem expected');
 			return null;
-		} else if (item.getQuantity() < 1) {
+		}
+		if (item.getQuantity() < 1) {
 			console.warn('Zero quantity items won\'t be added');
 			return null;
 		}
@@ -169,7 +170,6 @@ class Cart {
 
 		// Add the "remove from cart" functionality to buttons
 		removeBtns = document.querySelectorAll('.cart-item__remove');
-		console.log(removeBtns);
 		for (const key in this.itemList) {
 			removeBtns[key].addEventListener(
 				'click', () => activeCart.removeItem(this.itemList[key]));

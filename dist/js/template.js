@@ -51,7 +51,7 @@
 						</ul>
 					</div>
 					<div class="col l6 s12">
-						<h5 class="footer-header h5 white-text">E-Commerce</h5>
+						<h5 class="footer-header h5 white-text">Webshop</h5>
 						<p class="grey-text text-lighten-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut neque voluptates nam nihil excepturi est quos itaque. Dolorum, mollitia natus?</p>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 			<div class="footer-copyright">
 				<div class="container">
 					<div class="">
-						<span class="center center-block">© 2022 E-Commerce</span>
+						<span class="center center-block">© 2022 Webshop</span>
 					</div>
 				</div>
 			</div>
@@ -73,7 +73,7 @@
 				<a href="javascript://" class="sidenav-close white-text close-button">
 					<i class="material-icons">close</i>
 				</a>
-				<span class="white-text">E-COMMERCE</span>
+				<span class="white-text">Webshop</span>
 			</div>
 			<ul>
 				<li><a class="waves-effect waves-classic ${sidenavActiveClass('index')}" href="${setHref('index', '../')}"><span class="a">HOME</span><i class="material-icons ${sidenavActiveClass('index')}">home</i></a></li>
