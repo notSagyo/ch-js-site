@@ -1,4 +1,3 @@
- <!-- TODO: remove gsap from dependencies before pushing -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +31,7 @@
 </head>
 <body>
 	{{pageHeader}}
+
 	<!------ MAIN ------>
 	<main>
 		{{sidenav}}
@@ -63,23 +63,22 @@
 				</svg>
 			</div>
 		</section>
-		
+
 		<div class="main__wrapper">
 			<section class="cat-showcase">
-				<h2 class="h2 cat-showcase__header">CATEGORIES</h2>
 				<div class="cat-showcase__layout">
 					<a id="cat-showcase-big" class="cat-showcase__img--big" href="#">
-						<div class="cat-showcase__info">
-							<h3 class="cat-showcase__desc h4">TECHNOLOGY</h3>
-						</div>
+						<h3 class="cat-showcase__info">TECHNOLOGY</h3>
 					</a>
 					<a class="cat-showcase__img--small" href="#">
-						<div class="cat-showcase__info">
-							<h3 class="cat-showcase__desc h4">CLOTHES</h3>
-						</div>
+						<h3 class="cat-showcase__info">CLOTHES</h3>
 					</a>
-					<a class="cat-showcase__img--small" href="#"></a>
-					<a class="cat-showcase__img--small" href="#"></a>
+					<a class="cat-showcase__img--small" href="#">
+						<h3 class="cat-showcase__info">SPORTS</h3>
+					</a>
+					<a class="cat-showcase__img--small" href="#">
+						<h3 class="cat-showcase__info">HOME</h3>
+					</a>
 				</div>
 			</section>
 		</div>
@@ -91,6 +90,7 @@
 	<script defer src="js/cart.js"></script>
 	<script defer src="js/main.js"></script>
 	<!-- GSAP CDN -->
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
 	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 	<script defer src="js/animation.js"></script>
 </body>
