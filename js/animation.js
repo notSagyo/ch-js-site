@@ -1,4 +1,6 @@
 (() => {
+	gsap.registerPlugin(ScrollTrigger);
+
 	let defs = { duration: 1, ease: 'sine' };
 	let tl = gsap.timeline({ defaults: defs });
 
@@ -11,7 +13,7 @@
 		heroLeft = '#hero-img-left',
 		heroRight = '#hero-img-right';
 
-	// Border images animation
+	// Hero order images animation
 	gsap.from(heroLeft, { x: '-100%' });
 	gsap.from(heroRight, { x: '100%' });
 
@@ -55,3 +57,20 @@
 	}
 	//#endregion
 })();
+
+function typeWriter(elem, text, timeout = 75) {
+	elem.innerText = ' ';
+	gsap.to(elem, {
+		scrollTrigger: elem,
+		onComplete: typewriterEffect,
+		onCompleteParams: [elem, text, timeout]
+	});
+}
+
+// *Don't manually call this!
+function typewriterEffect(elem, text, timeout, i = 0) {
+	if (i == text.length) return;
+	elem.innerText = elem.innerText.replace(' ', '');
+	elem.innerText += text[i];
+	setTimeout(() => typewriterEffect(elem, text, timeout, ++i), timeout);
+}
