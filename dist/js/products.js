@@ -95,68 +95,83 @@ class Product {
 		return result;
 	}
 
-	// Product info represented as HTML element as string
-	static productToHTML(product, type = 'productItem') {
+	// ?TODO: Refactor this even more bruh
+	// Product info represented as an DOM node
+	static productToNode(product, type = 'productItem') {
 		type = type.toLowerCase();
-		let html = '';
+		let elem = '';
 
-		let title = product.name;
+		let { name, description, quantity, image } = product;
 		let price = product.getTotal();
-		let description = product.description;
-		let image = product.image;
-		let quantity = product.getQuantity();
 
 		if (type == 'productitem') {
-			html = /* html */
-			`<!-- PRODUCT -->
-			<li class="product-li row">
-				<!-- Left side: image -->
-				<div class="product-li__image col-xs-12 col-sm-4 col-xl-3">
-					<img src="${image}" alt="">
-				</div>
-				<!-- Right side: details -->
-				<div class="product-li__details col-xs-12 col-sm">
-					<!-- Title -->
-					<span class="product-li__title">${title}</span>
-					<!-- Description -->
-					<p class="product-li__description">${description}</p>
-					<div class="product-li__footer">
-						<!-- Price -->
-						<span class="product-li__price h6">$${price}</span>
-						<!-- Add to cart -->
-						<a href="javascript://" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart"><i class="material-icons">add_shopping_cart</i></a>
+
+			elem = createElement('li', ['product-li', 'row'],
+				/* HTML */ `<!-- PRODUCT -->
+				<li class="product-li row">
+					<!-- Left side: image -->
+					<div class="product-li__image col-xs-12 col-sm-4 col-xl-3">
+						<img src="${image}" alt="">
 					</div>
-				</div>
-			</li>
-			`;
-		} else if (type == 'cartitem') {
-			html = /* html */
-			`<!-- PRODUCT -->
-			<li class="cart-item row">
-				<!-- Image  -->
-				<div class="cart-item__image">
-					<img src="${image}" alt="">
-				</div>
-				<!-- Details -->
-				<div class="cart-item__details">
-					<!-- Left Side -->
-					<div class="cart-item__details-left">
-						<div>
-							<span class="h5">${title}</span>
-							<span class="quantity">${quantity > 1 ? `x${quantity}` : ''}</span>
+					<!-- Right side: details -->
+					<div class="product-li__details col-xs-12 col-sm">
+						<span class="product-li__title">${name}</span>
+						<p class="product-li__description">${description}</p>
+						<!-- Footer -->
+						<div class="product-li__footer">
+							<span class="product-li__price h6">$${price}</span>
+							<div class="product-qty">
+								<div class="decrease-qty">DECREASE</div>
+								<input class="product-qty__input input-field" type="number" placeholder="Qty" value="1"></input>
+								<div class="increase-qty">INCREASE</div>
+							</div>
+							<a href="javascript://" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart">
+								<i class="material-icons">add_shopping_cart</i>
+							</a>
 						</div>
-						<span class="h6 cart-item__price">$${price}</span>
 					</div>
-					<!-- Right side -->
-					<div class="cart-item__details-right">
-						<!-- Remove from cart -->
-						<a href="javascript://" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"><i class="material-icons">remove_shopping_cart</i></a>
-					</div>
-				</div>
-			</li>
-			`;
+				</li>
+			`);
+
+			let addBtn = elem.querySelector('.product-li__add');
+			addBtn.addEventListener('click', () => activeCart.addItem(product));
+
+			quantityControls(elem, product);
 		}
-		return html;
+
+		else if (type == 'cartitem') {
+			elem = createElement('li', ['cart-item', 'row'],
+				/* HTML */
+				`<!-- PRODUCT -->
+				<li class="cart-item row">
+					<!-- Image  -->
+					<div class="cart-item__image">
+						<img src="${image}" alt="">
+					</div>
+					<!-- Details -->
+					<div class="cart-item__details">
+						<!-- Left Side -->
+						<div class="cart-item__details-left">
+							<div>
+								<span class="h5">${name}</span>
+								<span class="quantity">${quantity > 1 ? `x${quantity}` : ''}</span>
+							</div>
+							<span class="h6 cart-item__price">$${price}</span>
+						</div>
+						<!-- Right side -->
+						<div class="cart-item__details-right">
+							<a href="javascript://" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"> <i class="material-icons">remove_shopping_cart</i> </a>
+						</div>
+					</div>
+				</li>
+			`);
+
+			elem.querySelector('.cart-item__remove').addEventListener('click',
+				() => activeCart.removeItem(product)
+			);
+		}
+
+		return elem;
 	}
 	//#endregion
 }
@@ -164,7 +179,7 @@ class Product {
 class ProductList {
 	constructor(products) {
 		this.products = products || [];
-		this.productsHtml = '';
+		this.productsNodes = [];
 	}
 
 	//#region Product Methods ------- //
@@ -220,11 +235,11 @@ class ProductList {
 	//#endregion
 
 	//#region DOM Methods ----------- //
-	// Generate HTML for the current product list
-	generateHtml() {
-		let html = '';
-		this.products.forEach(e => html += Product.productToHTML(e));
-		return html;
+	// Generate DOM nodes for the current product list
+	generateNodes() {
+		let nodes = [];
+		this.products.forEach(prod => nodes.push(Product.productToNode(prod)));
+		return nodes;
 	}
 
 	// Update the list in the DOM with the current products
@@ -234,15 +249,8 @@ class ProductList {
 			return;
 
 		// Update the products in the HTML
-		this.productsHtml = this.generateHtml();
-		productListElem.innerHTML = this.productsHtml;
-
-		// Add the "add to cart" function to buttons
-		let addBtns = document.querySelectorAll('.product-li__add');
-		for (const key in this.products) {
-			addBtns[key].addEventListener(
-				'click', () => activeCart.addItem(this.products[key]));
-		}
+		this.productsNodes = this.generateNodes();
+		productListElem.replaceChildren(...this.productsNodes);
 
 		// New prods aren't zoomable; initialize again
 		initMaterialboxed();
@@ -256,5 +264,8 @@ class ProductList {
 	}
 
 	getProducts() { return this.products; }
-	getProductsHtml() { return this.productsHtml; }
+	getProductsNodes() { return this.productsNodes; }
 }
+
+// TODO: make this static
+let activeProductList = new ProductList();

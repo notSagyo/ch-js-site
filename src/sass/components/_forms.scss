@@ -1,0 +1,13 @@
+.product-qty {
+	&__input {
+		// FIXME: center this
+		text-align-last: right;
+		width: 2rem !important;
+		appearance: textfield;
+
+		&::-webkit-inner-spin-button,
+		&::-webkit-outer-spin-button {
+			appearance: none;
+		}
+	}
+}

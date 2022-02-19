@@ -33,10 +33,14 @@ class Cart {
 		let result = this.findItem(item.name);
 		if (result)
 			result.increaseQuantity();
-		else
-			this.itemList.push(item);
+		else {
+			let copy = copyObject(new Product(), item);
+			this.itemList.push(copy);
+		}
 
-		M.toast({ text: `${item.name} added to cart.`, displayLength: 2000 });
+		let toastQty = item.quantity > 1 ? `${item.quantity}` : '';
+		M.toast({ text: `${toastQty} ${item.name} added to cart.`,
+			displayLength: 2000 });
 
 		if (debugMode)
 			console.log(
@@ -155,8 +159,7 @@ class Cart {
 	//#region DOM Methods
 	updateDom() {
 		let cartListElem = document.querySelector('#cart-list');
-		let itemsHTML = '';
-		let removeBtns = '';
+		let itemsNodes = [];
 
 		Cart.updateCartBadges();
 
@@ -165,15 +168,8 @@ class Cart {
 			return '';
 
 		// Update the cart items in HTML
-		itemsHTML = this.generateHtml();
-		cartListElem.innerHTML = itemsHTML;
-
-		// Add the "remove from cart" functionality to buttons
-		removeBtns = document.querySelectorAll('.cart-item__remove');
-		for (const key in this.itemList) {
-			removeBtns[key].addEventListener(
-				'click', () => activeCart.removeItem(this.itemList[key]));
-		}
+		itemsNodes = this.generateNodes();
+		cartListElem.replaceChildren(...itemsNodes);
 
 		// New products aren't zoomable, initialize again
 		initMaterialboxed();
@@ -181,14 +177,14 @@ class Cart {
 		if (debugMode)
 			console.log('%cUpdating cart DOM.', `color: ${colors.info};`);
 
-		return itemsHTML;
+		return itemsNodes;
 	}
 
-	// Generate HTML for the cart
-	generateHtml() {
-		let html = '';
-		this.itemList.forEach(e => html += Cart.cartItemToHTML(e));
-		return html;
+	// Generate DOM nodes for the cart
+	generateNodes() {
+		let nodes = [];
+		this.itemList.forEach(item => nodes.push(Cart.cartItemToNode(item)));
+		return nodes;
 	}
 
 	// Update cart icons to show a badge with the prod count
@@ -213,9 +209,9 @@ class Cart {
 	}
 
 	// Cart item info represented as HTML element as string
-	static cartItemToHTML(item) {
-		let html = Product.productToHTML(item, 'cartItem');
-		return html;
+	static cartItemToNode(item) {
+		let node = Product.productToNode(item, 'cartItem');
+		return node;
 	}
 	//#endregion
 
@@ -336,6 +332,7 @@ class Cart {
 	//#endregion
 }
 
+// TODO: make this static
 // Active cart used globally
 /**@type Cart */
 let activeCart = Cart.loadCart();
