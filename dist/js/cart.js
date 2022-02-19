@@ -30,16 +30,17 @@ class Cart {
 		}
 
 		// If already in cart only increase quantity
-		let result = this.findItem(item.name);
-		if (result)
-			result.increaseQuantity();
+		let added = this.findItem(item.name);
+		if (added)
+			added.increaseQuantity();
 		else {
 			let copy = copyObject(new Product(), item);
 			this.itemList.push(copy);
 		}
 
-		let toastQty = item.quantity > 1 ? `${item.quantity}` : '';
-		M.toast({ text: `${toastQty} ${item.name} added to cart.`,
+		let toastQty = item.quantity > 1 ? `(${item.quantity}) ` : '';
+		M.toast({
+			text: truncateText(`Added ${toastQty} ${item.name}`, toastLen),
 			displayLength: 2000 });
 
 		if (debugMode)
@@ -55,28 +56,29 @@ class Cart {
 	// Remove item from cart (Product or string)
 	removeItem(item) {
 		// Check if item exists
-		let removedItem = this.findItem(item);
-		if (!removedItem) {
+		let removed = this.findItem(item);
+		if (!removed) {
 			console.warn('Item not found, no item removed');
 			return null;
 		}
-		let removedIndex = this.itemList.indexOf(removedItem);
+		let removedIndex = this.itemList.indexOf(removed);
+		let toastQty = removed.quantity > 1 ? `(${removed.quantity}) ` : '';
 
 		// Remove item
 		this.itemList.splice(removedIndex, 1);
 
 		M.toast({
-			text: `${removedItem.name} removed from cart.`,
+			text: truncateText(`Removed ${toastQty} ${removed.name}`, toastLen),
 			displayLength: 2000 });
 
 		if (debugMode)
 			console.log(
-				`%cRemoved from cart: ${removedItem.name} ` +
-				`(${removedItem.getQuantity()})`,
+				`%cRemoved from cart: ${removed.name} ` +
+				`(${removed.getQuantity()})`,
 				`color: ${colors.danger};`);
 
 		this.updateCart();
-		return removedItem;
+		return removed;
 	}
 
 	// Remove all items from cart

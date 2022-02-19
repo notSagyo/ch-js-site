@@ -14,6 +14,9 @@ let colors = {
 	danger: 'indianred'
 };
 
+// Other
+let toastLen = 50;
+
 function createElement(tagName, classList = [], innerHTML = '') {
 	let element = document.createElement(tagName);
 	element.classList.add(...classList);
@@ -48,4 +51,15 @@ function copyObject(target, source) {
 	let copy = JSON.parse(JSON.stringify(source));
 	Object.assign(target, copy);
 	return target;
+}
+
+function truncateText(text, length) {
+	if (text.length > length) {
+		text = text.substring(0, length);
+		text = text.split(' ');
+		text.splice(-1, 1);
+		text = text.join(' ');
+		text += '...';
+	}
+	return text;
 }
