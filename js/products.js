@@ -99,12 +99,18 @@ class Product {
 	// Product info represented as an DOM node
 	static productToNode(product, type = 'productItem') {
 		type = type.toLowerCase();
-		let elem = '';
 
 		let { name, description, quantity, image } = product;
 		let price = product.getTotal();
+		let descLen = 130;
+		let nameLen = 70;
+		let elem = '';
+
+		if (price % 1 != 0) price = price.toFixed(2);
 
 		if (type == 'productitem') {
+			description = truncateText(description, descLen);
+			name = truncateText(name, nameLen);
 
 			elem = createElement('li', ['product-li', 'row'],
 				/* HTML */ `<!-- PRODUCT -->
@@ -141,8 +147,7 @@ class Product {
 
 		else if (type == 'cartitem') {
 			elem = createElement('li', ['cart-item', 'row'],
-				/* HTML */
-				`<!-- PRODUCT -->
+				/* HTML */ `<!-- CART ITEM -->
 				<li class="cart-item row">
 					<!-- Image  -->
 					<div class="cart-item__image">
