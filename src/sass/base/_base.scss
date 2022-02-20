@@ -8,8 +8,6 @@ body {
 	display: flex;
 	flex-direction: column;
 	background-color: $bgc;
-	// TODO: Find good font
-	font-family: Roboto, sans-serif;
 	min-height: 100vh;
 }
 
@@ -19,9 +17,9 @@ main {
 
 	.main__wrapper {
 		@include container;
-
-		background-color: $bgc;
 		margin: 0 auto;
+
+		@include xs-down{ width: 100% };
 	}
 }
 

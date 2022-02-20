@@ -2,56 +2,132 @@
 @use '../vendor/sass-flexbox/main' as flex;
 @use '../abstracts' as *;
 @use 'sass:color';
+@use 'sass:math';
+
+.cart-list {
+	@extend .z-depth-1;
+
+	margin: (flex.$gutter * 2) auto;
+
+	background-color: white;
+	border-radius: $br;
+
+	@include md-up { @include px(flex.$gutter * 2); }
+	@include xl-up { width: 80%; }
+	@include xs-down {
+		width: 100vw;
+		box-shadow: none;
+	}
+}
 
 .cart-item {
-	// TODO: style eveything
+	flex-wrap: nowrap;
 	padding: flex.$gutter 0;
-	border-bottom: solid 1px M.color('grey', 'lighten-2');
+	border-bottom: solid 1px M.color('grey', 'lighten-3');
+	color: M.$secondary;
 
 	// Image ------------------------ //
 	&__image {
 		@include product-bg;
 
+		$height: 7.5rem;
+		$width: $height;
+
 		display: flex;
 		justify-content: center;
 		align-items: center;
 
-		height: 5rem;
-		width: 4rem;
+		height: $height;
+		min-width: $width;
 
 		overflow: hidden;
 
 		img {
 			@extend .materialboxed;
 
-			width: 100%;
+			max-width: $width;
+			max-height: $height;
 		}
 	}
 
-	// Details Left ----------------- //
-	// LEFT
+	// Details -------------------------------------------------------------- //
 	&__details {
+		@include px(flex.$gutter);
+
 		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-between;
 		flex-grow: 1;
+		overflow: hidden;
 	}
 
+	// Details Left ----------------- //
 	&__details-left {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
-
-		padding: 0 flex.$gutter;
+		justify-content: space-around;
+		justify-content: space-evenly;
+		overflow: hidden;
 	}
 
-	// &__price { @include price-tag; }
+	&__title {
+		color: M.$on-secondary-container;
+		font-weight: 600;
+	}
 
-	// RIGHT
+	&__price { @include price-tag; }
+
+	// Details right ----------------- //
 	&__details-right {
 		display: flex;
-		align-items: flex-end;
-		margin-left: auto;
+		min-width: fit-content;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__details-numbers {
+		display: flex;
+		flex-direction: column;
+
+		font-size: 1.5rem;
 	}
 
 	// Pseudo ---------------------- //
 	&:last-child { border: none; }
+
+	// Media ---------------------------------------------------------------- //
+	@include sm-up {
+		// ?XXX: different image sizes?
+		// &__image {
+		// 	$height: 6rem;
+		// 	$width: $height;
+		// 	height: $height;
+		// 	min-width: $width;
+
+		// 	img {
+		// 		max-width: $width;
+		// 		max-height: $height;
+		// 	}
+		// }
+
+		&__details { flex-direction: row; }
+
+		&__title { @include M.truncate; }
+
+		&__description {
+			@include v-clamp(2);
+			@include my(flex.$gutter * 0.5);
+		}
+
+		&__details-numbers { @include mx(2rem); }
+		&__details-numbers > * { @include my(0.25rem); }
+	}
+
+	@include sm-down {
+		&__details-left { @include v-clamp(2); }
+	}
+
+	@include xs-down {
+		&__details { padding: 0; }
+	}
 }

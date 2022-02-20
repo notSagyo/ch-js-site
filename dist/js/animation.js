@@ -50,7 +50,7 @@
 			gsap.to(heroBackground, {
 				backgroundPositionX: posX,
 				backgroundPositionY: posY,
-				duration: 0.35,
+				duration: 0.5,
 				ease: 'ease-in-out'
 			});
 		});
@@ -58,6 +58,7 @@
 	//#endregion
 })();
 
+// Typewriter --------------------------------------------------------------- //
 function typeWriter(elem, text, timeout = 75) {
 	elem.innerText = ' ';
 	gsap.to(elem, {

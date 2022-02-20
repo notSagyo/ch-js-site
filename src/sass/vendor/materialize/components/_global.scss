@@ -16,7 +16,7 @@ textarea {
 
 ul {
   &:not(.browser-default) {
-    padding-left: 0;
+    // padding-left: 0;
     list-style-type: none;
 
     & > li {
@@ -628,11 +628,15 @@ td, th{
   margin-right: auto;
 }
 
-.truncate {
+@mixin truncate {
   display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.truncate {
+  @include truncate;
 }
 
 .no-padding {

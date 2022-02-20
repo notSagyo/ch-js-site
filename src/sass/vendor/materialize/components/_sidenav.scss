@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 .sidenav {
   position: fixed;
   width: $sidenav-width;
@@ -14,6 +16,18 @@
   will-change: transform;
   backface-visibility: hidden;
   transform: translateX(-105%);
+
+  &__footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 1rem;
+    z-index: -1;
+
+    text-align: center;
+    color: $on-primary;
+    background-color: $primary-color;
+  }
 
   @extend .z-depth-1;
 

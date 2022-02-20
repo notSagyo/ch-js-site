@@ -1,13 +1,38 @@
+@use '../vendor/materialize/materialize' as M;
+@use '../abstracts' as *;
+
+
 .product-qty {
-	&__input {
-		// FIXME: center this
-		text-align-last: right;
-		width: 2rem !important;
+	$color: M.$primary-color;
+	$fs: 1.25rem;
+
+	display: flex;
+	align-items: center;
+
+	&__input[type='number']:not(.browser-default) {
+		margin: 0;
+		width: $fs * 2;
+		height: $fs * 1.75;
+
+		font-weight: 500;
+		font-size: $fs;
+		text-align: center;
+
+		color: $color;
 		appearance: textfield;
 
 		&::-webkit-inner-spin-button,
 		&::-webkit-outer-spin-button {
 			appearance: none;
 		}
+	}
+
+	&__increase,
+	&__decrease {
+		@include px(0.25rem);
+
+		line-height: 0;
+		color: $color;
+		cursor: pointer;
 	}
 }
