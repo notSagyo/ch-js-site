@@ -173,8 +173,8 @@ class Cart {
 		itemsNodes = this.generateNodes();
 		cartListElem.replaceChildren(...itemsNodes);
 
-		// New products aren't zoomable, initialize again
-		initMaterialboxed();
+		// New prods aren't listened by materialize; initialize again
+		reinitMaterialize();
 
 		if (debugMode)
 			console.log('%cUpdating cart DOM.', `color: ${colors.info};`);

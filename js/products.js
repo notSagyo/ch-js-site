@@ -95,23 +95,19 @@ class Product {
 		return result;
 	}
 
-	// ?TODO: Refactor this even more bruh
+	// !TODO: make category filters work!
+	// ?TODO: refactor this even more bruh
 	// Product info represented as an DOM node
 	static productToNode(product, type = 'productItem') {
 		type = type.toLowerCase();
 
 		let { name, description, quantity, image } = product;
 		let price = product.getTotal();
-		let descLen = 130;
-		let nameLen = 70;
 		let elem = '';
 
 		if (price % 1 != 0) price = price.toFixed(2);
 
 		if (type == 'productitem') {
-			description = truncateText(description, descLen);
-			name = truncateText(name, nameLen);
-
 			elem = createElement('li', ['product-li', 'row'],
 				/* HTML */ `<!-- PRODUCT -->
 				<li class="product-li row">
@@ -121,17 +117,21 @@ class Product {
 					</div>
 					<!-- Right side: details -->
 					<div class="product-li__details col-xs-12 col-sm">
-						<span class="product-li__title">${name}</span>
-						<p class="product-li__description">${description}</p>
+						<span class="product-li__title">
+							<span class="product-li__title-text">${name}</span>
+						</span>
+						<p class="product-li__description">
+							<span class="product-li__description-text">${description}</span>
+						</p>
 						<!-- Footer -->
 						<div class="product-li__footer">
-							<span class="product-li__price h6">$${price}</span>
+							<span class="product-li__price">$${price}</span>
 							<div class="product-qty">
-								<div class="decrease-qty">DECREASE</div>
+								<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i> </a>
 								<input class="product-qty__input input-field" type="number" placeholder="Qty" value="1"></input>
-								<div class="increase-qty">INCREASE</div>
+								<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i> </a>
 							</div>
-							<a href="javascript://" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart">
+							<a href="javascript:void(0)" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart">
 								<i class="material-icons">add_shopping_cart</i>
 							</a>
 						</div>
@@ -148,32 +148,38 @@ class Product {
 		else if (type == 'cartitem') {
 			elem = createElement('li', ['cart-item', 'row'],
 				/* HTML */ `<!-- CART ITEM -->
-				<li class="cart-item row">
-					<!-- Image  -->
+				<div class="cart-item__image-wrapper">
 					<div class="cart-item__image">
 						<img src="${image}" alt="">
 					</div>
-					<!-- Details -->
-					<div class="cart-item__details">
-						<!-- Left Side -->
-						<div class="cart-item__details-left">
-							<div>
-								<span class="h5">${name}</span>
-								<span class="quantity">${quantity > 1 ? `x${quantity}` : ''}</span>
-							</div>
-							<span class="h6 cart-item__price">$${price}</span>
-						</div>
-						<!-- Right side -->
-						<div class="cart-item__details-right">
-							<a href="javascript://" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"> <i class="material-icons">remove_shopping_cart</i> </a>
-						</div>
+				</div>
+				<!-- Details -->
+				<div class="cart-item__details">
+					<!-- Left Side -->
+					<div class="cart-item__details-left">
+						<div class="cart-item__title"><span>${name}</span></div>
+						<div class="cart-item__description hide-on-small-and-down"><p>${description}</p></div>
 					</div>
-				</li>
+					<!-- Right side -->
+					<div class="cart-item__details-right">
+						<div class="cart-item__details-numbers">
+							<span class="h6 cart-item__price">$${price}</span>
+							<div class="product-qty">
+								<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i>
+								<input class="product-qty__input input-field" type="number" placeholder="Qty" value="${quantity}"></input>
+								<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i>
+							</div>
+						</div>
+						<a href="javascript:void(0)" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"> <i class="material-icons">remove_shopping_cart</i> </a>
+					</div>
+				</div>
 			`);
 
 			elem.querySelector('.cart-item__remove').addEventListener('click',
 				() => activeCart.removeItem(product)
 			);
+
+			quantityControls(elem, product, activeCart);
 		}
 
 		return elem;
@@ -257,8 +263,8 @@ class ProductList {
 		this.productsNodes = this.generateNodes();
 		productListElem.replaceChildren(...this.productsNodes);
 
-		// New prods aren't zoomable; initialize again
-		initMaterialboxed();
+		// New prods aren't listened by materialize; initialize again
+		reinitMaterialize();
 	}
 	//#endregion
 
