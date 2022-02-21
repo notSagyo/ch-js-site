@@ -23,7 +23,7 @@
   @extend .z-depth-1;
   border-radius: 2px;
   top: 35px;
-  width: auto;
+  width: fit-content;
   margin-top: 10px;
   position: relative;
   max-width:100%;
@@ -32,6 +32,7 @@
   line-height: 1.5em;
   background-color: $toast-color;
   padding: 10px 25px;
+  margin-left: auto;
   font-size: 1.1rem;
   font-weight: 300;
   color: $toast-text-color;
@@ -50,6 +51,8 @@
   &.rounded{
     border-radius: 24px;
   }
+
+  @media #{$medium-and-down} { margin-left: initial; }
 
   @media #{$small-and-down} {
     width: 100%;
