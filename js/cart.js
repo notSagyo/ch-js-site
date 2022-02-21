@@ -14,6 +14,7 @@ class Cart {
 		this.payments = payments || 1;
 		this.taxRate = tax || 0;
 		this.monthFee = 0;
+
 	}
 
 	//#region Item Methods ---------- //
@@ -34,14 +35,15 @@ class Cart {
 		if (added)
 			added.increaseQuantity();
 		else {
-			let copy = copyObject(new Product(), item);
+			let copy = Product.copy(item);
 			this.itemList.push(copy);
 		}
 
 		let toastQty = item.quantity > 1 ? `(${item.quantity}) ` : '';
 		M.toast({
 			text: truncateText(`Added ${toastQty} ${item.name}`, toastLen),
-			displayLength: 2000 });
+			displayLength: 2000
+		});
 
 		if (debugMode)
 			console.log(
@@ -171,7 +173,10 @@ class Cart {
 
 		// Update the cart items in HTML
 		itemsNodes = this.generateNodes();
-		cartListElem.replaceChildren(...itemsNodes);
+		if (itemsNodes.length > 0)
+			cartListElem.replaceChildren(...itemsNodes);
+		else
+			cartListElem.innerHTML = Cart.emptyCartHtml();
 
 		// New prods aren't listened by materialize; initialize again
 		reinitMaterialize();
@@ -245,32 +250,33 @@ class Cart {
 
 	static loadCart(cartName = 'activeCart') {
 		let cartJSON = localStorage.getItem(cartName);
-		if (!cartJSON) return null;
+		if (!cartJSON)
+			return null;
 
 		let cartParsed = JSON.parse(cartJSON);
 		let cartRecovered = new Cart();
-
-		let itemListFlat = '';
+		let itemListParsed = [];
 		let itemListRecovered = [];
 
-		// TODO: replace with spread operator
 		// Load cart properties
-		for (const prop in cartParsed)
-			cartRecovered[prop] = cartParsed[prop];
+		Object.assign(cartRecovered, cartParsed);
 
-		// Copy the "flat" item list, but with real Product objects
-		// this way methods and other data JSON doesn't save can be recovered
-		itemListFlat = cartRecovered.itemList;
-
-		for (const item in itemListFlat) {
-			itemListRecovered[item] = new Product();
-
-			for (const prop in itemListFlat[item])
-				itemListRecovered[item][prop] = itemListFlat[item][prop];
-		}
+		// Copy the parsed list, but save Product objects to recover methods
+		itemListParsed = cartRecovered.itemList;
+		itemListParsed.forEach(item => {
+			itemListRecovered.push(Object.assign(new Product(), item));
+		});
 		cartRecovered.itemList = itemListRecovered;
 
 		return cartRecovered;
+	}
+
+	static emptyCartHtml() {
+		let emoji = ['🙁', '😕', '🤨', '🥺', '❌', '🛒', '🎈', '💤', '🐱‍👤', '💔'];
+		emoji = emoji[Math.floor(Math.random() * 10)];
+		let html = /* HTML */
+			`<span class="empty-cart-msg">The cart is empty ${emoji}</span>`;
+		return html;
 	}
 	//#endregion
 

@@ -8,8 +8,8 @@ let prods = [];
 // Prods in case fetch request fails
 prods = [
 	new Product('Shirt', 15,
-		'This is a simple shirt! And if you\'re still reading this the API is '
-		+ 'taking too long or maybe even failed! 🙃',
+		'This is a simple shirt! And if you\'re still reading this the products'
+		+ ' API is taking too long or maybe even failed! 🙃',
 		'../img/shirt.webp' ),
 	new Product('Jeans', 30, 'These are simple Jeans.', '../img/jeans.webp'),
 	new Product('Shoes', 50, 'These are simple Shoes.', '../img/shoes.webp'),

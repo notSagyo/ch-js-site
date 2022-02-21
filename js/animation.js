@@ -13,6 +13,8 @@
 		heroLeft = '#hero-img-left',
 		heroRight = '#hero-img-right';
 
+	let heroElem = document.querySelector('#hero-section');
+
 	// Hero order images animation
 	gsap.from(heroLeft, { x: '-100%' });
 	gsap.from(heroRight, { x: '100%' });
@@ -44,6 +46,7 @@
 
 	if (window.screen.width > mediaMd) {
 		document.addEventListener('mousemove', (e) => {
+			if (!heroElem.matches(':hover')) return;
 			let posX = (e.clientX - screentCenterX) * bgForce  + 'px';
 			let posY = (e.clientY - screenCenterY) * bgForce  + 'px';
 
