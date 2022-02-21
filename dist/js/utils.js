@@ -47,12 +47,6 @@ function quantityControls(parent, product, cart) {
 	});
 }
 
-function copyObject(target, source) {
-	let copy = JSON.parse(JSON.stringify(source));
-	Object.assign(target, copy);
-	return target;
-}
-
 function truncateText(text, length) {
 	if (text.length > length) {
 		text = text.substring(0, length);

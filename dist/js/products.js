@@ -184,6 +184,12 @@ class Product {
 
 		return elem;
 	}
+
+	static copy(source) {
+		let copy = JSON.parse(JSON.stringify(source));
+		copy = Object.assign(new Product(), copy);
+		return copy;
+	}
 	//#endregion
 }
 
