@@ -4,18 +4,26 @@
 @use 'sass:color';
 @use 'sass:math';
 
+.cart-list__wrapper {
+	margin: (flex.$gutter * 2) auto;
+
+	@include xl-up { width: 65%; }
+	@include xs-down { width: 100vw; }
+}
+
 .cart-list {
 	@extend .z-depth-1;
 
-	margin: (flex.$gutter * 2) auto;
+	padding: (flex.$gutter);
+	margin: (flex.$gutter) auto;
 
 	background-color: white;
 	border-radius: $br;
 
-	@include md-up { @include px(flex.$gutter * 2); }
-	@include xl-up { width: 80%; }
+	@include md-up { padding: (flex.$gutter * 2); }
+
 	@include xs-down {
-		width: 100vw;
+		@include px(0);
 		box-shadow: none;
 	}
 }
@@ -52,7 +60,7 @@
 
 	// Details -------------------------------------------------------------- //
 	&__details {
-		@include px(flex.$gutter);
+		padding-left: flex.$gutter;
 
 		display: flex;
 		flex-flow: column nowrap;
@@ -97,19 +105,6 @@
 
 	// Media ---------------------------------------------------------------- //
 	@include sm-up {
-		// ?XXX: different image sizes?
-		// &__image {
-		// 	$height: 6rem;
-		// 	$width: $height;
-		// 	height: $height;
-		// 	min-width: $width;
-
-		// 	img {
-		// 		max-width: $width;
-		// 		max-height: $height;
-		// 	}
-		// }
-
 		&__details { flex-direction: row; }
 
 		&__title { @include M.truncate; }
@@ -130,4 +125,10 @@
 	@include xs-down {
 		&__details { padding: 0; }
 	}
+}
+
+.empty-cart-msg {
+	color: M.$secondary-color;
+	font-size: 2rem;
+	letter-spacing: 0.5px;
 }

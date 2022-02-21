@@ -14,13 +14,13 @@ body {
 main {
 	// Footer on bottom
 	flex-grow: 1;
+}
 
-	.main__wrapper {
-		@include container;
-		margin: 0 auto;
+.main__wrapper {
+	@include container;
+	margin: 0 auto;
 
-		@include xs-down{ width: 100% };
-	}
+	@include xs-down { width: 100%; }
 }
 
 ul { margin: 0; }
