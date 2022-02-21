@@ -34,7 +34,11 @@
 	<main>
 		{{sidenav}}
 
-		<div class="main__wrapper">			<!-- Cart items list -->
+		<div class="main__wrapper cart-list__wrapper">
+			<a href="javascript:void(0)" id="empty-cart-btn" class="btn empty-cart-btn" onclick="activeCart.clearCart();">
+				<i class="material-icons left">delete</i>Empty cart
+			</a>
+			<!-- Cart items list -->
 			<ul id="cart-list" class="cart-list">
 				<!-- This list is populated with JS -->
 			</ul>
