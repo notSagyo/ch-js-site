@@ -1,5 +1,4 @@
 //Default styles
-
 html {
  box-sizing: border-box;
 }
@@ -17,7 +16,7 @@ textarea {
 
 ul {
   &:not(.browser-default) {
-    padding-left: 0;
+    // padding-left: 0;
     list-style-type: none;
 
     & > li {
@@ -367,7 +366,6 @@ ul.staggered-list li {
 
 // Footer
 .page-footer {
-  padding-top: 20px;
   color: $footer-font-color;
   background-color: $footer-bg-color;
 
@@ -630,18 +628,17 @@ td, th{
   margin-right: auto;
 }
 
-.truncate {
+@mixin truncate {
   display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.truncate {
+  @include truncate;
+}
+
 .no-padding {
   padding: 0 !important;
 }
-
-.primary { background-color: $primary-color !important; }
-.primary-text { color: $primary-color !important; }
-.secondary { background-color: $secondary-color !important; }
-.secondary-text { color: $secondary-color !important; }

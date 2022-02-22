@@ -1,4 +1,7 @@
 // Import every other file that should be compiled into the main CSS
+// Reset
+@use 'base/reset';
+
 // Vendor
 @use 'vendor/materialize/materialize';
 @use 'vendor/sass-flexbox/main';
@@ -13,6 +16,10 @@
 @use 'components/products';
 @use 'components/cart';
 @use 'components/badges';
+@use 'components/buttons';
+@use 'components/hero';
+@use 'components/forms';
+@use 'components/cat-showcase';
 
 // Layout
 @use 'layout/footer';

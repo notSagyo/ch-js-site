@@ -2,27 +2,11 @@
 @use 'colors' as *;
 @forward 'colors';
 
-// Colors ------------------------------------------------------------------- //
-// Good contrast against secondary.
-// $primary-color: #212529;
-// Good contrast against primary.
-// $secondary-color: #f8f9fa;
-// Color usually used for accents like links.
-// $terciary-color: coral;
-
-// $background-color: $primary-color;
-// $foreground-color: $secondary-color;
-
-// Shortforms
-// $primary: $primary-color;
-// $secondary: $secondary-color;
-// $terciary: $terciary-color;
-// $background: $background-color;
-// $foreground: $foreground-color;
-// $bg: $background-color;
-// $fg: $foreground-color;
+$br: 0.25rem;
+$bgc: #f7f7f7;
 
 // Breakpoints -------------------------------------------------------------- //
+$xs: 368px;
 $sm: 600px;
 $md: 992px;
 $lg: 1200px;

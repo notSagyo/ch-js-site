@@ -1,49 +1,38 @@
 // This file will be used in every page in the site!
 // Imports -------------------------------------------------------------------//
-@use 'fonts' as *;
+@use 'typography' as *;
 @use '../abstracts' as *;
 
 // Styling -------------------------------------------------------------------//
 body {
 	display: flex;
 	flex-direction: column;
-	background-color: #f7f7f7;
-	// font-family: 'Josefin Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: $bgc;
 	min-height: 100vh;
 }
 
 main {
 	// Footer on bottom
 	flex-grow: 1;
+}
 
-	.main__wrapper {
-		@extend .container;
-		margin: 0 auto;
-	}
+.main__wrapper {
+	@include container;
+	margin: 0 auto;
+
+	@include xs-down { width: 100%; }
 }
 
 ul { margin: 0; }
 
-.container {
-	margin: 0 auto;
-	max-width: 1280px;
-	width: 90%;
-
-	@include md-up { width: 85%; }
-	@include lg-up { width: 70%; }
-}
+.container { @include container; }
 
 .josefin-descender-ignore {
 	display: inline-block;
 	transform: translateY(7.5%);
 }
 
-.close-button {
-	cursor: pointer;
-	font-size: 0;
-
-	&.material-icons, .material-icons { font-size: 24px; }
-}
-
+.vertical-align { @include v-align; }
+.page-title { padding: 1rem; }
 .noselect { user-select: none; }
 .p-0 { padding: 0 !important; }

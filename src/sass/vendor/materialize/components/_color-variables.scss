@@ -368,3 +368,57 @@ $colors: (
   @warn "Unknown `#{$color}` - `#{$type}` in $colors.";
   @return null;
 }
+
+$primary: #4355b9;
+$on-primary: #ffffff;
+$primary-container: #dde0ff;
+$on-primary-container: #000d61;
+$secondary: #5b5d71;
+$on-secondary: #ffffff;
+$secondary-container: #e0e1fa;
+$on-secondary-container: #171a2c;
+$tertiary: #77536d;
+$on-tertiary: #ffffff;
+$tertiary-container: #ffd7f3;
+$on-tertiary-container: #2d1228;
+$error: #ba1b1b;
+$on-error: #ffffff;
+$error-container: #ffdad4;
+$on-error-container: #410001;
+$outline: #767680;
+$background: #fefbff;
+$on-background: #1b1b1f;
+$surface: #fefbff;
+$on-surface: #1b1b1f;
+$surface-variant: #e3e1ec;
+$on-surface-variant: #46464f;
+$inverse-surface: #303034;
+$inverse-on-surface: #f3f0f5;
+
+$material-color: (
+  "primary": $primary,
+  "on-primary": $on-primary,
+  "primary-container": $primary-container,
+  "on-primary-container": $on-primary-container,
+  "secondary": $secondary,
+  "on-secondary": $on-secondary,
+  "secondary-container": $secondary-container,
+  "on-secondary-container": $on-secondary-container,
+  "tertiary": $tertiary,
+  "on-tertiary": $on-tertiary,
+  "tertiary-container": $tertiary-container,
+  "on-tertiary-container": $on-tertiary-container,
+  "error": $error,
+  "on-error": $on-error,
+  "error-container": $error-container,
+  "on-error-container": $on-error-container,
+  "outline": $outline,
+  "background": $background,
+  "on-background": $on-background,
+  "surface": $surface,
+  "on-surface": $on-surface,
+  "surface-variant": $surface-variant,
+  "on-surface-variant": $on-surface-variant,
+  "inverse-surface": $inverse-surface,
+  "inverse-on-surface": $inverse-on-surface,
+);

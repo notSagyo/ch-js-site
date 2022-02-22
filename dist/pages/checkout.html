@@ -4,87 +4,45 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link rel="stylesheet" href="../css/main.css">
-	<!--Import Google Icon Font-->
+	<title>Webshop | Buy with a click and sell with a few more</title>
+	<meta name="description" content="Buy with a click and sell with a few more">
+	<link rel="shortcut icon" href="../img/favicon.svg" type="image/x-icon">
+	<!-- Facebook Meta Tags -->
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Webshop | Buy with a click and sell with a few more">
+	<meta property="og:description" content="Buy with a click and sell with a few more">
+	<meta property="og:image" content="https://i.imgur.com/X5gCXpy.jpg">
+	<!-- Twitter Meta Tags -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta property="twitter:domain" content="notsagyo.github.io">
+	<meta name="twitter:title" content="Webshop | Buy with a click and sell with a few more">
+	<meta name="twitter:description" content="Buy with a click and sell with a few more">
+	<meta name="twitter:image" content="https://i.imgur.com/X5gCXpy.jpg">
+	<!-- Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<!-- Materialize JS -->
-	<script src="../js/materialize/materialize.min.js" defer></script>
-	<script src="../js/utils.js" defer></script>
+	<!-- CSS -->
+	<link rel="stylesheet" href="../css/main.css">
+	<!-- JS -->
+	<script defer src="../js/template.js"></script>
+	<script defer src="../js/materialize.min.js"></script>
+	<script defer src="../js/utils.js"></script>
 </head>
 <body>
-	<!------ HEADER ------>
-	<header>
-		<!-- NAVBAR -->
-		<nav>
-			<div class="nav-wrapper container">
-				<a href="#!" class="brand-logo truncate">E-Commerce</a>
-				<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-				<ul class="right hide-on-med-and-down">
-					<li><a class="waves-effect waves-classic" href="#">HOME</a></li>
-					<li><a class="waves-effect waves-classic" href="products.html">PRODUCTS</a></li>
-					<li><a class="waves-effect waves-classic" href="contact.html">CONTACT</a></li>
-					<li><a class="waves-effect waves-classic" href="about.html">ABOUT</a></li>
-					<li><a class="waves-effect waves-classic" href="cart.html"><i class="material-icons">shopping_cart</i></a></li>
-				</ul>
-			</div>
-		</nav>
-	</header>
+	{{pageHeader}}
 
 	<!------ MAIN ------>
 	<main>
-		<!-- SIDENAV -->
-		<div class="sidenav" id="slide-out">
-			<div class="sidenav-header">
-				<a href="#" class="sidenav-close white-text close-button">
-					<i class="material-icons">close</i>
-				</a>
-				<span class="white-text josefin-descender-ignore">E-COMMERCE</span>
-			</div>
-			<ul>
-				<li class=""><a class="waves-effect waves-classic indigo white-text" href="#"><span class="a josefin-descender-ignore">HOME</span><i class="material-icons white-text">home</i></a></li>
-				<li><a class="waves-effect waves-classic waves" href="products.html"><span class="a josefin-descender-ignore">PRODUCTS</span><i class="material-icons">shopping_bag</i></a></li>
-				<li><a class="waves-effect waves-classic" href="cart.html"><span class="a josefin-descender-ignore">CART</span><i class="material-icons">shopping_cart</i></a></li>
-				<li><a class="waves-effect waves-classic" href="contact.html"><span class="a josefin-descender-ignore">CONTACT</span><i class="material-icons">contact_support</i></a></li>
-				<li><a class="waves-effect waves-classic" href="about.html"><span class="a josefin-descender-ignore">ABOUT</span><i class="material-icons">info</i></a></li>
-			</ul>
-		</div>
+		{{sidenav}}
 
 		<div class="main__wrapper">
 			<h1 class="h1">E-Commerce</h1>
 		</div>
 	</main>
 
-	<!------ FOOTER ------>
-	<footer class="page-footer">
-		<div class="container">
-			<div class="row">
-				<div class="col l4 s12">
-					<h5 class="white-text">Links</h5>
-					<ul>
-						<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-						<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-						<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-						<li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-					</ul>
-				</div>
-				<div class="col l6 s12">
-					<h5 class="white-text">E-Commerce</h5>
-					<p class="grey-text text-lighten-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut neque voluptates nam nihil excepturi est quos itaque. Dolorum, mollitia natus?</p>
-				</div>
-			</div>
-		</div>
-		<div class="footer-copyright">
-			<div class="container">
-				<div class="">
-					<!-- <a class="grey-text text-lighten-4 right" href="#!">More Links</a> -->
-					<span class="center center-block">© 2022 E-Commerce</span>
-				</div>
-			</div>
-		</div>
-	</footer>
+	{{pageFooter}}
 
-	<script src="../js/cart.js" defer></script>
-	<script src="../js/main.js" defer></script>
+	<script defer src="../js/products.js"></script>
+	<script defer src="../js/cart.js"></script>
+	<script defer src="../js/main.js"></script>
 </body>
 </html>

@@ -1,4 +1,53 @@
 // Add and import mixins to be available in every files that use "abstracts".
+@use 'media' as media;
+@use '../variables' as var;
+@use '../../vendor/materialize/materialize' as M;
+
+@mixin inverted-colors {
+	background-color: M.$primary-color;
+	color: M.$on-primary;
+}
+
+@mixin price-tag {
+	@include inverted-colors;
+
+	width: fit-content;
+	padding: 0.25rem;
+	padding-right: 1rem;
+
+	font-weight: 500;
+}
+
+@mixin product-bg {
+	border-radius: var.$br;
+	background: #fff;
+}
+
+@mixin container {
+	margin: 0 auto;
+	max-width: 1280px;
+	width: 90%;
+
+	@include media.md-up { width: 85%; }
+	@include media.lg-up { width: 70%; }
+}
+
+// TODO: Add this to template
+@mixin v-align {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+@mixin v-clamp($lines) {
+	-webkit-line-clamp: $lines;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: break-word;
+}
+
 @mixin size($width, $height: $width) {
 	width: $width;
 	height: $height;

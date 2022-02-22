@@ -1,0 +1,15 @@
+@use '../vendor/materialize/materialize' as M;
+
+.cart-btn {
+	@extend .btn-floating;
+
+	line-height: 1;
+	.material-icons { font-size: 1.5rem; }
+}
+
+.close-button {
+	cursor: pointer;
+	font-size: 0;
+
+	&.material-icons, .material-icons { font-size: 24px; }
+}

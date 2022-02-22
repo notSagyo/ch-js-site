@@ -4,71 +4,46 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link rel="stylesheet" href="../css/main.css">
-	<!--Import Google Icon Font-->
+	<title>Webshop | Buy with a click and sell with a few more</title>
+	<meta name="description" content="Buy with a click and sell with a few more">
+	<link rel="shortcut icon" href="../img/favicon.svg" type="image/x-icon">
+	<!-- Facebook Meta Tags -->
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Webshop | Buy with a click and sell with a few more">
+	<meta property="og:description" content="Buy with a click and sell with a few more">
+	<meta property="og:image" content="https://i.imgur.com/X5gCXpy.jpg">
+	<!-- Twitter Meta Tags -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta property="twitter:domain" content="notsagyo.github.io">
+	<meta name="twitter:title" content="Webshop | Buy with a click and sell with a few more">
+	<meta name="twitter:description" content="Buy with a click and sell with a few more">
+	<meta name="twitter:image" content="https://i.imgur.com/X5gCXpy.jpg">
+	<!-- Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<!-- Materialize JS -->
+	<!-- CSS -->
+	<link rel="stylesheet" href="../css/main.css">
+	<!-- JS -->
+	<script defer src="../js/template.js"></script>
 	<script defer src="../js/materialize.min.js"></script>
 	<script defer src="../js/utils.js"></script>
 </head>
 <body>
-	<!------ HEADER ------>
-	<header class="navbar-fixed">
-		<!-- NAVBAR -->
-		<nav>
-			<div class="nav-wrapper container">
-				<a href="#!" class="brand-logo truncate">E-Commerce</a>
-				<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-				<ul class="right hide-on-med-and-down">
-					<li><a class="waves-effect waves-classic" href="#">HOME</a></li>
-					<li><a class="waves-effect waves-classic" href="products.html">PRODUCTS</a></li>
-					<li><a class="waves-effect waves-classic" href="contact.html">CONTACT</a></li>
-					<li><a class="waves-effect waves-classic" href="about.html">ABOUT</a></li>
-					<li><a class="waves-effect waves-classic" href="cart.html">
-							<i class="material-icons badge-container">
-								<span class="cart-badge hide">0</span>
-								shopping_cart
-							</i>
-					</a></li>
-				</ul>
-			</div>
-		</nav>
-	</header>
+	{{pageHeader}}
 
 	<!------ MAIN ------>
 	<main>
-		<!-- SIDENAV -->
-		<div class="sidenav" id="slide-out">
-			<div class="sidenav-header">
-				<a href="#" class="sidenav-close white-text close-button">
-					<i class="material-icons">close</i>
-				</a>
-				<span class="white-text">E-COMMERCE</span>
-			</div>
-			<ul>
-				<li><a class="waves-effect waves-classic" href="../index.html"><span class="a">HOME</span><i class="material-icons">home</i></a></li>
-				<li><a class="waves-effect waves-classic indigo white-text" href="#"><span class="a">PRODUCTS</span><i class="material-icons white-text">shopping_bag</i></a></li>
-				<li><a class="waves-effect waves-classic" href="cart.html"><span class="a">CART</span>
-					<i class="material-icons badge-container">
-						<span class="cart-badge hide">0</span>
-						shopping_cart
-					</i>
-				</a></li>
-				<li><a class="waves-effect waves-classic" href="contact.html"><span class="a">CONTACT</span><i class="material-icons">contact_support</i></a></li>
-				<li><a class="waves-effect waves-classic" href="about.html"><span class="a">ABOUT</span><i class="material-icons">info</i></a></li>
-			</ul>
-		</div>
+		{{sidenav}}
 
 		<div class="main__wrapper">
-			<h1 class="h1">Products</h1>
+			<h1 class="h1 page-title">Products</h1>
 			<div class="products-layout">
 				<!-- Search filters -->
 				<aside class="product-filters col-gutter">
 					<!-- Product filter: categories -->
+					<!-- TODO: add collapsed icon -->
 					<ul class="product-filters__filter--menu collapsible expandable">
 						<li class="active">
-							<div class="collapsible-header primary white-text noselect" selec>CATEGORIES</div>
+							<div class="collapsible-header primary white-text noselect">CATEGORIES</div>
 							<ul class="collapsible-body collection p-0">
 								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">Home</a></li>
 								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">Technology</a></li>
@@ -86,37 +61,10 @@
 		</div>
 	</main>
 
-	<!------ FOOTER ------>
-	<footer class="page-footer">
-		<div class="container">
-			<!-- FIXME: Vertical margin -->
-			<div class="row">
-				<div class="col l4 s12">
-					<h5 class="white-text">Links</h5>
-					<ul>
-						<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-						<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-						<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-						<li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-					</ul>
-				</div>
-				<div class="col l6 s12">
-					<h5 class="white-text">E-Commerce</h5>
-					<p class="grey-text text-lighten-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ut neque voluptates nam nihil excepturi est quos itaque. Dolorum, mollitia natus?</p>
-				</div>
-			</div>
-		</div>
-		<div class="footer-copyright">
-			<div class="container">
-				<div class="">
-					<span class="center center-block">© 2022 E-Commerce</span>
-				</div>
-			</div>
-		</div>
-	</footer>
+	{{pageFooter}}
 
-	<script defer src="../js/cart.js"></script>
 	<script defer src="../js/products.js"></script>
+	<script defer src="../js/cart.js"></script>
 	<script defer src="../js/main.js"></script>
 </body>
 </html>

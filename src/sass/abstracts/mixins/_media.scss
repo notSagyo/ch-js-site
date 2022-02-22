@@ -2,9 +2,6 @@
 @use '../variables/variables' as var;
 
 // Media queries ------------------------------------------------------------ //
-@mixin sm-down {
-	@media only screen and(max-width: var.$sm) { @content; }
-}
 
 // Mobile first ------------------------------------------------------------- //
 @mixin sm-up {
@@ -28,6 +25,14 @@
 }
 
 // Desktop first ------------------------------------------------------------ //
+@mixin xs-down {
+	@media only screen and(max-width: var.$xs) { @content; }
+}
+
+@mixin sm-down {
+	@media only screen and(max-width: var.$sm) { @content; }
+}
+
 @mixin md-down {
 	@media only screen and(max-width: var.$md) { @content; }
 }

@@ -1,0 +1,85 @@
+@use '../abstracts' as *;
+@use '../vendor/materialize/materialize' as M;
+
+.cat-showcase {
+	margin: 2rem;
+
+	&__layout {
+		@include mx-auto;
+		display: grid;
+	}
+
+	// IMAGES --------------------------------------------------------------- //
+	&__img--big, &__img--small {
+		position: relative;
+		overflow: hidden;
+
+		border-radius: $br;
+	}
+
+	&__img--big {
+		padding-top: 70%;
+		background-image: url('../img/cat-showcase-big.webp');
+		background-size: auto 100%;
+		background-position: right;
+	}
+
+	// HACK: replace with images
+	&__img--small { background-color: teal; }
+
+	// INFO ----------------------------------------------------------------- //
+	&__info {
+		@include M.h3;
+
+		position: absolute;
+		bottom: 0;
+
+		height: fit-content;
+		padding: 1rem;
+		padding-right: 4rem;
+		border-radius: 0 $br $br 0;
+
+
+		color: M.$on-primary;
+		background: rgba(M.$primary-color, 0.75);
+	}
+
+	// MEDIA ---------------------------------------------------------------- //
+	@include sm-up { &__layout { max-width: 80%; } }
+
+	@include md-up {
+		&__layout {
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: repeat(3, 1fr);
+			gap: 1rem;
+
+			max-width: 100%;
+		}
+
+		&__img--big, &__img--small {
+			filter: saturate(0);
+			transition: filter 0.5s;
+		}
+
+		&__img--big { grid-row: span 3; }
+
+		&__img--big:hover, &__img--small:hover { filter: saturate(1); }
+	}
+
+	@include lg-up {
+		&__info {
+			@include M.h5;
+
+			top: 100%;
+			transform: translateY(-100%);
+			transition-property: top, transform;
+			transition-duration: 0.5s;
+		}
+
+		&__img--big:hover &__info,
+		&__img--small:hover &__info {
+			top: 10%;
+			transform: translateY(0);
+		}
+	}
+}

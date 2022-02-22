@@ -1,72 +1,59 @@
 // Log extra info if debug
 let debugMode = true;
 
+// Media queries
+let mediaSm = 600;
+let mediaMd = 992;
+let mediaLg = 1200;
+let mediaXl = 1400;
+
 // Colors
 let colors = {
 	info: 'steelblue',
 	success: 'seagreen',
 	danger: 'indianred'
+};
+
+// Other
+let toastLen = 50;
+
+function createElement(tagName, classList = [], innerHTML = '') {
+	let element = document.createElement(tagName);
+	element.classList.add(...classList);
+	element.innerHTML = innerHTML;
+	return element;
 }
 
-// Converts a product info to an HTML element
-function productToHTML(product, type = 'productItem') {
-	let title = product.name;
-	let price = product.getPrice();
-	let description = product.description || 'No description';
-	let image = product.image || 'https://via.placeholder.com/256';
+// If it's a cart item pass the cart
+function initQtyControls(parent, product, cart) {
+	let qtyInput = parent.querySelector('.product-qty__input');
+	let qtyIncrease = parent.querySelector('.product-qty__increase');
+	let qtyDecrease = parent.querySelector('.product-qty__decrease');
 
-	let html = '';
+	qtyInput.addEventListener('change', () => {
+		if (qtyInput.value < 1) qtyInput.value = 1;
+		if (cart)
+			activeCart.setItemQuantity(product, Number(qtyInput.value));
+		else
+			product.setQuantity(Number(qtyInput.value));
+	});
+	qtyIncrease.addEventListener('click', () => {
+		qtyInput.value++;
+		qtyInput.dispatchEvent(new Event('change'));
+	});
+	qtyDecrease.addEventListener('click', () => {
+		qtyInput.value--;
+		qtyInput.dispatchEvent(new Event('change'));
+	});
+}
 
-	if (type.toLowerCase() == 'productitem') {
-		html = /* html */
-		`<!-- PRODUCT -->
-		<li class="product-li row">
-			<!-- Left side: image -->
-			<div class="product-li__image col-xs-12 col-sm-4 col-xl-3">
-				<img src="${image}" alt="">
-			</div>
-			<!-- Right side: details -->
-			<div class="product-li__details col-xs-12 col-sm">
-				<!-- Title -->
-				<span class="product-li__title">${title}</span>
-				<!-- Description -->
-				<p class="product-li__description">${description}</p>
-				<div class="product-li__footer">
-					<!-- Price -->
-					<span class="product-li__price">$${price}</span>
-					<!-- Add to cart -->
-					<a href="javascript:(0)" class="product-li__add indigo-text text-accent-2"><i class="material-icons">add_shopping_cart</i></a>
-				</div>
-			</div>
-		</li>
-		`;
-	} else if (type.toLowerCase() == 'cartitem') {
-		html = /* html */
-		`<!-- PRODUCT -->
-		<li class="cart-item row">
-			<!-- Image  -->
-			<div class="cart-item__image">
-				<img src="${image}" alt="">
-			</div>
-			<!-- Details -->
-			<div class="cart-item__details">
-				<!-- Title -->
-				<span class="cart-item__title">${title}</span>
-				<!-- Footer -->
-				<div class="cart-item__footer">
-					<!-- Price -->
-					<span class="cart-item__price">$${price}</span>
-					<!-- Remove from cart -->
-					<a href="javascript:(0)" class="cart-item__remove"><i class="material-icons">remove_shopping_cart</i></a>
-				</div>
-			</div>
-		</li>
-		`;
+function truncateText(text, length) {
+	if (text.length > length) {
+		text = text.substring(0, length);
+		text = text.split(' ');
+		text.splice(-1, 1);
+		text = text.join(' ');
+		text += '...';
 	}
-	return html;
-}
-
-function cartItemToHTML(item) {
-	html = productToHTML(item, 'cartItem');
-	return html;
+	return text;
 }
