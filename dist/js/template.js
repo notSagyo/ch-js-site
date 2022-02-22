@@ -182,9 +182,9 @@ function getCartItemHtml(product) {
 				<div class="cart-item__details-numbers">
 					<span class="h6 cart-item__price">$${total}</span>
 					<div class="product-qty">
-						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i>
+						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i> </a>
 						<input class="product-qty__input input-field" type="number" placeholder="Qty" value="${quantity}"></input>
-						<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i>
+						<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i> </a>
 					</div>
 				</div>
 				<a href="javascript:void(0)" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"> <i class="material-icons">remove_shopping_cart</i> </a>
