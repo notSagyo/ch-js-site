@@ -125,8 +125,8 @@
 
 // PRODUCTS HTML ------------------------------------------------------------ //
 function getProductHtml(product) {
-	let { name, description, image, price } = product;
-	if (price % 1 != 0) price = price.toFixed(2);
+	let { name, description, image, total } = product;
+	if (total % 1 != 0) total = total.toFixed(2);
 
 	let html = /* HTML */
 		`<!-- Left side: image -->
@@ -143,7 +143,7 @@ function getProductHtml(product) {
 				</p>
 				<!-- Footer -->
 				<div class="product-li__footer">
-					<span class="product-li__price">$${price}</span>
+					<span class="product-li__price">$${total}</span>
 					<div class="product-qty">
 						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i> </a>
 						<input class="product-qty__input input-field" type="number" placeholder="Qty" value="1"></input>
@@ -160,8 +160,8 @@ function getProductHtml(product) {
 }
 
 function getCartItemHtml(product) {
-	let { name, description, quantity, image, price } = product;
-	if (price % 1 != 0) price = price.toFixed(2);
+	let { name, description, quantity, image, total } = product;
+	if (total % 1 != 0) total = total.toFixed(2);
 
 	let html = /* HTML */
 		`<!-- CART ITEM -->
@@ -180,7 +180,7 @@ function getCartItemHtml(product) {
 			<!-- Right side -->
 			<div class="cart-item__details-right">
 				<div class="cart-item__details-numbers">
-					<span class="h6 cart-item__price">$${price}</span>
+					<span class="h6 cart-item__price">$${total}</span>
 					<div class="product-qty">
 						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i>
 						<input class="product-qty__input input-field" type="number" placeholder="Qty" value="${quantity}"></input>
