@@ -5,6 +5,7 @@
 test.*
 test-*.*
 tests.*
+*.ignore.*
 
 # Git Node.js Template
 # Logs
