@@ -25,7 +25,7 @@ function createElement(tagName, classList = [], innerHTML = '') {
 }
 
 // If it's a cart item pass the cart
-function quantityControls(parent, product, cart) {
+function initQtyControls(parent, product, cart) {
 	let qtyInput = parent.querySelector('.product-qty__input');
 	let qtyIncrease = parent.querySelector('.product-qty__increase');
 	let qtyDecrease = parent.querySelector('.product-qty__decrease');

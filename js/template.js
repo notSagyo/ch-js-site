@@ -1,5 +1,6 @@
 // Me cansé de modificar los html todo el rato así que le mando esto
 
+// PAGES HTML --------------------------------------------------------------- //
 (() => {
 	let currentPage = getCurrentPage();
 	let pagesPath = (currentPage) == 'index' ? 'pages/' : '';
@@ -121,3 +122,75 @@
 		return page;
 	}
 })();
+
+// PRODUCTS HTML ------------------------------------------------------------ //
+function getProductHtml(product) {
+	let { name, description, image, price } = product;
+	if (price % 1 != 0) price = price.toFixed(2);
+
+	let html = /* HTML */
+		`<!-- Left side: image -->
+			<div class="product-li__image col-xs-12 col-sm-4 col-xl-3">
+				<img src="${image}" alt="">
+			</div>
+			<!-- Right side: details -->
+			<div class="product-li__details col-xs-12 col-sm">
+				<span class="product-li__title">
+					<span class="product-li__title-text">${name}</span>
+				</span>
+				<p class="product-li__description">
+					<span class="product-li__description-text">${description}</span>
+				</p>
+				<!-- Footer -->
+				<div class="product-li__footer">
+					<span class="product-li__price">$${price}</span>
+					<div class="product-qty">
+						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i> </a>
+						<input class="product-qty__input input-field" type="number" placeholder="Qty" value="1"></input>
+						<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i> </a>
+					</div>
+					<a href="javascript:void(0)" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart">
+						<i class="material-icons">add_shopping_cart</i>
+					</a>
+				</div>
+			</div>
+		`;
+
+	return html;
+}
+
+function getCartItemHtml(product) {
+	let { name, description, quantity, image, price } = product;
+	if (price % 1 != 0) price = price.toFixed(2);
+
+	let html = /* HTML */
+		`<!-- CART ITEM -->
+		<div class="cart-item__image-wrapper">
+			<div class="cart-item__image">
+				<img src="${image}" alt="">
+			</div>
+		</div>
+		<!-- Details -->
+		<div class="cart-item__details">
+			<!-- Left Side -->
+			<div class="cart-item__details-left">
+				<div class="cart-item__title"><span>${name}</span></div>
+				<div class="cart-item__description hide-on-small-and-down"><p>${description}</p></div>
+			</div>
+			<!-- Right side -->
+			<div class="cart-item__details-right">
+				<div class="cart-item__details-numbers">
+					<span class="h6 cart-item__price">$${price}</span>
+					<div class="product-qty">
+						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i>
+						<input class="product-qty__input input-field" type="number" placeholder="Qty" value="${quantity}"></input>
+						<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i>
+					</div>
+				</div>
+				<a href="javascript:void(0)" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"> <i class="material-icons">remove_shopping_cart</i> </a>
+			</div>
+		</div>
+		`;
+
+	return html;
+}
