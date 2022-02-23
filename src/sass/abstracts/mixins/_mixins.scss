@@ -8,6 +8,12 @@
 	color: M.$on-primary;
 }
 
+@mixin raised-bg {
+	@extend .z-depth-1;
+	background-color: white;
+	border-radius: var.$br;
+}
+
 @mixin price-tag {
 	@include inverted-colors;
 
