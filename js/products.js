@@ -85,7 +85,7 @@ class Product {
 
 			if (result)
 				console.log(
-					`%c${result.name} found.`, `color: ${colors.info}`);
+					`%cFound: ${result.name}`, `color: ${colors.info}`);
 			else if (typeof product === 'string')
 				notFound(product);
 

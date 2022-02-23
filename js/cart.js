@@ -12,7 +12,6 @@ class Cart {
 		this.payments = payments || 1;
 		this.taxRate = tax || 0;
 		this.monthFee = 0;
-
 	}
 
 	//#region Item Methods ---------- //
@@ -136,14 +135,15 @@ class Cart {
 
 	//#region Price Methods --------- //
 	calcDiscount(discount = this.discount) {
-		return this.total * (1 - discount);
+		discount = this.subtotal * discount;
+		return discount;
 	}
 
 	// Calc. the interest tax (flat $) for the subtotal
 	calcInterest(payments = this.payments, interest = this.monthInterest) {
 		interest = (payments > 1)
-			? this.total * (1 + (interest * (payments - 1)))
-			: this.total;
+			? this.total * ((payments * interest) - interest)
+			: 0;
 		return interest;
 	}
 
@@ -152,9 +152,10 @@ class Cart {
 		return this.calcInterest(payments, interest) / payments;
 	}
 
-	// Calc. the total with tax rate applied
+	// Calc. the tax rate applied to the subtotal
 	calcTax(tax = this.taxRate) {
-		return this.total * (1 + tax);
+		tax = this.subtotal * tax;
+		return tax;
 	}
 	//#endregion
 
@@ -176,6 +177,8 @@ class Cart {
 		else
 			cartListElem.innerHTML = Cart.emptyCartHtml();
 
+		this.updateCartSummary();
+
 		// New prods aren't listened by materialize; initialize again
 		reinitMaterialize();
 
@@ -190,6 +193,21 @@ class Cart {
 		let nodes = [];
 		this.itemList.forEach(item => nodes.push(Cart.cartItemToNode(item)));
 		return nodes;
+	}
+
+	updateCartSummary() {
+		let summaryElem = document.querySelector('#cart-summary');
+		let subtotalElem = summaryElem.querySelector('.cart__summary-subtotal');
+		let interestElem = summaryElem.querySelector('.cart__summary-interest');
+		let taxElem = summaryElem.querySelector('.cart__summary-tax');
+		let discountElem = summaryElem.querySelector('.cart__summary-discount');
+		let totalElem = summaryElem.querySelector('.cart__summary-total');
+
+		subtotalElem.innerText = `$${this.subtotal.toFixed(2)}`;
+		interestElem.innerText = `$${this.calcInterest().toFixed(2)}`;
+		taxElem.innerText = `${this.taxRate}%`;
+		discountElem.innerText = `${this.discount}%`;
+		totalElem.innerText = `$${this.total.toFixed(2)}`;
 	}
 
 	// Update cart icons to show a badge with the prod count
@@ -223,13 +241,14 @@ class Cart {
 	//#region Cart status ----------- //
 	// After modifying a field, should call this
 	updateCart() {
+		// !FIXME: Interest calculated erroneously on multiple calls
 		this.subtotal = this.itemList.reduce((a, b) => a + b.getTotal(), 0);
 		this.totalQuantity = this.itemList.reduce((a, b) => a + b.getQuantity(), 0);
 		this.itemCount = this.itemList.length;
 		this.total = this.subtotal;
-		this.total = this.calcInterest();
-		this.total = this.calcDiscount();
-		this.total = this.calcTax();
+		this.total -= this.calcDiscount();
+		this.total += this.calcTax();
+		this.total += this.calcInterest();
 		this.monthFee = this.total / this.payments;
 
 		Cart.saveCart();
@@ -256,6 +275,8 @@ class Cart {
 		let itemListParsed = [];
 		let itemListRecovered = [];
 
+		let paymentsElem = document.querySelector('#cart-payments');
+
 		// Load cart properties
 		Object.assign(cartRecovered, cartParsed);
 
@@ -265,6 +286,26 @@ class Cart {
 			itemListRecovered.push(Object.assign(new Product(), item));
 		});
 		cartRecovered.itemList = itemListRecovered;
+
+		if (paymentsElem) {
+			// Get the payments element and add the event listener
+			paymentsElem.value = cartRecovered.payments;
+			paymentsElem.addEventListener('change', () => {
+				cartRecovered.payments =
+				cartRecovered.setPayments(paymentsElem.value);
+			});
+
+			// Then add interest% next to the payments count
+			paymentsElem.childNodes.forEach(child => {
+				let payments = child.value;
+				let interest =
+					Math.round(cartRecovered.monthInterest * (payments - 1) * 100);
+				if (payments > 1) {
+					child.innerHTML =
+						`${payments} <span class="cart__payments-interest"> (${interest}%)</span>`;
+				}
+			});
+		}
 
 		return cartRecovered;
 	}

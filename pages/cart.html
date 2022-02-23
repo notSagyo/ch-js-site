@@ -34,7 +34,7 @@
 	<main>
 		{{sidenav}}
 
-		<div class="main__wrapper cart-list__wrapper">
+		<div class="main__wrapper cart">
 			<a href="javascript:void(0)" id="empty-cart-btn" class="btn empty-cart-btn" onclick="activeCart.clearCart();">
 				<i class="material-icons left">delete</i>Empty cart
 			</a>
@@ -42,6 +42,41 @@
 			<ul id="cart-list" class="cart-list">
 				<!-- This list is populated with JS -->
 			</ul>
+			<div id="cart-summary" class="cart__summary">
+				<div class="input-field cart__summary-payments">
+					<select class="select-dropdown" id="cart-payments">
+						<option value="1" selected>1</option>
+						<option value="2">2</option>
+						<option value="4">4</option>
+						<option value="6">6</option>
+						<option value="8">8</option>
+						<option value="12">12</option>
+					</select>
+					<label>Payments</label>
+				</div>
+				<div class="cart__summary-details">
+					<div class="cart__summary-details-names">
+
+					</div>
+					<ul class="cart__summary-values">
+						<li class="cart__summary-values-li">
+							<span>Subtotal:</span><span class="cart__summary-subtotal"></span>
+						</li class="cart__summary-values-li">
+						<li class="cart__summary-values-li">
+							<span>Interest:</span><span class="cart__summary-interest"></span>
+						</li class="cart__summary-values-li">
+						<li class="cart__summary-values-li">
+							<span>Discount:</span><span class="cart__summary-discount"></span>
+						</li class="cart__summary-values-li">
+						<li class="cart__summary-values-li">
+							<span>Tax:</span><span class="cart__summary-tax"></span>
+						</li class="cart__summary-values-li">
+						<li class="cart__summary-values-li">
+							<span>Total:</span><span class="cart__summary-total"></span>
+						</li class="cart__summary-values-li">
+					</ul>
+				</div>
+			</div>
 		</div>
 	</main>
 
