@@ -13,8 +13,6 @@
 		heroLeft = '#hero-img-left',
 		heroRight = '#hero-img-right';
 
-	let heroElem = document.querySelector('#hero-section');
-
 	// Hero order images animation
 	gsap.from(heroLeft, { x: '-100%' });
 	gsap.from(heroRight, { x: '100%' });
@@ -46,7 +44,6 @@
 
 	if (window.screen.width > mediaMd) {
 		document.addEventListener('mousemove', (e) => {
-			if (!heroElem.matches(':hover')) return;
 			let posX = (e.clientX - screentCenterX) * bgForce  + 'px';
 			let posY = (e.clientY - screenCenterY) * bgForce  + 'px';
 
@@ -71,7 +68,7 @@ function typeWriter(elem, text, timeout = 75) {
 	});
 }
 
-// *Don't manually call this!
+// *Don't manually call this. Call typeWriter insted
 function typewriterEffect(elem, text, timeout, i = 0) {
 	if (i == text.length) return;
 	elem.innerText = elem.innerText.replace(' ', '');

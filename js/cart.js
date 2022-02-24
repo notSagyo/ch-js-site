@@ -8,9 +8,9 @@ class Cart {
 		this.total = 0;
 		this.subtotal = 0;
 		this.discount = discount || 0;
-		this.monthInterest = monthInterestRate || 0.03;
+		this.interestRate = monthInterestRate || 0.03;
 		this.payments = payments || 1;
-		this.taxRate = tax || 0;
+		this.taxRate = tax || 0.21;
 		this.monthFee = 0;
 	}
 
@@ -133,32 +133,6 @@ class Cart {
 	}
 	//#endregion
 
-	//#region Price Methods --------- //
-	calcDiscount(discount = this.discount) {
-		discount = this.subtotal * discount;
-		return discount;
-	}
-
-	// Calc. the interest tax (flat $) for the subtotal
-	calcInterest(payments = this.payments, interest = this.monthInterest) {
-		interest = (payments > 1)
-			? this.total * ((payments * interest) - interest)
-			: 0;
-		return interest;
-	}
-
-	// Calc. the monthly interest tax (flat $) for the subtotal
-	calcMonthInterest(payments = this.payments, interest = this.monthInterest) {
-		return this.calcInterest(payments, interest) / payments;
-	}
-
-	// Calc. the tax rate applied to the subtotal
-	calcTax(tax = this.taxRate) {
-		tax = this.subtotal * tax;
-		return tax;
-	}
-	//#endregion
-
 	//#region DOM Methods
 	updateDom() {
 		let cartListElem = document.querySelector('#cart-list');
@@ -204,9 +178,9 @@ class Cart {
 		let totalElem = summaryElem.querySelector('.cart__summary-total');
 
 		subtotalElem.innerText = `$${this.subtotal.toFixed(2)}`;
-		interestElem.innerText = `$${this.calcInterest().toFixed(2)}`;
-		taxElem.innerText = `${this.taxRate}%`;
-		discountElem.innerText = `${this.discount}%`;
+		interestElem.innerText = `${(this.getTotalInterestRate() * 100).toFixed(2)}%`;
+		taxElem.innerText = `${this.taxRate * 100}%`;
+		discountElem.innerText = `${this.discount * 100}%`;
 		totalElem.innerText = `$${this.total.toFixed(2)}`;
 	}
 
@@ -241,21 +215,21 @@ class Cart {
 	//#region Cart status ----------- //
 	// After modifying a field, should call this
 	updateCart() {
-		// !FIXME: Interest calculated erroneously on multiple calls
 		this.subtotal = this.itemList.reduce((a, b) => a + b.getTotal(), 0);
 		this.totalQuantity = this.itemList.reduce((a, b) => a + b.getQuantity(), 0);
 		this.itemCount = this.itemList.length;
 		this.total = this.subtotal;
-		this.total -= this.calcDiscount();
-		this.total += this.calcTax();
-		this.total += this.calcInterest();
+		this.total *=
+			(1 - this.discount)
+			* (1 + this.taxRate)
+			* (1 + this.getTotalInterestRate());
 		this.monthFee = this.total / this.payments;
 
 		Cart.saveCart();
 		this.updateDom();
 
 		if (debugMode)
-			console.log(`Cart price now is: $${this.getTotal()}`);
+			console.log(`Cart price now is: $${this.total}`);
 		return this.total;
 	}
 
@@ -299,7 +273,7 @@ class Cart {
 			paymentsElem.childNodes.forEach(child => {
 				let payments = child.value;
 				let interest =
-					Math.round(cartRecovered.monthInterest * (payments - 1) * 100);
+					Math.round(cartRecovered.interestRate * (payments - 1) * 100);
 				if (payments > 1) {
 					child.innerHTML =
 						`${payments} <span class="cart__payments-interest"> (${interest}%)</span>`;
@@ -313,14 +287,15 @@ class Cart {
 	static emptyCartHtml() {
 		let emoji = ['🙁', '😕', '🤨', '🥺', '❌', '🛒', '🎈', '💤', '🐱‍👤', '💔'];
 		emoji = emoji[Math.floor(Math.random() * 10)];
-		let html = /* HTML */
+		let html =
 			`<span class="empty-cart-msg">The cart is empty ${emoji}</span>`;
 		return html;
 	}
 	//#endregion
 
 	//#region Get / Set ------------- //
-	// Setters
+	getTotalInterestRate() { return this.interestRate * (this.payments - 1); }
+
 	setItemList(items) {
 		if (!Array.isArray(items) || !items.every(x => x instanceof Product)) {
 			console.warn('Invalid arguments: CartItems[] expected');
@@ -347,7 +322,7 @@ class Cart {
 	}
 
 	setMonthInterest (amount) {
-		this.monthInterest = amount;
+		this.interestRate = amount;
 		this.updateCart();
 		return amount;
 	}
@@ -363,19 +338,6 @@ class Cart {
 		this.updateCart();
 		return amount;
 	}
-
-	// Getters
-	getItemList() { return this.itemList; }
-	getItemCount() { return this.itemCount; }
-	getTotalQuantity() { return this.totalQuantity; }
-
-	getTotal() { return this.total; }
-	getSubtotal() { return this.subtotal; }
-	getDiscount() { return this.discount; }
-	getMonthInterest() { return this.monthInterest; }
-	getPayments() { return this.payments; }
-	getTaxRate() { return this.taxRate; }
-	getMonthFee() { return this.monthFee; }
 	//#endregion
 }
 
