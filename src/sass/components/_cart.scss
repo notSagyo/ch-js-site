@@ -7,6 +7,7 @@
 .cart {
 	margin: (flex.$gutter * 2) auto;
 
+	// Summary --------------------------------------------------------------- //
 	&__summary {
 		@include raised-bg;
 
@@ -18,7 +19,7 @@
 	}
 
 	&__summary-payments {
-		max-width: 6rem;
+		max-width: 6.5rem;
 
 		input {
 			text-align: right;
@@ -58,6 +59,11 @@
 			font-size: 1.5rem;
 			font-weight: 500;
 		}
+	}
+
+	// MEDIA ---------------------------------------------------------------- //
+	@include md-up {
+		&__summary-payments { max-width: 5.5rem; }
 	}
 
 	@include sm-up {

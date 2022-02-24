@@ -29,7 +29,7 @@
 
 	// INFO ----------------------------------------------------------------- //
 	&__info {
-		@include M.h3;
+		@include M.h5;
 
 		position: absolute;
 		bottom: 0;
@@ -68,7 +68,7 @@
 
 	@include lg-up {
 		&__info {
-			@include M.h5;
+			@include M.h4;
 
 			top: 100%;
 			transform: translateY(-100%);
