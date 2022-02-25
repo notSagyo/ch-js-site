@@ -406,7 +406,14 @@
 }
 
 // MAKE SLIDER HITBOX AREA BIGGER
-.noUi-connect, .noUi-origin { top: 50%; }
+.noUi-handle-touch-area {
+  cursor: pointer;
+  pointer-events: all;
+}
+.noUi-connect, .noUi-origin {
+  pointer-events: none;
+  top: 50%;
+}
 .noUi-connect { height: 3px; }
 .noUi-base {
   height: 48px;

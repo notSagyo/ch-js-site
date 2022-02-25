@@ -7529,7 +7529,13 @@ input[type=range]::-ms-thumb {
   opacity: 1;
 }
 
+.noUi-handle-touch-area {
+  cursor: pointer;
+  pointer-events: all;
+}
+
 .noUi-connect, .noUi-origin {
+  pointer-events: none;
   top: 50%;
 }
 

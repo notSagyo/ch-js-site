@@ -242,7 +242,7 @@ let activeProductList = new ProductList();
 
 // Add events
 (() => {
-	priceSlider.noUiSlider.on('set', (values) => {
+	priceSlider && (priceSlider.noUiSlider.on('set', (values) => {
 		activeProductList.onFilterPrice(values[0], values[1]);
-	});
+	}));
 })();
