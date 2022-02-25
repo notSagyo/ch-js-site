@@ -133,6 +133,7 @@ class ProductList {
 	constructor(products) {
 		this.products = products || [];
 		this.productsNodes = [];
+		this.filterPriceRange = [0, 9999];
 	}
 
 	//#region Product Methods ------- //
@@ -210,6 +211,22 @@ class ProductList {
 	}
 	//#endregion
 
+	// Filters ----------------------- //
+	onFilterPrice(startPrice, endPrice) {
+		this.productsNodes.forEach(prodElem => {
+			let price = prodElem.querySelector('.product-li__price');
+			let prodClasses = prodElem.classList;
+			price = +price.innerHTML.slice(1);
+
+			if (price < startPrice || price > endPrice) {
+				if (!prodClasses.contains('hide'))
+					prodClasses.add('hide');
+			} else {
+				prodClasses.remove('hide');
+			}
+		});
+	}
+
 	// Getters/Setters -------------- //
 	setProducts (products) {
 		this.products = products;
@@ -222,3 +239,10 @@ class ProductList {
 
 // TODO: make this static
 let activeProductList = new ProductList();
+
+// Add events
+(() => {
+	priceSlider.noUiSlider.on('set', (values) => {
+		activeProductList.onFilterPrice(values[0], values[1]);
+	});
+})();

@@ -24,6 +24,7 @@
 	<link rel="stylesheet" href="../css/main.css">
 	<!-- JS -->
 	<script defer src="../js/template.js"></script>
+	<script defer src="../js/nouislider.min.js"></script>
 	<script defer src="../js/materialize.min.js"></script>
 	<script defer src="../js/utils.js"></script>
 </head>
@@ -35,7 +36,8 @@
 		{{sidenav}}
 
 		<div class="main__wrapper">
-			<h1 class="h1 page-title">Products</h1>
+			<!-- TODO: Add headers to all files -->
+			<!-- <h1 class="h1 page-title">Products</h1> -->
 			<div class="products-layout">
 				<!-- Search filters -->
 				<aside class="product-filters col-gutter">
@@ -45,10 +47,21 @@
 						<li class="active">
 							<div class="collapsible-header primary white-text noselect">CATEGORIES</div>
 							<ul class="collapsible-body collection p-0">
-								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">Home</a></li>
+								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">House</a></li>
 								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">Technology</a></li>
 								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">Clothes</a></li>
 								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">Vehicles</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="product-filters__filter--price collapsible expandable">
+						<li class="active">
+							<div class="collapsible-header primary white-text noselect">PRICE</div>
+							<ul class="collapsible-body p-0">
+								<li class="product-filters__range-item collection-item">
+									Price range
+									<div id="test-slider" class="slider"></div>
+								</li>
 							</ul>
 						</li>
 					</ul>
