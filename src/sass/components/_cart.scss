@@ -5,8 +5,6 @@
 @use 'sass:math';
 
 .cart {
-	margin: (flex.$gutter * 2) auto;
-
 	// Summary --------------------------------------------------------------- //
 	&__summary {
 		@include raised-bg;

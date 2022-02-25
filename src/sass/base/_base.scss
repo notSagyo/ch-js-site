@@ -2,6 +2,7 @@
 // Imports -------------------------------------------------------------------//
 @use 'typography' as *;
 @use '../abstracts' as *;
+@use '../vendor/sass-flexbox/main.scss' as flex;
 
 // Styling -------------------------------------------------------------------//
 body {
@@ -11,14 +12,13 @@ body {
 	min-height: 100vh;
 }
 
-main {
-	// Footer on bottom
-	flex-grow: 1;
-}
+// Footer on bottom
+main { flex-grow: 1; }
 
 .main__wrapper {
 	@include container;
 	margin: 0 auto;
+	padding: (flex.$gutter * 2)  0;
 
 	@include xs-down { width: 100%; }
 }

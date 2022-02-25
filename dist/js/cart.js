@@ -1,3 +1,4 @@
+// TODO: Interés mensual => tasa nominal anual
 // Stores cart status and item list
 class Cart {
 	constructor({ discount, payments, monthInterestRate, tax, itemList } = {}) {

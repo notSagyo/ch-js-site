@@ -14,6 +14,8 @@
 		margin-bottom: flex.$gutter;
 		width: 100%;
 
+		.collapsible-header { font-weight: 500; }
+
 		@include md-up { width: 16rem; }
 	}
 
@@ -28,6 +30,12 @@
 
 			&:hover { background-color: rgba(0 0 0 / 5%); }
 		}
+	}
+
+	&__filter--price &__range-item {
+		padding: 10px 20px;
+
+		.slider { margin: 10px 0; }
 	}
 }
 
