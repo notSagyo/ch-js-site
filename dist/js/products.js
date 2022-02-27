@@ -213,9 +213,16 @@ class ProductList {
 
 	// Filters ----------------------- //
 	onFilterPrice(startPrice, endPrice) {
+		// Update min/max input fields
+		let min = document.querySelector('#min-price');
+		let max  = document.querySelector('#max-price');
+		min.value = startPrice;
+		max.value = endPrice;
+
 		this.productsNodes.forEach(prodElem => {
 			let price = prodElem.querySelector('.product-li__price');
 			let prodClasses = prodElem.classList;
+
 			price = +price.innerHTML.slice(1);
 
 			if (price < startPrice || price > endPrice) {
@@ -242,7 +249,21 @@ let activeProductList = new ProductList();
 
 // Add events
 (() => {
-	priceSlider && (priceSlider.noUiSlider.on('set', (values) => {
+	// Price slider
+	priceSlider && (priceSlider.noUiSlider.on('end', (values) => {
+		console.log(values);
 		activeProductList.onFilterPrice(values[0], values[1]);
 	}));
+
+	// Price min/max
+	let min = document.querySelector('#min-price');
+	let max = document.querySelector('#max-price');
+	let onMinMax = () => {
+		if (priceSlider)
+			priceSlider.noUiSlider.set([min.value, max.value], false, true);
+		activeProductList.onFilterPrice(min.value, max.value);
+	};
+
+	min.addEventListener('change', onMinMax);
+	max.addEventListener('change', onMinMax);
 })();

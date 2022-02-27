@@ -59,8 +59,13 @@
 							<div class="collapsible-header primary white-text noselect">PRICE</div>
 							<ul class="collapsible-body p-0">
 								<li class="product-filters__range-item collection-item">
-									Price range
-									<div id="test-slider" class="slider"></div>
+									Range
+									<div class="range-minmax">
+										<input id="min-price" class="range-minmax__number" type="number" value="0" placeholder="min.">
+										<div>—</div>
+										<input id="max-price" class="range-minmax__number" type="number" value="1000" placeholder="max.">
+									</div>
+									<div id="price-slider" class="slider"></div>
 								</li>
 							</ul>
 						</li>
