@@ -1,4 +1,3 @@
-// !TODO: MAKE FILTERS NOT OVERRIDE EACH OTHER
 // Stores product related info
 class Product {
 	constructor(name, price, description, image, category, quantity = 1) {
@@ -26,7 +25,7 @@ class Product {
 		return this.setQuantity(this.quantity - amount);
 	}
 
-	//#region Get / Set ------------- //
+	//#region Setters --------------- //
 	setPrice(amount) {
 		if (!Number.isInteger(amount) || amount < 0) {
 			console.warn('Invalid arguments: positive integer expected');
@@ -56,13 +55,6 @@ class Product {
 		this.total = amount;
 		return this.total;
 	}
-
-	getName() { return this.name; }
-	getDescription() { return this.description; }
-	getImage() { return this.image; }
-	getPrice() { return this.price; }
-	getQuantity() { return this.quantity; }
-	getTotal() { return this.total; }
 	//#endregion
 
 	//#region Static methods -------- //
@@ -136,6 +128,14 @@ class ProductList {
 	constructor(products) {
 		this.products = products || [];
 		this.productsNodes = [];
+
+		this.activePriceFilter = [];
+		this.activeCategoryFilter = '';
+	}
+
+	setProducts (products) {
+		this.products = products;
+		this.updateDom();
 	}
 
 	//#region Product Methods ------- //
@@ -144,7 +144,7 @@ class ProductList {
 		if (!(product instanceof Product)) {
 			console.warn('Invalid arguments: Product expected');
 			return null;
-		} else if (product.getQuantity() < 1) {
+		} else if (product.quantity < 1) {
 			console.warn('Zero quantity products won\'t be added');
 			return null;
 		} else if (this.findProduct(product.name)) {
@@ -158,7 +158,7 @@ class ProductList {
 		if (debugMode)
 			console.log(
 				`%cAdded to product list: ${product.name}
-				(${product.getQuantity()})`,
+				(${product.quantity})`,
 				`color: ${colors.success}`);
 
 		this.updateDom();
@@ -180,7 +180,7 @@ class ProductList {
 		if (debugMode)
 			console.log(
 				`%cRemoved from product list: ${removedProduct.name} ` +
-				`(${removedProduct.getQuantity()})`,
+				`(${removedProduct.quantity})`,
 				`color: ${colors.danger};`);
 
 		this.updateDom();
@@ -208,91 +208,119 @@ class ProductList {
 		this.productsNodes = this.generateNodes();
 		productListElem.replaceChildren(...this.productsNodes);
 
+		// Filter results with active filters
+		this.filter({
+			startPrice: this.activePriceFilter[0],
+			endPrice: this.activePriceFilter[1],
+			categories: this.activeCategoryFilter
+		});
+
 		// New prods aren't listened by materialize; initialize again
 		reinitMaterialize();
 	}
 	//#endregion
 
-	// Filters ----------------------- //
-	onFilterPrice(startPrice, endPrice) {
-		// Update min/max input fields
-		let min = document.querySelector('#min-price');
-		let max  = document.querySelector('#max-price');
-		min.value = startPrice;
-		max.value = endPrice;
+	// Podría haber hecho los filtros pidiendo nuevamente el JSON
+	// pero tenía ganas de trabajarlo así para complicarme la vida :)
+	//#region Filters --------------- //
+	filter({
+		startPrice = this.activePriceFilter[0],
+		endPrice = this.activePriceFilter[1],
+		categories = this.activeCategoryFilter
+	}) {
+		let filtered = this.productsNodes;
 
-		// Get element price from the price tag
-		this.productsNodes.forEach(prodElem => {
-			let price = prodElem.dataProduct.price;
-			hideOnCondition(prodElem, (price < startPrice || price > endPrice));
-		});
+		if (startPrice && endPrice) {
+			this.activePriceFilter = [startPrice, endPrice];
+			filtered = this.filterPrice(startPrice, endPrice, filtered);
+		}
+		if (categories) {
+			this.activeCategoryFilter = categories;
+			filtered = this.filterCategory(categories, filtered);
+		}
+
+		if (filtered != this.productsNodes) {
+			this.productsNodes.forEach(prodElem =>
+				hideOnCondition(prodElem, !filtered.includes(prodElem)));
+		} else {
+			this.productsNodes.forEach(prodElem =>
+				prodElem.classList.remove('hide'));
+		}
 	}
 
-	onFilterCategory(categories) {
-		// Check if each product belongs to any 'categories' and hide/unhide it
-		for (let i = 0; i < this.productsNodes.length; i++) {
-			let prodElem = this.productsNodes[i];
-			let includesCategory = false;
+	filterPrice(startPrice, endPrice, prodList = this.productsNodes) {
+		let filtered = [];
+		let min = document.querySelector('#min-price');
+		let max  = document.querySelector('#max-price');
 
-			if (categories.includes('all')) {
-				prodElem.classList.remove('hide');
-				continue;
-			}
+		if (min) min.value = startPrice;
+		if (max) max.value = endPrice;
+
+		prodList.forEach(prodElem => {
+			let price = prodElem.dataProduct.price;
+			if (price > startPrice && price < endPrice)
+				filtered.push(prodElem);
+		});
+
+		return filtered;
+	}
+
+	filterCategory(categories, prodList = this.productsNodes) {
+		if (categories.includes('all'))
+			return this.productsNodes;
+
+		let filtered = [];
+		for (let i = 0; i < prodList.length; i++) {
+			let prodElem = prodList[i];
+			let includesCategory = false;
 
 			categories.forEach(category => {
 				let elemCategory = prodElem.dataProduct.category;
+				elemCategory = elemCategory.toLowerCase();
 				category = category.toLowerCase();
+
 				if (!includesCategory)
 					includesCategory = elemCategory.includes(category);
 			});
 
-			hideOnCondition(prodElem, !includesCategory);
+			if (includesCategory) filtered.push(prodElem);
 		}
-	}
 
-	// Getters/Setters -------------- //
-	setProducts (products) {
-		this.products = products;
-		this.updateDom();
+		return filtered;
 	}
-
-	getProducts() { return this.products; }
-	getProductsNodes() { return this.productsNodes; }
+	//#endregion
 }
 
 (() => {
 	// Add filter's events -------------------------------------------------- //
-	// Categories
+	// Categories ------------------- //
 	let filters = document.querySelectorAll('.category-filter');
-	filters && (filters.forEach(filterElem => {
-		let categories = filterElem.getAttribute('data-category');
-		categories = categories.split(',');
+
+	if (filters) filters.forEach(filterElem => {
+		let categories = filterElem.getAttribute('data-category').split(',');
+
 		filterElem.addEventListener('click', () =>
-			activeProductList.onFilterCategory(categories));
-	}));
+			activeProductList.filter({ categories: categories }));
+	});
 
 	// Price ------------------------ //
-	priceSlider && (priceSlider.noUiSlider.on('end', (values) =>
-		activeProductList.onFilterPrice(values[0], values[1])));
-
+	// On price input's number change
 	let min = document.querySelector('#min-price');
 	let max = document.querySelector('#max-price');
 
 	if (min && max && priceSlider) {
 		let onMinMax = () => {
 			priceSlider.noUiSlider.set([min.value, max.value], false, true);
-			activeProductList.onFilterPrice(min.value, max.value);
+			activeProductList.filterPrice(min.value, max.value);
 		};
 
 		min.addEventListener('change', onMinMax);
 		max.addEventListener('change', onMinMax);
 	}
 
-	// Fix sticky filters --------------------------------------------------- //
-	let filtersElement = document.querySelector('.product-filters');
-	let navbar = document.querySelector('.navbar-fixed');
-
-
+	// On price slider change
+	(priceSlider) && priceSlider.noUiSlider.on('end', (values) =>
+		activeProductList.filter({ startPrice: values[0], endPrice: values[1] }));
 })();
 
 // TODO: make this static
