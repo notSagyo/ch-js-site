@@ -14,9 +14,11 @@ let colors = {
 	danger: 'indianred'
 };
 
-// Other
+// Other variables
 let toastLen = 50;
 
+
+// DOM =======================================================================//
 function createElement(tagName, classList = [], innerHTML = '') {
 	let element = document.createElement(tagName);
 	element.classList.add(...classList);
@@ -47,6 +49,20 @@ function initQtyControls(parent, product, cart) {
 	});
 }
 
+function hideOnCondition(elem, condition) {
+	let elemClasses = elem.classList;
+
+	if (condition) {
+		if (!elemClasses.contains('hide'))
+			elemClasses.add('hide');
+	} else {
+		elemClasses.remove('hide');
+	}
+
+	return !condition;
+}
+
+// OTHER METHODS =============================================================//
 function truncateText(text, length) {
 	if (text.length > length) {
 		text = text.substring(0, length);
