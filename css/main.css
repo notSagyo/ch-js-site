@@ -2878,7 +2878,7 @@ a {
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
 }
 
-.z-depth-1, .cart__summary, .cart-list, .sidenav-header, .sidenav, .collapsible, .dropdown-content, .btn-floating, .cart-btn, .btn, .btn-small, .btn-large, .toast, nav {
+.z-depth-1, .cart__summary, .cart-list, .product-list, .sidenav-header, .sidenav, .collapsible, .dropdown-content, .btn-floating, .cart-btn, .btn, .btn-small, .btn-large, .toast, nav {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -7659,6 +7659,7 @@ ul {
 .product-filters {
   justify-content: space-between;
   max-width: 48rem;
+  padding: 0 1rem;
 }
 .product-filters [class^=product-filters__filter--] {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
@@ -7670,12 +7671,15 @@ ul {
   border: none;
   border-radius: 0.25rem;
 }
-.product-filters [class^=product-filters__filter--] .collapsible-header {
-  font-weight: 500;
-  border-radius: 0.25rem 0.25rem 0 0;
+.product-filters [class^=product-filters__filter--]:last-child {
+  margin-bottom: 0;
 }
 .product-filters [class^=product-filters__filter--] ul {
   background-color: white;
+}
+.product-filters [class^=product-filters__filter--] .collapsible-header {
+  font-weight: 500;
+  border-radius: 0.25rem 0.25rem 0 0;
 }
 @media only screen and (max-width: 992px) {
   .product-filters [class^=product-filters__filter--] {
@@ -7733,6 +7737,8 @@ ul {
 .product-list {
   margin-left: auto;
   margin-right: auto;
+  background-color: white;
+  border-radius: 0.25rem;
   width: 100%;
   max-width: 48rem;
 }
@@ -7753,7 +7759,6 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 1rem;
 }
 .product-li__image img {
   width: 100%;
@@ -7800,13 +7805,6 @@ ul {
   margin: auto 0;
   font-size: 1.25rem;
   line-height: 1;
-}
-@media only screen and (min-width: 600px) {
-  .product-li {
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-    background-color: white;
-    border-radius: 0.25rem;
-  }
 }
 @media only screen and (min-width: 600px) {
   .product-li .product-qty {
