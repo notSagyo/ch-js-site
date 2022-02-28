@@ -1,3 +1,15 @@
-// Generic project's function file.
-// Add and import variables that should be available
-// in every SCSS files that import "abstracts".
+@use 'sass:math';
+
+@function em($px) {
+	$em: math.div($px, 16px) * 1em;
+	@return $em;
+}
+@function rem($px) {
+	$rem: math.div($px, 16px) * 1rem;
+	@return $rem;
+}
+
+@function px($rem) {
+	$px: math.div($rem, 1rem) * 16px;
+	@return $px;
+}

@@ -1,6 +1,9 @@
 // Imports
+@use '../../vendor/sass-flexbox/main' as flex;
 @use 'colors' as *;
 @forward 'colors';
+
+$main-wrapper-padding: flex.$gutter * 2;
 
 $br: 0.25rem;
 $bgc: #f7f7f7;

@@ -146,10 +146,10 @@ function getProductHtml(product) {
 					<span class="product-li__price">$${total}</span>
 					<div class="product-qty">
 						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i> </a>
-						<input class="product-qty__input input-field" type="number" placeholder="Qty" value="1"></input>
+						<input class="product-qty__input input-field" type="number" placeholder="QTY" value="1"></input>
 						<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i> </a>
 					</div>
-					<a href="javascript:void(0)" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart">
+					<a href="javascript:void(0)" class="product-li__add cart-btn tooltipped waves-effect waves-classic" data-tooltip="Add to cart">
 						<i class="material-icons">add_shopping_cart</i>
 					</a>
 				</div>
@@ -183,11 +183,11 @@ function getCartItemHtml(product) {
 					<span class="h6 cart-item__price">$${total}</span>
 					<div class="product-qty">
 						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i> </a>
-						<input class="product-qty__input input-field" type="number" placeholder="Qty" value="${quantity}"></input>
+						<input class="product-qty__input input-field" type="number" placeholder="QTY" value="${quantity}"></input>
 						<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i> </a>
 					</div>
 				</div>
-				<a href="javascript:void(0)" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"> <i class="material-icons">remove_shopping_cart</i> </a>
+				<a href="javascript:void(0)" class="cart-item__remove cart-btn tooltipped waves-effect waves-classic" data-tooltip="Remove from cart"> <i class="material-icons">remove_shopping_cart</i> </a>
 			</div>
 		</div>
 		`;

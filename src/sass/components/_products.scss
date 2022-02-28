@@ -2,24 +2,42 @@
 @use '../vendor/sass-flexbox/main' as flex;
 @use '../abstracts' as *;
 
+// TODO: Change bg and shadow from cards to columns
+$max-column-width: 48rem;
+
 .products-layout {
 	display: flex;
 	flex-direction: column;
+	position: relative;
 
 	@include md-up { flex-direction: row; }
 }
 
 .product-filters {
+	justify-content: space-between;
+	max-width: $max-column-width;
+
 	[class^='product-filters__filter--'] {
+		@include M.z-depth-1;
+
 		height: fit-content;
-		width: 100%;
+		width: 16rem;
 		margin-bottom: flex.$gutter;
+		border: none;
+		border-radius: $br;
 
-		.collapsible-header { font-weight: 500; }
+		.collapsible-header {
+			font-weight: 500;
+			border-radius: $br $br 0 0;
+		}
 
-		@include md-up { width: 16rem; }
-		@include md-down { margin: 0 1rem; }
-		@include sm-down { margin: 1rem 0; }
+		ul { background-color: white; }
+
+		@include md-down { width: 47.5%; }
+		@include sm-down {
+			margin: 1rem 0;
+			width: 100%;
+		}
 	}
 
 	&__filter--menu &__menu-item {
@@ -35,13 +53,26 @@
 		}
 	}
 
-	&__filter--price &__range-item {
+	&__filter--price ul li {
 		padding: 10px 20px;
 
 		.slider { margin: 10px 0; }
 	}
 
-	@include md-down { display: flex; }
+	// Sticky filters
+	@include md-up {
+		position: sticky;
+		height: fit-content;
+		top: M.$navbar-height + px($main-wrapper-padding);
+	}
+
+	@include md-down {
+		display: flex;
+		width: 100%;
+		max-width: $max-column-width;
+		margin: 0 auto;
+	}
+
 	@include sm-down { flex-direction: column; }
 }
 
@@ -49,7 +80,7 @@
 	@include mx-auto;
 
 	width: 100%;
-	max-width: 48rem;
+	max-width: $max-column-width;
 
 	@include md-up { @include mx(0); }
 }
@@ -64,8 +95,10 @@
 		@include product-bg;
 
 		display: flex;
-		justify-content: center;
 		align-items: center;
+		justify-content: center;
+		margin: 0 flex.$gutter;
+
 
 		img {
 			@extend .materialboxed;
@@ -109,6 +142,13 @@
 		margin: auto 0;
 		font-size: 1.25rem;
 		line-height: 1;
+	}
+
+	@include sm-up {
+		@include M.z-depth-1;
+
+		background-color: white;
+		border-radius: $br;
 	}
 
 	@include sm-up {

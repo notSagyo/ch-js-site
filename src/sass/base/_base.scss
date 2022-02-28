@@ -18,7 +18,7 @@ main { flex-grow: 1; }
 .main__wrapper {
 	@include container;
 	margin: 0 auto;
-	padding: (flex.$gutter * 2)  0;
+	padding: $main-wrapper-padding  0;
 
 	@include xs-down { width: 100%; }
 }

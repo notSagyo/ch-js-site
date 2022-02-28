@@ -1,9 +1,11 @@
+// !TODO: MAKE FILTERS NOT OVERRIDE EACH OTHER
 // Stores product related info
 class Product {
-	constructor(name, price, description, image, quantity = 1) {
+	constructor(name, price, description, image, category, quantity = 1) {
 		this.name = name;
 		this.description = description || 'No description';
 		this.image = image || 'https://via.placeholder.com/256';
+		this.category = category || 'other';
 
 		this.price = price;
 		this.quantity = quantity;
@@ -95,7 +97,7 @@ class Product {
 		return result;
 	}
 
-	// !TODO: make category filters work!
+	// ?TODO: add pagination
 	// Product info represented as an DOM node
 	static productToNode(product, type = 'productItem') {
 		let elem = '';
@@ -108,16 +110,17 @@ class Product {
 			addBtn.addEventListener('click', () => activeCart.addItem(product));
 
 			initQtyControls(elem, product);
-		} else if (type == 'cartitem') {
+		}
+		else if (type == 'cartitem') {
 			elem = createElement('li', ['cart-item', 'row'], getCartItemHtml(product));
 
 			elem.querySelector('.cart-item__remove').addEventListener('click',
-				() => activeCart.removeItem(product)
-			);
+				() => activeCart.removeItem(product));
 
 			initQtyControls(elem, product, activeCart);
 		}
 
+		if (elem) elem.dataProduct = product;
 		return elem;
 	}
 
@@ -133,7 +136,6 @@ class ProductList {
 	constructor(products) {
 		this.products = products || [];
 		this.productsNodes = [];
-		this.filterPriceRange = [0, 9999];
 	}
 
 	//#region Product Methods ------- //
@@ -219,19 +221,33 @@ class ProductList {
 		min.value = startPrice;
 		max.value = endPrice;
 
+		// Get element price from the price tag
 		this.productsNodes.forEach(prodElem => {
-			let price = prodElem.querySelector('.product-li__price');
-			let prodClasses = prodElem.classList;
-
-			price = +price.innerHTML.slice(1);
-
-			if (price < startPrice || price > endPrice) {
-				if (!prodClasses.contains('hide'))
-					prodClasses.add('hide');
-			} else {
-				prodClasses.remove('hide');
-			}
+			let price = prodElem.dataProduct.price;
+			hideOnCondition(prodElem, (price < startPrice || price > endPrice));
 		});
+	}
+
+	onFilterCategory(categories) {
+		// Check if each product belongs to any 'categories' and hide/unhide it
+		for (let i = 0; i < this.productsNodes.length; i++) {
+			let prodElem = this.productsNodes[i];
+			let includesCategory = false;
+
+			if (categories.includes('all')) {
+				prodElem.classList.remove('hide');
+				continue;
+			}
+
+			categories.forEach(category => {
+				let elemCategory = prodElem.dataProduct.category;
+				category = category.toLowerCase();
+				if (!includesCategory)
+					includesCategory = elemCategory.includes(category);
+			});
+
+			hideOnCondition(prodElem, !includesCategory);
+		}
 	}
 
 	// Getters/Setters -------------- //
@@ -244,26 +260,40 @@ class ProductList {
 	getProductsNodes() { return this.productsNodes; }
 }
 
-// TODO: make this static
-let activeProductList = new ProductList();
-
-// Add events
 (() => {
-	// Price slider
-	priceSlider && (priceSlider.noUiSlider.on('end', (values) => {
-		console.log(values);
-		activeProductList.onFilterPrice(values[0], values[1]);
+	// Add filter's events -------------------------------------------------- //
+	// Categories
+	let filters = document.querySelectorAll('.category-filter');
+	filters && (filters.forEach(filterElem => {
+		let categories = filterElem.getAttribute('data-category');
+		categories = categories.split(',');
+		filterElem.addEventListener('click', () =>
+			activeProductList.onFilterCategory(categories));
 	}));
 
-	// Price min/max
+	// Price ------------------------ //
+	priceSlider && (priceSlider.noUiSlider.on('end', (values) =>
+		activeProductList.onFilterPrice(values[0], values[1])));
+
 	let min = document.querySelector('#min-price');
 	let max = document.querySelector('#max-price');
-	let onMinMax = () => {
-		if (priceSlider)
-			priceSlider.noUiSlider.set([min.value, max.value], false, true);
-		activeProductList.onFilterPrice(min.value, max.value);
-	};
 
-	min.addEventListener('change', onMinMax);
-	max.addEventListener('change', onMinMax);
+	if (min && max && priceSlider) {
+		let onMinMax = () => {
+			priceSlider.noUiSlider.set([min.value, max.value], false, true);
+			activeProductList.onFilterPrice(min.value, max.value);
+		};
+
+		min.addEventListener('change', onMinMax);
+		max.addEventListener('change', onMinMax);
+	}
+
+	// Fix sticky filters --------------------------------------------------- //
+	let filtersElement = document.querySelector('.product-filters');
+	let navbar = document.querySelector('.navbar-fixed');
+
+
 })();
+
+// TODO: make this static
+let activeProductList = new ProductList();

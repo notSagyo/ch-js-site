@@ -24,8 +24,8 @@
 		.then(json =>  {
 			prods = [];
 			json.forEach(prod => {
-				let { title, price, description, image } = prod;
-				prods.push(new Product(title, price, description, image));
+				let { title, price, description, image, category } = prod;
+				prods.push(new Product(title, price, description, image, category));
 			});
 			productList.setProducts(prods);
 		})
