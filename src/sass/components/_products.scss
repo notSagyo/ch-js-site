@@ -16,6 +16,7 @@ $max-column-width: 48rem;
 .product-filters {
 	justify-content: space-between;
 	max-width: $max-column-width;
+	padding: 0 flex.$gutter;
 
 	[class^='product-filters__filter--'] {
 		@include M.z-depth-1;
@@ -23,15 +24,17 @@ $max-column-width: 48rem;
 		height: fit-content;
 		width: 16rem;
 		margin-bottom: flex.$gutter;
+
 		border: none;
 		border-radius: $br;
+
+		&:last-child { margin-bottom: 0; }
+		ul { background-color: white; }
 
 		.collapsible-header {
 			font-weight: 500;
 			border-radius: $br $br 0 0;
 		}
-
-		ul { background-color: white; }
 
 		@include md-down { width: 47.5%; }
 		@include sm-down {
@@ -78,6 +81,7 @@ $max-column-width: 48rem;
 
 .product-list {
 	@include mx-auto;
+	@include raised-bg;
 
 	width: 100%;
 	max-width: $max-column-width;
@@ -97,8 +101,6 @@ $max-column-width: 48rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		margin: 0 flex.$gutter;
-
 
 		img {
 			@extend .materialboxed;
@@ -142,13 +144,6 @@ $max-column-width: 48rem;
 		margin: auto 0;
 		font-size: 1.25rem;
 		line-height: 1;
-	}
-
-	@include sm-up {
-		@include M.z-depth-1;
-
-		background-color: white;
-		border-radius: $br;
 	}
 
 	@include sm-up {

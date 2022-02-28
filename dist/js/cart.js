@@ -1,7 +1,6 @@
-// TODO: Interés mensual => tasa nominal anual
 // Stores cart status and item list
 class Cart {
-	constructor({ discount, payments, monthInterestRate, tax, itemList } = {}) {
+	constructor({ discount, payments, annualIntereset, tax, itemList } = {}) {
 		this.itemList = itemList || [];
 		this.itemCount = 0;
 		this.totalQuantity = 0;
@@ -9,7 +8,8 @@ class Cart {
 		this.total = 0;
 		this.subtotal = 0;
 		this.discount = discount || 0;
-		this.interestRate = monthInterestRate || 0.03;
+		this.annualInterestRate = annualIntereset || 0.43;
+		this.monthInterestRate = this.annualInterestRate / 12;
 		this.payments = payments || 1;
 		this.taxRate = tax || 0.21;
 		this.monthFee = 0;
@@ -216,7 +216,7 @@ class Cart {
 	//#region Cart status ----------- //
 	// After modifying a field, should call this
 	updateCart() {
-		this.subtotal = this.itemList.reduce((a, b) => a + b.getTotal(), 0);
+		this.subtotal = this.itemList.reduce((a, b) => a + b.total, 0);
 		this.totalQuantity = this.itemList.reduce((a, b) => a + b.quantity, 0);
 		this.itemCount = this.itemList.length;
 		this.total = this.subtotal;
@@ -274,7 +274,7 @@ class Cart {
 			paymentsElem.childNodes.forEach(child => {
 				let payments = child.value;
 				let interest =
-					Math.round(cartRecovered.interestRate * (payments - 1) * 100);
+					Math.round(cartRecovered.monthInterestRate * payments * 100);
 				if (payments > 1) {
 					child.innerHTML =
 						`${payments} <span class="cart__payments-interest"> (${interest}%)</span>`;
@@ -295,7 +295,12 @@ class Cart {
 	//#endregion
 
 	//#region Get / Set ------------- //
-	getTotalInterestRate() { return this.interestRate * (this.payments - 1); }
+	getTotalInterestRate() {
+		let interest = (this.payments > 1)
+			? this.monthInterestRate * (this.payments)
+			: 0;
+		return  interest;
+	}
 
 	setItemList(items) {
 		if (!Array.isArray(items) || !items.every(x => x instanceof Product)) {
@@ -323,7 +328,7 @@ class Cart {
 	}
 
 	setMonthInterest (amount) {
-		this.interestRate = amount;
+		this.monthInterestRate = amount;
 		this.updateCart();
 		return amount;
 	}
