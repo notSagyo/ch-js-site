@@ -23,7 +23,7 @@ class Cart {
 			console.warn('Invalid arguments: CartItem expected');
 			return null;
 		}
-		if (item.getQuantity() < 1) {
+		if (item.quantity < 1) {
 			console.warn('Zero quantity items won\'t be added');
 			return null;
 		}
@@ -46,7 +46,7 @@ class Cart {
 		if (debugMode)
 			console.log(
 				`%cAdded to cart: ${item.name} ` +
-				`(${item.getQuantity()})`,
+				`(${item.quantity})`,
 				`color: ${colors.success}`);
 
 		this.updateCart();
@@ -74,7 +74,7 @@ class Cart {
 		if (debugMode)
 			console.log(
 				`%cRemoved from cart: ${removed.name} ` +
-				`(${removed.getQuantity()})`,
+				`(${removed.quantity})`,
 				`color: ${colors.danger};`);
 
 		this.updateCart();
@@ -217,7 +217,7 @@ class Cart {
 	// After modifying a field, should call this
 	updateCart() {
 		this.subtotal = this.itemList.reduce((a, b) => a + b.getTotal(), 0);
-		this.totalQuantity = this.itemList.reduce((a, b) => a + b.getQuantity(), 0);
+		this.totalQuantity = this.itemList.reduce((a, b) => a + b.quantity, 0);
 		this.itemCount = this.itemList.length;
 		this.total = this.subtotal;
 		this.total *=
