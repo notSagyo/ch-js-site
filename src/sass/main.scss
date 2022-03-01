@@ -21,7 +21,9 @@
 @use 'components/hero';
 @use 'components/forms';
 @use 'components/cat-showcase';
+@use 'components/float-shape';
 
 // Layout
 @use 'layout/footer';
 @use 'layout/contact';
+@use 'layout/about';

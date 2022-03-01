@@ -8326,6 +8326,19 @@ ul {
   }
 }
 
+.float-shape__img {
+  position: relative;
+  float: left;
+  shape-margin: 2rem;
+}
+.float-shape--right .float-shape__img {
+  float: right;
+}
+
+#float-shape-about {
+  shape-outside: url("../img/about.svg");
+}
+
 .page-footer .footer-container {
   margin: 0 auto;
   max-width: 1280px;
@@ -8353,5 +8366,53 @@ ul {
   align-items: center;
   flex-grow: 1;
   max-width: 50rem;
+}
+
+.about__header img {
+  display: none;
+}
+@media only screen and (max-width: 992px) {
+  .about__header {
+    display: flex;
+    flex-direction: column;
+  }
+  .about__header img {
+    align-self: center;
+    display: block;
+    margin-bottom: 1rem;
+    width: 75%;
+    max-width: 40rem;
+  }
+}
+
+.about__logo-container {
+  width: 15rem;
+  max-width: 50%;
+  display: inline-block;
+}
+.about__logo-container #svg-logo {
+  display: inline;
+  color: rgba(0, 0, 0, 0.87);
+  height: 100%;
+}
+
+.about__content {
+  margin: 1rem 0;
+  font-size: 1.5rem;
+}
+.about__content p {
+  margin-bottom: 2.5rem;
+}
+
+.float-shape__img {
+  max-width: 60%;
+}
+.float-shape__text {
+  margin: 1rem 0;
+}
+@media only screen and (max-width: 992px) {
+  .float-shape__img {
+    display: none;
+  }
 }
 /*# sourceMappingURL=main.css.map */
