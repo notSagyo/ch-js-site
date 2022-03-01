@@ -6,6 +6,7 @@
 	// Add some prods
 	let prods = [];
 
+	// TODO: put these in a JSON file
 	// Prods in case fetch request fails
 	prods = [
 		new Product('Shirt', 15,
