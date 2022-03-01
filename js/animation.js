@@ -59,6 +59,7 @@
 })();
 
 // Typewriter --------------------------------------------------------------- //
+// XXX: delete if not enough time to implement
 function typeWriter(elem, text, timeout = 75) {
 	elem.innerText = ' ';
 	gsap.to(elem, {

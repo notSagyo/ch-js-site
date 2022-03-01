@@ -2878,7 +2878,7 @@ a {
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
 }
 
-.z-depth-1, .cart__summary, .cart-list, .product-list, .sidenav-header, .sidenav, .collapsible, .dropdown-content, .btn-floating, .cart-btn, .btn, .btn-small, .btn-large, .toast, nav {
+.z-depth-1, .contact-form, .cart__summary, .cart-list, .product-list, .sidenav-header, .sidenav, .collapsible, .dropdown-content, .btn-floating, .cart-btn, .btn, .btn-small, .btn-large, .toast, nav {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -4681,7 +4681,7 @@ select:focus {
 
 button:focus {
   outline: none;
-  background-color: #64667c;
+  background-color: #5162c0;
 }
 
 label {
@@ -4798,8 +4798,8 @@ input[type=tel]:not(.browser-default):focus:not([readonly]),
 input[type=number]:not(.browser-default):focus:not([readonly]),
 input[type=search]:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]) {
-  border-bottom: 1px solid #5b5d71;
-  box-shadow: 0 1px 0 0 #5b5d71;
+  border-bottom: 1px solid #4355b9;
+  box-shadow: 0 1px 0 0 #4355b9;
 }
 input:not([type]):not(.browser-default):focus:not([readonly]) + label,
 input[type=text]:not(.browser-default):focus:not([readonly]) + label,
@@ -4814,7 +4814,7 @@ input[type=tel]:not(.browser-default):focus:not([readonly]) + label,
 input[type=number]:not(.browser-default):focus:not([readonly]) + label,
 input[type=search]:not(.browser-default):focus:not([readonly]) + label,
 textarea.materialize-textarea:focus:not([readonly]) + label {
-  color: #5b5d71;
+  color: #4355b9;
 }
 input:not([type]):not(.browser-default):focus.valid ~ label,
 input[type=text]:not(.browser-default):focus.valid ~ label,
@@ -5122,7 +5122,7 @@ textarea.materialize-textarea + label:after {
   top: 0.5rem;
 }
 .input-field .prefix.active, .input-field .suffix.active {
-  color: #5b5d71;
+  color: #4355b9;
 }
 .input-field .prefix ~ input,
 .input-field .prefix ~ textarea,
@@ -5669,7 +5669,7 @@ select {
   z-index: 1;
 }
 .select-wrapper input.select-dropdown:focus {
-  border-bottom: 1px solid #5b5d71;
+  border-bottom: 1px solid #4355b9;
 }
 .select-wrapper .caret {
   position: absolute;
@@ -7573,7 +7573,9 @@ body {
 }
 
 main {
+  display: flex;
   flex-grow: 1;
+  flex-direction: column;
 }
 
 .main__wrapper {
@@ -7685,6 +7687,9 @@ ul {
   .product-filters [class^=product-filters__filter--] {
     width: 47.5%;
   }
+  .product-filters [class^=product-filters__filter--]:last-child {
+    margin-bottom: 1rem;
+  }
 }
 @media only screen and (max-width: 600px) {
   .product-filters [class^=product-filters__filter--] {
@@ -7739,6 +7744,9 @@ ul {
   margin-right: auto;
   background-color: white;
   border-radius: 0.25rem;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   width: 100%;
   max-width: 48rem;
 }
@@ -8134,6 +8142,39 @@ ul {
   height: 30rem;
 }
 
+.contact-form {
+  background-color: white;
+  border-radius: 0.25rem;
+  display: grid;
+  width: 100%;
+  margin: auto;
+  padding: 1rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 2rem;
+  gap: 2rem;
+  border-radius: 0.25rem;
+}
+.contact-form textarea {
+  max-height: 4.25rem;
+  overflow: auto;
+}
+.contact-form__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contact-form__buttons button {
+  margin-left: 1rem;
+}
+.contact-form input:-webkit-autofill, .contact-form input:-webkit-autofill:hover, .contact-form input:-webkit-autofill:focus, .contact-form input:-webkit-autofill:active {
+  -webkit-transition: background-color 0s 50000s;
+  transition: background-color 0s 50000s;
+}
+.contact-form label {
+  pointer-events: none;
+}
+
 .range-minmax {
   display: flex;
   justify-content: space-between;
@@ -8289,5 +8330,14 @@ ul {
 }
 .page-footer .footer-header {
   margin-bottom: 1rem;
+}
+
+.contact-container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 50rem;
 }
 /*# sourceMappingURL=main.css.map */
