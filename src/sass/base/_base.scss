@@ -12,8 +12,12 @@ body {
 	min-height: 100vh;
 }
 
-// Footer on bottom
-main { flex-grow: 1; }
+main {
+	display: flex;
+	flex-grow: 1;
+	// Footer on bottom
+	flex-direction: column;
+}
 
 .main__wrapper {
 	@include container;

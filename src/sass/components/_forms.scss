@@ -1,5 +1,46 @@
 @use '../vendor/materialize/materialize' as M;
+@use '../vendor/sass-flexbox/main' as flex;
 @use '../abstracts' as *;
+
+.contact-form {
+	@include raised-bg;
+
+	display: grid;
+	width: 100%;
+	margin: auto;
+	padding: flex.$gutter;
+
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr;
+	gap: 2rem;
+
+	border-radius: $br;
+
+	textarea {
+		max-height: 4.25rem;
+		overflow: auto;
+	}
+
+	&__buttons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		button { margin-left: flex.$gutter; }
+	}
+
+
+	// Fix autocomplete bg!
+	input {
+		&:-webkit-autofill, &:-webkit-autofill:hover,
+		&:-webkit-autofill:focus, &:-webkit-autofill:active {
+			transition: background-color 0s 50000s;
+		}
+	}
+
+	// Fix autocomplete not working on 1st click!
+	label { pointer-events: none; }
+}
 
 .range-minmax {
 	display: flex;

@@ -36,7 +36,12 @@ $max-column-width: 48rem;
 			border-radius: $br $br 0 0;
 		}
 
-		@include md-down { width: 47.5%; }
+		@include md-down {
+			width: 47.5%;
+
+			&:last-child { margin-bottom: flex.$gutter; }
+		}
+
 		@include sm-down {
 			margin: 1rem 0;
 			width: 100%;
@@ -83,6 +88,7 @@ $max-column-width: 48rem;
 	@include mx-auto;
 	@include raised-bg;
 
+	height: fit-content;
 	width: 100%;
 	max-width: $max-column-width;
 
