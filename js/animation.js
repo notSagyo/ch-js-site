@@ -43,7 +43,7 @@
 		// Recuerdos de guerra de Algebra y hacer gráficos en Pascal
 		let screentCenterX = window.screen.width / 2;
 		let screenCenterY = window.screen.height / 2;
-		let bgForce = 0.05;
+		let bgForce = 0.04;
 
 		if (window.screen.width > mediaMd) {
 			document.addEventListener('mousemove', (e) => {
@@ -53,7 +53,7 @@
 				gsap.to(heroBackground, {
 					backgroundPositionX: posX,
 					backgroundPositionY: posY,
-					duration: 0.5,
+					duration: 0.65,
 					ease: 'ease-in-out'
 				});
 			});

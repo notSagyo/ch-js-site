@@ -319,7 +319,7 @@ class ProductList {
 	}
 
 	// On price slider change
-	(priceSlider) && priceSlider.noUiSlider.on('end', (values) =>
+	(priceSlider) && priceSlider.noUiSlider.on('set', (values) =>
 		activeProductList.filter({ startPrice: values[0], endPrice: values[1] }));
 })();
 
