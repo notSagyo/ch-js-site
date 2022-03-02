@@ -2,7 +2,7 @@
 @use '../vendor/sass-flexbox/main' as flex;
 @use '../abstracts' as *;
 
-// TODO: Change bg and shadow from cards to columns
+// ?TODO: Change bg and shadow from cards to columns
 $max-column-width: 48rem;
 
 .products-layout {
