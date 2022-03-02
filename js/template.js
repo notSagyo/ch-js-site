@@ -194,3 +194,11 @@ function getCartItemHtml(product) {
 
 	return html;
 }
+
+function noResultsHtml(message, classes = '') {
+	let emoji = ['🙁', '😕', '🤨', '🥺', '❌', '🛒', '🎈', '💤', '🐱‍👤', '💔'];
+	emoji = emoji[Math.floor(Math.random() * 10)];
+	let html =
+		`<span class="no-results ${classes}">${message} ${emoji}</span>`;
+	return html;
+}

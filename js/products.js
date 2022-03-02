@@ -131,6 +131,7 @@ class ProductList {
 
 		this.activePriceFilter = [];
 		this.activeCategoryFilter = '';
+		this.filteredProductsNodes = [];
 	}
 
 	setProducts (products) {
@@ -152,7 +153,6 @@ class ProductList {
 			return null;
 		}
 
-		// Add product
 		this.products.push(product);
 
 		if (debugMode)
@@ -201,6 +201,7 @@ class ProductList {
 	// Update the list in the DOM with the current products
 	updateDom() {
 		let productListElem = document.querySelector('#product-list');
+
 		if (!productListElem)
 			return;
 
@@ -209,7 +210,7 @@ class ProductList {
 		productListElem.replaceChildren(...this.productsNodes);
 
 		// Filter results with active filters
-		this.filter({
+		this.filterAndUpdate({
 			startPrice: this.activePriceFilter[0],
 			endPrice: this.activePriceFilter[1],
 			categories: this.activeCategoryFilter
@@ -223,6 +224,21 @@ class ProductList {
 	// Podría haber hecho los filtros pidiendo nuevamente el JSON
 	// pero tenía ganas de trabajarlo así para complicarme la vida :)
 	//#region Filters --------------- //
+	filterAndUpdate({
+		startPrice = this.activePriceFilter[0],
+		endPrice = this.activePriceFilter[1],
+		categories = this.activeCategoryFilter
+	}) {
+		let filtered = this.filter({ startPrice, endPrice, categories });
+
+		this.productsNodes.forEach(prodElem =>
+			hideOnCondition(prodElem, !filtered.includes(prodElem)));
+
+		this.filteredProductsNodes = filtered;
+		this.updateEmptyList();
+		return filtered;
+	}
+
 	filter({
 		startPrice = this.activePriceFilter[0],
 		endPrice = this.activePriceFilter[1],
@@ -239,13 +255,7 @@ class ProductList {
 			filtered = this.filterCategory(categories, filtered);
 		}
 
-		if (filtered != this.productsNodes) {
-			this.productsNodes.forEach(prodElem =>
-				hideOnCondition(prodElem, !filtered.includes(prodElem)));
-		} else {
-			this.productsNodes.forEach(prodElem =>
-				prodElem.classList.remove('hide'));
-		}
+		return filtered;
 	}
 
 	filterPrice(startPrice, endPrice, prodList = this.productsNodes) {
@@ -288,6 +298,26 @@ class ProductList {
 
 		return filtered;
 	}
+
+	updateEmptyList() {
+		if (this != activeProductList)
+			return;
+
+		let emtpyListElem = document.querySelector('.no-results');
+		let productListElem = document.querySelector('.product-list');
+
+		if (!emtpyListElem) {
+			emtpyListElem = createElement(
+				'div',
+				undefined,
+				noResultsHtml('No product found'));
+			productListElem.appendChild(emtpyListElem);
+			emtpyListElem = document.querySelector('.no-results');
+		}
+
+		hideOnCondition(emtpyListElem, this.filteredProductsNodes.length > 0);
+		initTooltipped(); // Fix out of screen tooltips
+	}
 	//#endregion
 }
 
@@ -300,7 +330,7 @@ class ProductList {
 		let categories = filterElem.getAttribute('data-category').split(',');
 
 		filterElem.addEventListener('click', () =>
-			activeProductList.filter({ categories: categories }));
+			activeProductList.filterAndUpdate({ categories: categories }));
 	});
 
 	// Price ------------------------ //
@@ -320,7 +350,7 @@ class ProductList {
 
 	// On price slider change
 	(priceSlider) && priceSlider.noUiSlider.on('set', (values) =>
-		activeProductList.filter({ startPrice: values[0], endPrice: values[1] }));
+		activeProductList.filterAndUpdate({ startPrice: values[0], endPrice: values[1] }));
 })();
 
 // TODO: make this static

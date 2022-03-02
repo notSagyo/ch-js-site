@@ -7621,9 +7621,10 @@ ul {
   }
 }
 
-.josefin-descender-ignore {
-  display: inline-block;
-  transform: translateY(7.5%);
+.no-results {
+  color: #5b5d71;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
 }
 
 .vertical-align {
@@ -8037,12 +8038,6 @@ ul {
   .cart-item__details {
     padding: 0;
   }
-}
-
-.empty-cart-msg {
-  color: #5b5d71;
-  font-size: 2rem;
-  letter-spacing: 0.5px;
 }
 
 .cart-badge {
