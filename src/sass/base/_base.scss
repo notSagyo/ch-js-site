@@ -30,12 +30,7 @@ main {
 ul { margin: 0; }
 
 .container { @include container; }
-
-.josefin-descender-ignore {
-	display: inline-block;
-	transform: translateY(7.5%);
-}
-
+.no-results { @include no-results; }
 .vertical-align { @include v-align; }
 .page-title { padding: 1rem; }
 .noselect { user-select: none; }

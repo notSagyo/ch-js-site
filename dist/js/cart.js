@@ -1,3 +1,7 @@
+// Por qué tengo una clase de Cart y ProductList en vez de un obj único?
+// la verdad es que pensaba que haya varias instancias de Cart y que se puedan
+// comparar lado a lado, pero al final no terminó en el proyecto.
+
 // Stores cart status and item list
 class Cart {
 	constructor({ discount, payments, annualIntereset, tax, itemList } = {}) {
@@ -150,7 +154,7 @@ class Cart {
 		if (itemsNodes.length > 0)
 			cartListElem.replaceChildren(...itemsNodes);
 		else
-			cartListElem.innerHTML = Cart.emptyCartHtml();
+			cartListElem.innerHTML = noResultsHtml('The cart is empty');
 
 		this.updateCartSummary();
 
@@ -283,14 +287,6 @@ class Cart {
 		}
 
 		return cartRecovered;
-	}
-
-	static emptyCartHtml() {
-		let emoji = ['🙁', '😕', '🤨', '🥺', '❌', '🛒', '🎈', '💤', '🐱‍👤', '💔'];
-		emoji = emoji[Math.floor(Math.random() * 10)];
-		let html =
-			`<span class="empty-cart-msg">The cart is empty ${emoji}</span>`;
-		return html;
 	}
 	//#endregion
 
