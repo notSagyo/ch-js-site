@@ -129,8 +129,8 @@ class ProductList {
 		this.products = products || [];
 		this.productsNodes = [];
 
-		this.activePriceFilter = [];
-		this.activeCategoryFilter = '';
+		this.activePriceFilter = [0, 999999];
+		this.activeCategoryFilter = 'all';
 		this.filteredProductsNodes = [];
 	}
 
@@ -259,18 +259,14 @@ class ProductList {
 	}
 
 	filterPrice(startPrice, endPrice, prodList = this.productsNodes) {
-		let filtered = [];
 		let min = document.querySelector('#min-price');
 		let max  = document.querySelector('#max-price');
 
+		let filtered = [...prodList.filter(x =>
+			x.dataProduct.price > startPrice && x.dataProduct.price < endPrice)];
+
 		if (min) min.value = startPrice;
 		if (max) max.value = endPrice;
-
-		prodList.forEach(prodElem => {
-			let price = prodElem.dataProduct.price;
-			if (price > startPrice && price < endPrice)
-				filtered.push(prodElem);
-		});
 
 		return filtered;
 	}
@@ -279,22 +275,12 @@ class ProductList {
 		if (categories.includes('all'))
 			return this.productsNodes;
 
-		let filtered = [];
-		for (let i = 0; i < prodList.length; i++) {
-			let prodElem = prodList[i];
-			let includesCategory = false;
-
-			categories.forEach(category => {
-				let elemCategory = prodElem.dataProduct.category;
-				elemCategory = elemCategory.toLowerCase();
-				category = category.toLowerCase();
-
-				if (!includesCategory)
-					includesCategory = elemCategory.includes(category);
-			});
-
-			if (includesCategory) filtered.push(prodElem);
-		}
+		// If product has at least 1 category in common save it
+		let filtered = prodList.filter(product =>
+			categories.some(category => {
+				let prodCategory = product.dataProduct.category.toLowerCase();
+				return prodCategory.includes(category.toLowerCase());
+			}));
 
 		return filtered;
 	}
