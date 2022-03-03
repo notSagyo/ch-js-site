@@ -3,9 +3,21 @@
 @use '../variables' as var;
 @use '../../vendor/materialize/materialize' as M;
 
+@mixin no-results {
+	color: M.$secondary-color;
+	font-size: 2rem;
+	letter-spacing: 0.5px;
+}
+
 @mixin inverted-colors {
 	background-color: M.$primary-color;
 	color: M.$on-primary;
+}
+
+@mixin raised-bg {
+	@extend .z-depth-1;
+	background-color: white;
+	border-radius: var.$br;
 }
 
 @mixin price-tag {

@@ -4,19 +4,19 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Webshop | Buy with a click and sell with a few more</title>
-	<meta name="description" content="Buy with a click and sell with a few more">
+	<title>Webshop | Buy with a click, sell with a few more</title>
+	<meta name="description" content="Buy with a click, sell with a few more">
 	<link rel="shortcut icon" href="../img/favicon.svg" type="image/x-icon">
 	<!-- Facebook Meta Tags -->
 	<meta property="og:type" content="website">
-	<meta property="og:title" content="Webshop | Buy with a click and sell with a few more">
-	<meta property="og:description" content="Buy with a click and sell with a few more">
+	<meta property="og:title" content="Webshop | Buy with a click, sell with a few more">
+	<meta property="og:description" content="Buy with a click, sell with a few more">
 	<meta property="og:image" content="https://i.imgur.com/X5gCXpy.jpg">
 	<!-- Twitter Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta property="twitter:domain" content="notsagyo.github.io">
-	<meta name="twitter:title" content="Webshop | Buy with a click and sell with a few more">
-	<meta name="twitter:description" content="Buy with a click and sell with a few more">
+	<meta name="twitter:title" content="Webshop | Buy with a click, sell with a few more">
+	<meta name="twitter:description" content="Buy with a click, sell with a few more">
 	<meta name="twitter:image" content="https://i.imgur.com/X5gCXpy.jpg">
 	<!-- Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -24,6 +24,7 @@
 	<link rel="stylesheet" href="../css/main.css">
 	<!-- JS -->
 	<script defer src="../js/template.js"></script>
+	<script defer src="../js/nouislider.min.js"></script>
 	<script defer src="../js/materialize.min.js"></script>
 	<script defer src="../js/utils.js"></script>
 </head>
@@ -35,20 +36,61 @@
 		{{sidenav}}
 
 		<div class="main__wrapper">
-			<h1 class="h1 page-title">Products</h1>
+			<!-- TODO: Add headers to all files -->
+			<!-- <h1 class="h1 page-title">Products</h1> -->
 			<div class="products-layout">
 				<!-- Search filters -->
-				<aside class="product-filters col-gutter">
-					<!-- Product filter: categories -->
+				<aside class="product-filters">
 					<!-- TODO: add collapsed icon -->
+					<!-- Product filter: categories -->
 					<ul class="product-filters__filter--menu collapsible expandable">
 						<li class="active">
 							<div class="collapsible-header primary white-text noselect">CATEGORIES</div>
 							<ul class="collapsible-body collection p-0">
-								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">Home</a></li>
-								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">Technology</a></li>
-								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">Clothes</a></li>
-								<li class="product-filters__menu-item collection-item waves-effect waves-classic"><a href="#">Vehicles</a></li>
+								<li class="product-filters__menu-item collection-item waves-effect waves-classic">
+									<a class="category-filter" data-category="all" href="#">All</a>
+								</li>
+								<li class="product-filters__menu-item collection-item waves-effect waves-classic">
+									<a class="category-filter" data-category="electronics" href="#">Technology</a>
+								</li>
+								<li class="product-filters__menu-item collection-item waves-effect waves-classic">
+									<a class="category-filter" data-category="cloth,jewelery" href="#">Clothing</a>
+								</li>
+								<li class="product-filters__menu-item collection-item waves-effect waves-classic">
+									<a class="category-filter" data-category="sport" href="#">Sports</a>
+								</li>
+								<li class="product-filters__menu-item collection-item waves-effect waves-classic">
+									<a class="category-filter" data-category="house" href="#">House</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<!-- Product filter: price -->
+					<ul class="product-filters__filter--price collapsible expandable">
+						<li class="active">
+							<div class="collapsible-header primary white-text noselect">PRICE</div>
+							<ul class="collapsible-body p-0">
+								<li class="product-filters__range-item collection-item">
+									Range
+									<div class="range-minmax">
+										<input id="min-price" class="range-minmax__number" type="number" value="0" placeholder="$min">
+										<div>—</div>
+										<input id="max-price" class="range-minmax__number" type="number" value="1000" placeholder="$max">
+									</div>
+									<div id="price-slider" class="slider"></div>
+								</li>
+								<li>
+									<label for="shipping-checkbox">
+										<input type="checkbox" class="" id="shipping-checkbox">
+										<span>Free shipping</span>
+									</label>
+								</li>
+								<li>
+									<label for="interests-checkbox">
+										<input type="checkbox" class="" id="interests-checkbox">
+										<span>Interest-free</span>
+									</label>
+								</li>
 							</ul>
 						</li>
 					</ul>

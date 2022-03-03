@@ -1,6 +1,10 @@
+// Por qué tengo una clase de Cart y ProductList en vez de un obj único?
+// la verdad es que pensaba que haya varias instancias de Cart y que se puedan
+// comparar lado a lado, pero al final no terminó en el proyecto.
+
 // Stores cart status and item list
 class Cart {
-	constructor({ discount, payments, monthInterestRate, tax, itemList } = {}) {
+	constructor({ discount, payments, annualIntereset, tax, itemList } = {}) {
 		this.itemList = itemList || [];
 		this.itemCount = 0;
 		this.totalQuantity = 0;
@@ -8,11 +12,11 @@ class Cart {
 		this.total = 0;
 		this.subtotal = 0;
 		this.discount = discount || 0;
-		this.monthInterest = monthInterestRate || 0.03;
+		this.annualInterestRate = annualIntereset || 0.43;
+		this.monthInterestRate = this.annualInterestRate / 12;
 		this.payments = payments || 1;
-		this.taxRate = tax || 0;
+		this.taxRate = tax || 0.21;
 		this.monthFee = 0;
-
 	}
 
 	//#region Item Methods ---------- //
@@ -23,7 +27,7 @@ class Cart {
 			console.warn('Invalid arguments: CartItem expected');
 			return null;
 		}
-		if (item.getQuantity() < 1) {
+		if (item.quantity < 1) {
 			console.warn('Zero quantity items won\'t be added');
 			return null;
 		}
@@ -46,7 +50,7 @@ class Cart {
 		if (debugMode)
 			console.log(
 				`%cAdded to cart: ${item.name} ` +
-				`(${item.getQuantity()})`,
+				`(${item.quantity})`,
 				`color: ${colors.success}`);
 
 		this.updateCart();
@@ -74,7 +78,7 @@ class Cart {
 		if (debugMode)
 			console.log(
 				`%cRemoved from cart: ${removed.name} ` +
-				`(${removed.getQuantity()})`,
+				`(${removed.quantity})`,
 				`color: ${colors.danger};`);
 
 		this.updateCart();
@@ -134,30 +138,6 @@ class Cart {
 	}
 	//#endregion
 
-	//#region Price Methods --------- //
-	calcDiscount(discount = this.discount) {
-		return this.total * (1 - discount);
-	}
-
-	// Calc. the interest tax (flat $) for the subtotal
-	calcInterest(payments = this.payments, interest = this.monthInterest) {
-		interest = (payments > 1)
-			? this.total * (1 + (interest * (payments - 1)))
-			: this.total;
-		return interest;
-	}
-
-	// Calc. the monthly interest tax (flat $) for the subtotal
-	calcMonthInterest(payments = this.payments, interest = this.monthInterest) {
-		return this.calcInterest(payments, interest) / payments;
-	}
-
-	// Calc. the total with tax rate applied
-	calcTax(tax = this.taxRate) {
-		return this.total * (1 + tax);
-	}
-	//#endregion
-
 	//#region DOM Methods
 	updateDom() {
 		let cartListElem = document.querySelector('#cart-list');
@@ -174,7 +154,9 @@ class Cart {
 		if (itemsNodes.length > 0)
 			cartListElem.replaceChildren(...itemsNodes);
 		else
-			cartListElem.innerHTML = Cart.emptyCartHtml();
+			cartListElem.innerHTML = noResultsHtml('The cart is empty');
+
+		this.updateCartSummary();
 
 		// New prods aren't listened by materialize; initialize again
 		reinitMaterialize();
@@ -190,6 +172,21 @@ class Cart {
 		let nodes = [];
 		this.itemList.forEach(item => nodes.push(Cart.cartItemToNode(item)));
 		return nodes;
+	}
+
+	updateCartSummary() {
+		let summaryElem = document.querySelector('#cart-summary');
+		let subtotalElem = summaryElem.querySelector('.cart__summary-subtotal');
+		let interestElem = summaryElem.querySelector('.cart__summary-interest');
+		let taxElem = summaryElem.querySelector('.cart__summary-tax');
+		let discountElem = summaryElem.querySelector('.cart__summary-discount');
+		let totalElem = summaryElem.querySelector('.cart__summary-total');
+
+		subtotalElem.innerText = `$${this.subtotal.toFixed(2)}`;
+		interestElem.innerText = `${(this.getTotalInterestRate() * 100).toFixed(2)}%`;
+		taxElem.innerText = `${this.taxRate * 100}%`;
+		discountElem.innerText = `${this.discount * 100}%`;
+		totalElem.innerText = `$${this.total.toFixed(2)}`;
 	}
 
 	// Update cart icons to show a badge with the prod count
@@ -223,20 +220,21 @@ class Cart {
 	//#region Cart status ----------- //
 	// After modifying a field, should call this
 	updateCart() {
-		this.subtotal = this.itemList.reduce((a, b) => a + b.getTotal(), 0);
-		this.totalQuantity = this.itemList.reduce((a, b) => a + b.getQuantity(), 0);
+		this.subtotal = this.itemList.reduce((a, b) => a + b.total, 0);
+		this.totalQuantity = this.itemList.reduce((a, b) => a + b.quantity, 0);
 		this.itemCount = this.itemList.length;
 		this.total = this.subtotal;
-		this.total = this.calcInterest();
-		this.total = this.calcDiscount();
-		this.total = this.calcTax();
+		this.total *=
+			(1 - this.discount)
+			* (1 + this.taxRate)
+			* (1 + this.getTotalInterestRate());
 		this.monthFee = this.total / this.payments;
 
 		Cart.saveCart();
 		this.updateDom();
 
 		if (debugMode)
-			console.log(`Cart price now is: $${this.getTotal()}`);
+			console.log(`Cart price now is: $${this.total}`);
 		return this.total;
 	}
 
@@ -256,6 +254,8 @@ class Cart {
 		let itemListParsed = [];
 		let itemListRecovered = [];
 
+		let paymentsElem = document.querySelector('#cart-payments');
+
 		// Load cart properties
 		Object.assign(cartRecovered, cartParsed);
 
@@ -266,20 +266,38 @@ class Cart {
 		});
 		cartRecovered.itemList = itemListRecovered;
 
-		return cartRecovered;
-	}
+		if (paymentsElem) {
+			// Get the payments element and add the event listener
+			paymentsElem.value = cartRecovered.payments;
+			paymentsElem.addEventListener('change', () => {
+				cartRecovered.payments =
+				cartRecovered.setPayments(paymentsElem.value);
+			});
 
-	static emptyCartHtml() {
-		let emoji = ['🙁', '😕', '🤨', '🥺', '❌', '🛒', '🎈', '💤', '🐱‍👤', '💔'];
-		emoji = emoji[Math.floor(Math.random() * 10)];
-		let html = /* HTML */
-			`<span class="empty-cart-msg">The cart is empty ${emoji}</span>`;
-		return html;
+			// Then add interest% next to the payments count
+			paymentsElem.childNodes.forEach(child => {
+				let payments = child.value;
+				let interest =
+					Math.round(cartRecovered.monthInterestRate * payments * 100);
+				if (payments > 1) {
+					child.innerHTML =
+						`${payments} <span class="cart__payments-interest"> (${interest}%)</span>`;
+				}
+			});
+		}
+
+		return cartRecovered;
 	}
 	//#endregion
 
 	//#region Get / Set ------------- //
-	// Setters
+	getTotalInterestRate() {
+		let interest = (this.payments > 1)
+			? this.monthInterestRate * (this.payments)
+			: 0;
+		return  interest;
+	}
+
 	setItemList(items) {
 		if (!Array.isArray(items) || !items.every(x => x instanceof Product)) {
 			console.warn('Invalid arguments: CartItems[] expected');
@@ -306,7 +324,7 @@ class Cart {
 	}
 
 	setMonthInterest (amount) {
-		this.monthInterest = amount;
+		this.monthInterestRate = amount;
 		this.updateCart();
 		return amount;
 	}
@@ -322,19 +340,6 @@ class Cart {
 		this.updateCart();
 		return amount;
 	}
-
-	// Getters
-	getItemList() { return this.itemList; }
-	getItemCount() { return this.itemCount; }
-	getTotalQuantity() { return this.totalQuantity; }
-
-	getTotal() { return this.total; }
-	getSubtotal() { return this.subtotal; }
-	getDiscount() { return this.discount; }
-	getMonthInterest() { return this.monthInterest; }
-	getPayments() { return this.payments; }
-	getTaxRate() { return this.taxRate; }
-	getMonthFee() { return this.monthFee; }
 	//#endregion
 }
 

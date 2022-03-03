@@ -2,6 +2,7 @@
 // Imports -------------------------------------------------------------------//
 @use 'typography' as *;
 @use '../abstracts' as *;
+@use '../vendor/sass-flexbox/main.scss' as flex;
 
 // Styling -------------------------------------------------------------------//
 body {
@@ -12,13 +13,16 @@ body {
 }
 
 main {
-	// Footer on bottom
+	display: flex;
 	flex-grow: 1;
+	// Footer on bottom
+	flex-direction: column;
 }
 
 .main__wrapper {
 	@include container;
 	margin: 0 auto;
+	padding: $main-wrapper-padding  0;
 
 	@include xs-down { width: 100%; }
 }
@@ -26,12 +30,7 @@ main {
 ul { margin: 0; }
 
 .container { @include container; }
-
-.josefin-descender-ignore {
-	display: inline-block;
-	transform: translateY(7.5%);
-}
-
+.no-results { @include no-results; }
 .vertical-align { @include v-align; }
 .page-title { padding: 1rem; }
 .noselect { user-select: none; }

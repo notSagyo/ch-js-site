@@ -1,6 +1,62 @@
 @use '../vendor/materialize/materialize' as M;
+@use '../vendor/sass-flexbox/main' as flex;
 @use '../abstracts' as *;
 
+.contact-form {
+	@include raised-bg;
+
+	display: grid;
+	width: 100%;
+	margin: auto;
+	padding: flex.$gutter;
+	border-radius: $br;
+
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr;
+	gap: flex.$gutter * 2;
+
+	textarea {
+		max-height: 8.5rem;
+		overflow: auto;
+	}
+
+	button { margin-left: flex.$gutter; }
+
+	&__buttons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	// Fix autocomplete bg!
+	input {
+		&:-webkit-autofill, &:-webkit-autofill:hover,
+		&:-webkit-autofill:focus, &:-webkit-autofill:active {
+			transition: background-color 0s 50000s;
+		}
+	}
+
+	// Fix autocomplete not working on 1st click!
+	label { pointer-events: none; }
+
+	@include sm-down {
+		grid-template-columns: 1fr;
+		gap: flex.$gutter;
+	}
+	@include xs-down {
+		.input-field { margin-left: -3rem; }
+		.material-icons { display: none; }
+	}
+}
+
+.range-minmax {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	&__number:first-child { margin-right: 1rem !important; }
+	&__number:last-child { margin-left: 1rem !important; }
+}
 
 .product-qty {
 	$color: M.$primary-color;

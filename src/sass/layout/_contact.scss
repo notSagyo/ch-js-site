@@ -1,0 +1,12 @@
+@use '../vendor/sass-flexbox/main' as flex;
+@use '../abstracts' as *;
+
+.contact-container {
+	@include my(flex.$gutter * 2);
+
+	display: flex;
+	align-items: center;
+	flex-grow: 1;
+
+	max-width: 50rem;
+}

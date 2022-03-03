@@ -1,9 +1,8 @@
 @use '../abstracts' as *;
 @use '../vendor/materialize/materialize' as M;
+@use '../vendor/sass-flexbox/main.scss' as flex;
 
 .cat-showcase {
-	margin: 2rem;
-
 	&__layout {
 		@include mx-auto;
 		display: grid;
@@ -14,34 +13,58 @@
 		position: relative;
 		overflow: hidden;
 
+		margin-bottom: flex.$gutter;
 		border-radius: $br;
 	}
 
 	&__img--big {
 		padding-top: 70%;
-		background-image: url('../img/cat-showcase-big.webp');
+		background-image: url('../img/technology.webp');
 		background-size: auto 100%;
 		background-position: right;
 	}
 
-	// HACK: replace with images
-	&__img--small { background-color: teal; }
+	&__img--small {
+		background-size: cover;
+		padding-top: 25%;
+	}
+
+	#cat-img1 {
+		background-image: url('../img/clothes.webp');
+
+		.cat-showcase__info {
+			background-color: rgba(M.color('blue', 'darken-1'), 0.75);
+		}
+	}
+
+	#cat-img2 {
+		background-image: url('../img/sports.webp');
+
+		.cat-showcase__info { background-color: rgba(M.$error, 0.75); }
+	}
+
+	#cat-img3 {
+		background-image: url('../img/house.webp');
+
+		.cat-showcase__info {
+			background-color: rgba(M.color('teal', 'darken-1'), 0.75);
+		}
+	}
 
 	// INFO ----------------------------------------------------------------- //
 	&__info {
-		@include M.h3;
+		@include M.h5;
 
 		position: absolute;
 		bottom: 0;
 
 		height: fit-content;
 		padding: 1rem;
-		padding-right: 4rem;
+		padding-right: 3rem;
 		border-radius: 0 $br $br 0;
 
-
-		color: M.$on-primary;
 		background: rgba(M.$primary-color, 0.75);
+		color: M.$on-primary;
 	}
 
 	// MEDIA ---------------------------------------------------------------- //
@@ -57,18 +80,20 @@
 		}
 
 		&__img--big, &__img--small {
+			margin: 0;
 			filter: saturate(0);
 			transition: filter 0.5s;
 		}
 
 		&__img--big { grid-row: span 3; }
+		&__img--small { padding-top: 0; }
 
 		&__img--big:hover, &__img--small:hover { filter: saturate(1); }
 	}
 
-	@include lg-up {
+	@include xl-up {
 		&__info {
-			@include M.h5;
+			@include M.h4;
 
 			top: 100%;
 			transform: translateY(-100%);

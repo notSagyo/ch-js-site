@@ -1,0 +1,49 @@
+@use '../vendor/materialize/materialize' as M;
+@use '../vendor/sass-flexbox/main' as flex;
+@use '../abstracts' as *;
+
+.about__header {
+	img { display: none; }
+
+	@include md-down {
+		display: flex;
+		flex-direction: column;
+
+		img {
+			align-self: center;
+			display: block;
+			margin-bottom: flex.$gutter;
+			width: 75%;
+			max-width: 40rem;
+		}
+	}
+}
+
+.about__logo-container {
+	width: 15rem;
+	max-width: 50%;
+	display: inline-block;
+
+	#svg-logo {
+		display: inline;
+		color: M.$off-black;
+		height: 100%;
+	}
+}
+
+.about__content {
+	margin: flex.$gutter 0;
+	font-size: 1.5rem;
+
+	p { margin-bottom: 2.5rem; }
+}
+
+.float-shape {
+	&__img { max-width: 60%; }
+	&__text { margin: flex.$gutter 0; }
+
+	@include md-down {
+		&__img { display: none; }
+	}
+}
+

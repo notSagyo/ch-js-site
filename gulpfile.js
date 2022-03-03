@@ -17,7 +17,7 @@ let postCssProcessors = [
 	lost(),
 	presetEnv()
 ];
-let postCssProdProcessors = postCssProcessors.concat([cssnano()]);
+let postCssProdProcessors = [...postCssProcessors, cssnano()];
 
 //URLs
 let paths = {

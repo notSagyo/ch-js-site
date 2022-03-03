@@ -125,8 +125,8 @@
 
 // PRODUCTS HTML ------------------------------------------------------------ //
 function getProductHtml(product) {
-	let { name, description, image, price } = product;
-	if (price % 1 != 0) price = price.toFixed(2);
+	let { name, description, image, total } = product;
+	if (total % 1 != 0) total = total.toFixed(2);
 
 	let html = /* HTML */
 		`<!-- Left side: image -->
@@ -143,13 +143,13 @@ function getProductHtml(product) {
 				</p>
 				<!-- Footer -->
 				<div class="product-li__footer">
-					<span class="product-li__price">$${price}</span>
+					<span class="product-li__price">$${total}</span>
 					<div class="product-qty">
 						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i> </a>
-						<input class="product-qty__input input-field" type="number" placeholder="Qty" value="1"></input>
+						<input class="product-qty__input input-field" type="number" placeholder="QTY" value="1"></input>
 						<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i> </a>
 					</div>
-					<a href="javascript:void(0)" class="product-li__add cart-btn tooltipped" data-tooltip="Add to cart">
+					<a href="javascript:void(0)" class="product-li__add cart-btn tooltipped waves-effect waves-classic" data-tooltip="Add to cart">
 						<i class="material-icons">add_shopping_cart</i>
 					</a>
 				</div>
@@ -160,8 +160,8 @@ function getProductHtml(product) {
 }
 
 function getCartItemHtml(product) {
-	let { name, description, quantity, image, price } = product;
-	if (price % 1 != 0) price = price.toFixed(2);
+	let { name, description, quantity, image, total } = product;
+	if (total % 1 != 0) total = total.toFixed(2);
 
 	let html = /* HTML */
 		`<!-- CART ITEM -->
@@ -180,17 +180,25 @@ function getCartItemHtml(product) {
 			<!-- Right side -->
 			<div class="cart-item__details-right">
 				<div class="cart-item__details-numbers">
-					<span class="h6 cart-item__price">$${price}</span>
+					<span class="h6 cart-item__price">$${total}</span>
 					<div class="product-qty">
-						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i>
-						<input class="product-qty__input input-field" type="number" placeholder="Qty" value="${quantity}"></input>
-						<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i>
+						<a href="javascript:void(0)" class="product-qty__decrease"> <i class="material-icons">remove</i> </a>
+						<input class="product-qty__input input-field" type="number" placeholder="QTY" value="${quantity}"></input>
+						<a href="javascript:void(0)" class="product-qty__increase"> <i class="material-icons">add</i> </a>
 					</div>
 				</div>
-				<a href="javascript:void(0)" class="cart-item__remove cart-btn tooltipped" data-tooltip="Remove from cart"> <i class="material-icons">remove_shopping_cart</i> </a>
+				<a href="javascript:void(0)" class="cart-item__remove cart-btn tooltipped waves-effect waves-classic" data-tooltip="Remove from cart"> <i class="material-icons">remove_shopping_cart</i> </a>
 			</div>
 		</div>
 		`;
 
+	return html;
+}
+
+function noResultsHtml(message, classes = '') {
+	let emoji = ['🙁', '😕', '🤨', '🥺', '❌', '🛒', '🎈', '💤', '🐱‍👤', '💔'];
+	emoji = emoji[Math.floor(Math.random() * 10)];
+	let html =
+		`<span class="no-results ${classes}">${message} ${emoji}</span>`;
 	return html;
 }

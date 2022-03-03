@@ -1,0 +1,42 @@
+[
+	{
+	  "title": "Shirt",
+	  "price": 15,
+	  "description": "This is a simple shirt! If you're still reading this the products API is taking too long or maybe even failed! 🙃",
+	  "image": "../img/shirt.webp",
+	  "category": "clothes",
+	  "quantity": 1
+	},
+	{
+	  "title": "Jeans",
+	  "price": 30,
+	  "description": "These are simple Jeans.",
+	  "image": "../img/jeans.webp",
+	  "category": "clothes",
+	  "quantity": 1
+	},
+	{
+	  "title": "Shoes",
+	  "price": 50,
+	  "description": "These are simple Shoes.",
+	  "image": "../img/shoes.webp",
+	  "category": "clothes",
+	  "quantity": 1
+	},
+	{
+	  "title": "Belt",
+	  "price": 20,
+	  "description": "This is a simple Belt.",
+	  "image": "../img/belt.webp",
+	  "category": "clothes",
+	  "quantity": 1
+	},
+	{
+	  "title": "Goated Shirt",
+	  "price": 75,
+	  "description": "Most goated T-Shirt.",
+	  "image": "../img/shirt.webp",
+	  "category": "clothes",
+	  "quantity": 1
+	}
+  ]

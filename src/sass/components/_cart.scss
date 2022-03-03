@@ -4,28 +4,89 @@
 @use 'sass:color';
 @use 'sass:math';
 
-.cart-list__wrapper {
-	margin: (flex.$gutter * 2) auto;
+.cart {
+	// Summary --------------------------------------------------------------- //
+	&__summary {
+		@include raised-bg;
+
+		display: flex;
+		flex-direction: column;
+		width: fit-content;
+		padding: flex.$gutter;
+		margin-left: auto;
+	}
+
+	&__summary-payments {
+		max-width: 6.5rem;
+
+		input {
+			text-align: right;
+			margin-bottom: 0;
+		}
+
+		label, svg {
+			right: 0;
+			left: initial;
+		}
+
+		svg {
+			left: 0;
+			right: initial;
+			transform: translateX(-25%);
+		}
+	}
+
+	&__summary-details {
+		display: flex;
+		width: fit-content;
+		justify-content: right;
+	}
+
+	&__summary-values {
+		min-width: 15rem;
+
+		&-li {
+			display: flex;
+			justify-content: space-between;
+			font-weight: 500;
+		}
+
+		&-li:last-child {
+			// padding-top: 1rem;
+			border-top: solid 1px M.color('grey', 'base');
+			font-size: 1.5rem;
+			font-weight: 500;
+		}
+	}
+
+	// MEDIA ---------------------------------------------------------------- //
+	@include md-up {
+		&__summary-payments { max-width: 5.5rem; }
+	}
+
+	@include sm-up {
+		&__summary { flex-direction: row; }
+
+		&__summary-payments {
+			margin: flex.$gutter;
+			margin-right: flex.$gutter * 2;
+		}
+	}
 
 	@include xl-up { width: 65%; }
 	@include xs-down { width: 100vw; }
 }
 
 .cart-list {
-	@extend .z-depth-1;
+	@include raised-bg;
 
 	padding: (flex.$gutter);
 	margin: (flex.$gutter) auto;
 
-	background-color: white;
 	border-radius: $br;
 
 	@include md-up { padding: (flex.$gutter * 2); }
-
-	@include xs-down {
-		@include px(0);
-		box-shadow: none;
-	}
+	@include xs-down { @include px(0); }
 }
 
 .cart-item {
@@ -125,10 +186,4 @@
 	@include xs-down {
 		&__details { padding: 0; }
 	}
-}
-
-.empty-cart-msg {
-	color: M.$secondary-color;
-	font-size: 2rem;
-	letter-spacing: 0.5px;
 }

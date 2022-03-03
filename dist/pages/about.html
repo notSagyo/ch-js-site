@@ -4,19 +4,19 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Webshop | Buy with a click and sell with a few more</title>
-	<meta name="description" content="Buy with a click and sell with a few more">
+	<title>Webshop | Buy with a click, sell with a few more</title>
+	<meta name="description" content="Buy with a click, sell with a few more">
 	<link rel="shortcut icon" href="../img/favicon.svg" type="image/x-icon">
 	<!-- Facebook Meta Tags -->
 	<meta property="og:type" content="website">
-	<meta property="og:title" content="Webshop | Buy with a click and sell with a few more">
-	<meta property="og:description" content="Buy with a click and sell with a few more">
+	<meta property="og:title" content="Webshop | Buy with a click, sell with a few more">
+	<meta property="og:description" content="Buy with a click, sell with a few more">
 	<meta property="og:image" content="https://i.imgur.com/X5gCXpy.jpg">
 	<!-- Twitter Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta property="twitter:domain" content="notsagyo.github.io">
-	<meta name="twitter:title" content="Webshop | Buy with a click and sell with a few more">
-	<meta name="twitter:description" content="Buy with a click and sell with a few more">
+	<meta name="twitter:title" content="Webshop | Buy with a click, sell with a few more">
+	<meta name="twitter:description" content="Buy with a click, sell with a few more">
 	<meta name="twitter:image" content="https://i.imgur.com/X5gCXpy.jpg">
 	<!-- Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -24,6 +24,7 @@
 	<link rel="stylesheet" href="../css/main.css">
 	<!-- JS -->
 	<script defer src="../js/template.js"></script>
+	<script defer src="../js/nouislider.min.js"></script>
 	<script defer src="../js/materialize.min.js"></script>
 	<script defer src="../js/utils.js"></script>
 </head>
@@ -34,9 +35,32 @@
 	<main>
 		{{sidenav}}
 
-		<div class="main__wrapper">
-			<h1 class="h1">E-Commerce</h1>
-		</div>
+		<section class="main__wrapper about">
+			<div class="about__header">
+				<div class="about__logo-container">
+					<svg viewBox="0 0 460 229" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: e3e3e3;">
+						<g  clip-path="url(#clip0_301_13)">
+							<g id="svg-logo">
+								<g id="svg-logo-content">
+									<path id="svg-logo-lower" d="M130 128.736H137.729L139.937 173.05H140.674L145.09 128.736H151.347L155.764 173.05H156.5L158.708 128.736H166.437L161.285 187.625H152.451L148.255 156.855L143.986 187.625H135.153L130 128.736ZM172.326 187.625V128.736H189.257V134.625H179.687V153.764H187.784V159.653H179.687V180.264H189.257V187.625H172.326V187.625ZM194.409 187.625V128.736H205.598C213.18 128.736 215.683 133.447 215.683 141.912V143.458C215.683 148.537 214.505 152.512 213.18 155.383V155.678C215.904 157.96 217.597 162.45 217.965 170.252V172.608C217.376 182.987 214.652 187.625 207.07 187.625H194.409ZM201.77 153.764H205.598C207.659 153.764 209.131 151.335 209.131 143.458V141.912C209.131 136.244 207.806 134.625 205.598 134.625H201.77V153.764ZM201.77 180.264H207.07C209.279 180.264 210.824 178.423 211.119 172.608V170.252C210.824 161.493 209.279 159.653 207.07 159.653H201.77V180.264ZM221.645 169.664H229.08C229.227 179.159 229.963 181 232.613 181C236.22 181 236.22 177.982 236.22 169.958C236.22 158.18 221.645 161.346 221.645 145.667C221.645 136.465 221.645 128 232.687 128C240.858 128 243.066 132.637 243.581 143.753H236.22C235.926 135.729 235.042 133.889 232.687 133.889C229.08 133.889 229.08 137.864 229.08 145.667C229.08 157.076 243.728 153.028 243.728 169.958C243.728 180.264 243.728 188.361 232.613 188.361C224.074 188.361 222.087 183.282 221.645 169.664V169.664ZM249.617 187.625V128.736H256.978V153.764H264.339V128.736H271.7V187.625H264.339V159.653H256.978V187.625H249.617ZM278.325 156.635C278.325 136.097 278.767 128 289.809 128C300.85 128 301.292 136.097 301.292 156.635C301.292 180.19 300.85 188.361 289.809 188.361C278.767 188.361 278.325 180.19 278.325 156.635ZM285.686 156.635C285.686 177.908 285.686 181 289.809 181C293.931 181 293.931 177.908 293.931 156.635C293.931 137.496 293.931 133.889 289.809 133.889C285.686 133.889 285.686 137.496 285.686 156.635V156.635ZM307.917 187.625V128.736H319.842C327.424 128.736 329.411 133.374 330 144.489V146.844C329.411 157.96 327.424 162.597 319.842 162.597H315.278V187.625H307.917V187.625ZM315.278 156.708H319.842C322.05 156.708 322.86 154.868 323.154 146.844V144.489C322.86 136.465 322.05 134.625 319.842 134.625H315.278V156.708Z" fill="currentcolor" />
+									<path id="svg-logo-upper" d="M295.654 27H315.268L254.403 108.157L230.634 76.4707L206.869 108.157L146 27H165.614L206.872 82.008L220.83 63.3956L193.533 27.0018H213.147L230.637 50.3208L248.125 27.0018H267.737L240.443 63.3956L254.403 82.008L295.654 27Z" fill="currentcolor" />
+									<line id="svg-logo-line" stroke="currentcolor" x1="99.25%" y1="38%" x2="99.25%" y2="63%" />
+								</g>
+								<path id="svg-logo-box" d="M115 0V230H345V0H115ZM339.697 224.697H120.303V5.30259H339.697V224.697Z" fill="currentcolor" />
+							</g>
+						</g>
+					</svg>
+				</div>
+				<img src="../img/about.svg" alt="">
+			</div>
+			<div class="float-shape--right about__content">
+				<img class="float-shape__img" id="float-shape-about" src="../img/about.svg" alt="">
+				<p>Lorem ipsum dolor sit amet, conse adipisicing elit. Porro aspernatur velit qui obcaecati earum dolorem doloribus minima nobis cum eum?</p>
+				<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus debitis delectus nisi ex voluptatibus nobis quidem laudantium reiciendis ipsum amet.</p>
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas suscipit autem debitis praesentium reiciendis possimus fugiat iusto repellat dolorum atque.</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iste sint saepe eum unde libero repellendus obcaecati qui accusamus ea!</p>
+			</div>
+		</section>
 	</main>
 
 	{{pageFooter}}
@@ -44,5 +68,9 @@
 	<script defer src="../js/products.js"></script>
 	<script defer src="../js/cart.js"></script>
 	<script defer src="../js/main.js"></script>
+	<!-- GSAP CDN -->
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+	<script defer src="../js/animation.js"></script>
 </body>
 </html>

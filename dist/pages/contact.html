@@ -4,19 +4,19 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Webshop | Buy with a click and sell with a few more</title>
-	<meta name="description" content="Buy with a click and sell with a few more">
+	<title>Webshop | Buy with a click, sell with a few more</title>
+	<meta name="description" content="Buy with a click, sell with a few more">
 	<link rel="shortcut icon" href="../img/favicon.svg" type="image/x-icon">
 	<!-- Facebook Meta Tags -->
 	<meta property="og:type" content="website">
-	<meta property="og:title" content="Webshop | Buy with a click and sell with a few more">
-	<meta property="og:description" content="Buy with a click and sell with a few more">
+	<meta property="og:title" content="Webshop | Buy with a click, sell with a few more">
+	<meta property="og:description" content="Buy with a click, sell with a few more">
 	<meta property="og:image" content="https://i.imgur.com/X5gCXpy.jpg">
 	<!-- Twitter Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image">
 	<meta property="twitter:domain" content="notsagyo.github.io">
-	<meta name="twitter:title" content="Webshop | Buy with a click and sell with a few more">
-	<meta name="twitter:description" content="Buy with a click and sell with a few more">
+	<meta name="twitter:title" content="Webshop | Buy with a click, sell with a few more">
+	<meta name="twitter:description" content="Buy with a click, sell with a few more">
 	<meta name="twitter:image" content="https://i.imgur.com/X5gCXpy.jpg">
 	<!-- Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -24,6 +24,7 @@
 	<link rel="stylesheet" href="../css/main.css">
 	<!-- JS -->
 	<script defer src="../js/template.js"></script>
+	<script defer src="../js/nouislider.min.js"></script>
 	<script defer src="../js/materialize.min.js"></script>
 	<script defer src="../js/utils.js"></script>
 </head>
@@ -34,9 +35,49 @@
 	<main>
 		{{sidenav}}
 
-		<div class="main__wrapper">
-			<h1 class="h1">E-Commerce</h1>
-		</div>
+		<section class="main__wrapper contact-container">
+			<form class="contact-form" action="">
+				<div class="input-field">
+					<i class="material-icons prefix">account_circle</i>
+					<label for="name">Name</label>
+					<input type="text" name="name" id="name">
+				</div>
+				<div class="input-field">
+					<i class="material-icons prefix">email</i>
+					<label for="email">Email</label>
+					<input type="email" name="email" id="email">
+				</div>
+				<div class="input-field">
+					<i class="material-icons prefix">title</i>
+					<label for="subject">Subject</label>
+					<input type="text" name="subject" id="subject">
+				</div>
+				<div class="input-field">
+					<i class="material-icons prefix">format_list_bulleted</i>
+					<select name="category" id="category">
+						<option disabled selected>Choose a category</option>
+						<option value="1">Help / support</option>
+						<option value="2">Site issues</option>
+						<option value="3">Business</option>
+						<option value="-1">Other</option>
+					</select>
+					<label for="category">Category</label>
+				</div>
+				<div class="input-field">
+					<i class="material-icons prefix">edit</i>
+					<label for="message">Message</label>
+					<textarea name="message" id="message" class="materialize-textarea" cols="30" rows="10"></textarea>
+				</div>
+				<div class="contact-form__buttons">
+					<button class="btn waves-effect waves-classic waves-light" type="reset">Reset
+						<i class="material-icons right">refresh</i>
+					</button>
+					<button class="btn waves-effect waves-light" type="submit" name="submit">Submit
+						<i class="material-icons right">send</i>
+					</button>
+				</div>
+			</form>
+		</section>
 	</main>
 
 	{{pageFooter}}

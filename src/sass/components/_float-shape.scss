@@ -1,0 +1,11 @@
+.float-shape {
+	&__img {
+		position: relative;
+		float: left;
+		shape-margin: 2rem;
+	}
+
+	&--right &__img { float: right; }
+}
+
+#float-shape-about { shape-outside: url('../img/about.svg'); }
