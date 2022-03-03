@@ -4,25 +4,24 @@
 
 // Stores cart status and item list
 class Cart {
-	constructor({ discount, payments, annualIntereset, tax, itemList } = {}) {
+	constructor({ discount, payments, annualInterest, tax, itemList } = {}) {
+		// Item properties
 		this.itemList = itemList || [];
 		this.itemCount = 0;
-		this.totalQuantity = 0;
 
+		// Price properties
 		this.total = 0;
 		this.subtotal = 0;
-		this.discount = discount || 0;
-		this.annualInterestRate = annualIntereset || 0.43;
-		this.monthInterestRate = this.annualInterestRate / 12;
-		this.payments = payments || 1;
 		this.taxRate = tax || 0.21;
-		this.monthFee = 0;
+		this.discount = discount || 0;
+		this.payments = payments || 1;
+		this.annualInterestRate = annualInterest || 0.43;
+		this.monthInterestRate = this.annualInterestRate / 12;
 	}
 
-	//#region Item Methods ---------- //
+	// Item Methods ==========================================================//
 	// Add item to cart
 	addItem(item) {
-		// Return if not valid argument
 		if (!(item instanceof Product)) {
 			console.warn('Invalid arguments: CartItem expected');
 			return null;
@@ -32,82 +31,62 @@ class Cart {
 			return null;
 		}
 
-		// If already in cart only increase quantity
-		let added = this.findItem(item.name);
-		if (added)
-			added.increaseQuantity();
-		else {
-			let copy = Product.copy(item);
-			this.itemList.push(copy);
-		}
-
+		let addedItem = this.findItem(item.name);
 		let toastQty = item.quantity > 1 ? `(${item.quantity}) ` : '';
-		M.toast({
-			text: truncateText(`Added ${toastQty} ${item.name}`, toastLen),
-			displayLength: 2000
-		});
 
-		if (debugMode)
-			console.log(
-				`%cAdded to cart: ${item.name} ` +
-				`(${item.quantity})`,
-				`color: ${colors.success}`);
+		// If already in cart only increase quantity
+		if (!addedItem) {
+			addedItem = Product.copy(item);
+			this.itemList.push(addedItem);
+		} else addedItem.increaseQuantity();
+
+		M.toast({
+			text: truncateText(`Added ${toastQty}${addedItem.name}`, toastLen),
+			displayLength: 2000 });
 
 		this.updateCart();
-		return item;
+		return addedItem;
 	}
 
-	// Remove item from cart (Product or string)
+	// Product or string with an item name
 	removeItem(item) {
-		// Check if item exists
-		let removed = this.findItem(item);
-		if (!removed) {
+		let removedItem = this.findItem(item);
+		if (!removedItem) {
 			console.warn('Item not found, no item removed');
 			return null;
 		}
-		let removedIndex = this.itemList.indexOf(removed);
-		let toastQty = removed.quantity > 1 ? `(${removed.quantity}) ` : '';
 
-		// Remove item
+		let removedIndex = this.itemList.indexOf(removedItem);
+		let toastQty = removedItem.quantity > 1 ? `(${removedItem.quantity}) ` : '';
+
 		this.itemList.splice(removedIndex, 1);
 
 		M.toast({
-			text: truncateText(`Removed ${toastQty} ${removed.name}`, toastLen),
+			text: truncateText(`Removed ${toastQty}${removedItem.name}`, toastLen),
 			displayLength: 2000 });
 
-		if (debugMode)
-			console.log(
-				`%cRemoved from cart: ${removed.name} ` +
-				`(${removed.quantity})`,
-				`color: ${colors.danger};`);
-
 		this.updateCart();
-		return removed;
+		return removedItem;
 	}
 
-	// Remove all items from cart
-	clearCart() {
-		this.totalQuantity = 0;
-		this.itemList = [];
-		if (debugMode)
-			console.log('%cCART CLEARED', `color: ${colors.danger};`);
-		this.updateCart();
-	}
-
-	// Find an item in the cart (Product or string)
+	// Product or string with an item name
 	findItem(item) {
 		let result = Product.findProduct(item, this.itemList);
 		return result;
 	}
 
-	// Quantity Methods ------------- //
+	clearCart() {
+		this.itemList = [];
+		this.updateCart();
+	}
+
+	// Quantity Methods ======================================================//
 	increaseItemQuantity(item, amount = 1) {
 		let result = this.findItem(item);
 		if (!result)
 			return -1;
 
 		result.increaseQuantity(amount);
-
 		this.updateCart();
 		return amount;
 	}
@@ -136,114 +115,96 @@ class Cart {
 		this.updateCart();
 		return amount;
 	}
-	//#endregion
 
-	//#region DOM Methods
+	// DOM Methods ===========================================================//
 	updateDom() {
 		let cartListElem = document.querySelector('#cart-list');
-		let itemsNodes = [];
+		let itemNodes = [];
 
 		Cart.updateCartBadges();
 
-		// If this is not activeCart or there's no cart-list in HTML return
+		// If not called from activeCart or no cart-list elem in HTML return
 		if (this != activeCart || !cartListElem)
 			return '';
 
 		// Update the cart items in HTML
-		itemsNodes = this.generateNodes();
-		if (itemsNodes.length > 0)
-			cartListElem.replaceChildren(...itemsNodes);
+		itemNodes = this.generateNodes();
+		if (itemNodes.length > 0)
+			cartListElem.replaceChildren(...itemNodes);
 		else
 			cartListElem.innerHTML = noResultsHtml('The cart is empty');
 
-		this.updateCartSummary();
-
-		// New prods aren't listened by materialize; initialize again
+		// New nodes aren't listened by materialize
 		reinitMaterialize();
 
-		if (debugMode)
-			console.log('%cUpdating cart DOM.', `color: ${colors.info};`);
-
-		return itemsNodes;
+		this.updateCartSummary();
+		return itemNodes;
 	}
 
 	// Generate DOM nodes for the cart
 	generateNodes() {
 		let nodes = [];
-		this.itemList.forEach(item => nodes.push(Cart.cartItemToNode(item)));
+		this.itemList.forEach(item => nodes.push(Cart.itemToNode(item)));
 		return nodes;
 	}
 
+	// Update cart price summary in DOM
 	updateCartSummary() {
-		let summaryElem = document.querySelector('#cart-summary');
-		let subtotalElem = summaryElem.querySelector('.cart__summary-subtotal');
-		let interestElem = summaryElem.querySelector('.cart__summary-interest');
-		let taxElem = summaryElem.querySelector('.cart__summary-tax');
-		let discountElem = summaryElem.querySelector('.cart__summary-discount');
-		let totalElem = summaryElem.querySelector('.cart__summary-total');
+		let subtotalElem = document.querySelector('.cart__summary-subtotal');
+		let interestElem = document.querySelector('.cart__summary-interest');
+		let discountElem = document.querySelector('.cart__summary-discount');
+		let taxElem = document.querySelector('.cart__summary-tax');
+		let totalElem = document.querySelector('.cart__summary-total');
 
 		subtotalElem.innerText = `$${this.subtotal.toFixed(2)}`;
 		interestElem.innerText = `${(this.getTotalInterestRate() * 100).toFixed(2)}%`;
-		taxElem.innerText = `${this.taxRate * 100}%`;
 		discountElem.innerText = `${this.discount * 100}%`;
+		taxElem.innerText = `${this.taxRate * 100}%`;
 		totalElem.innerText = `$${this.total.toFixed(2)}`;
 	}
 
-	// Update cart icons to show a badge with the prod count
+	// Update cart icons to show a badge with item count
 	static updateCartBadges() {
 		let cartBadges = document.querySelectorAll('.cart-badge');
 
-		// If at least 1 item in cart, remove hidden from badges
-		// Else if the elem isn't hidden, hide it
-		if (activeCart.itemCount > 0) {
-			cartBadges.forEach(e => {
-				e.innerText = activeCart.itemCount;
-				e.classList.remove('hide');
-			});
-		} else {
-			cartBadges.forEach(e => {
-				if (!e.classList.contains('hide'))
-					e.classList.add('hide');
-			});
-		}
+		cartBadges.forEach(badgeElem => {
+			badgeElem.innerText = activeCart.itemCount;
+			hideOnCondition(badgeElem, activeCart.itemCount < 1);
+		});
 
 		return cartBadges;
 	}
 
-	// Cart item info represented as HTML element as string
-	static cartItemToNode(item) {
+	// Cart item info represented as a DOM node
+	static itemToNode(item) {
 		let node = Product.productToNode(item, 'cartItem');
 		return node;
 	}
-	//#endregion
 
-	//#region Cart status ----------- //
-	// After modifying a field, should call this
+	// Cart status ===========================================================//
+	// After modifying a property, this should be called
 	updateCart() {
 		this.subtotal = this.itemList.reduce((a, b) => a + b.total, 0);
-		this.totalQuantity = this.itemList.reduce((a, b) => a + b.quantity, 0);
 		this.itemCount = this.itemList.length;
 		this.total = this.subtotal;
-		this.total *=
-			(1 - this.discount)
+		this.total *= (1 - this.discount)
 			* (1 + this.taxRate)
 			* (1 + this.getTotalInterestRate());
-		this.monthFee = this.total / this.payments;
 
 		Cart.saveCart();
 		this.updateDom();
 
-		if (debugMode)
-			console.log(`Cart price now is: $${this.total}`);
 		return this.total;
 	}
 
+	// Save cart in localstorage
 	static saveCart(cartName = 'activeCart') {
 		let cartString = JSON.stringify(activeCart);
 		localStorage.setItem(cartName, cartString);
 		return(cartString);
 	}
 
+	// Load cart from localstorage
 	static loadCart(cartName = 'activeCart') {
 		let cartJSON = localStorage.getItem(cartName);
 		if (!cartJSON)
@@ -253,8 +214,6 @@ class Cart {
 		let cartRecovered = new Cart();
 		let itemListParsed = [];
 		let itemListRecovered = [];
-
-		let paymentsElem = document.querySelector('#cart-payments');
 
 		// Load cart properties
 		Object.assign(cartRecovered, cartParsed);
@@ -266,57 +225,10 @@ class Cart {
 		});
 		cartRecovered.itemList = itemListRecovered;
 
-		if (paymentsElem) {
-			// Get the payments element and add the event listener
-			paymentsElem.value = cartRecovered.payments;
-			paymentsElem.addEventListener('change', () => {
-				cartRecovered.payments =
-				cartRecovered.setPayments(paymentsElem.value);
-			});
-
-			// Then add interest% next to the payments count
-			paymentsElem.childNodes.forEach(child => {
-				let payments = child.value;
-				let interest =
-					Math.round(cartRecovered.monthInterestRate * payments * 100);
-				if (payments > 1) {
-					child.innerHTML =
-						`${payments} <span class="cart__payments-interest"> (${interest}%)</span>`;
-				}
-			});
-		}
-
 		return cartRecovered;
 	}
-	//#endregion
 
-	//#region Get / Set ------------- //
-	getTotalInterestRate() {
-		let interest = (this.payments > 1)
-			? this.monthInterestRate * (this.payments)
-			: 0;
-		return  interest;
-	}
-
-	setItemList(items) {
-		if (!Array.isArray(items) || !items.every(x => x instanceof Product)) {
-			console.warn('Invalid arguments: CartItems[] expected');
-			return null;
-		}
-
-		if (debugMode) {
-			console.groupCollapsed(
-				'%cItem list set to:',
-				`color: ${colors.success};`);
-			console.log(items);
-			console.groupEnd();
-		}
-
-		this.itemList = items;
-		this.updateCart();
-		return this.itemList;
-	}
-
+	// Get / Set =============================================================//
 	setDiscount(amount) {
 		this.discount = amount;
 		this.updateCart();
@@ -340,13 +252,50 @@ class Cart {
 		this.updateCart();
 		return amount;
 	}
-	//#endregion
+
+	setItemList(items) {
+		if (!Array.isArray(items) || !items.every(x => x instanceof Product)) {
+			console.warn('Invalid arguments: CartItems[] expected');
+			return null;
+		}
+
+		this.itemList = items;
+		this.updateCart();
+		return this.itemList;
+	}
+
+	getTotalInterestRate() {
+		let interest = (this.payments > 1)
+			? this.monthInterestRate * (this.payments)
+			: 0;
+		return  interest;
+	}
 }
 
 // TODO: make this static
 // Active cart used globally
 /**@type Cart */
-let activeCart = Cart.loadCart();
-
-if (!activeCart) activeCart = new Cart();
+let activeCart = Cart.loadCart() || new Cart();
 activeCart.updateDom();
+
+// TODO: put this in an initialization method
+(() => {
+	// Get the payments <select> and add event listener
+	let paymentsElem = document.querySelector('#cart-payments');
+	if (!paymentsElem)
+		return;
+
+	paymentsElem.value = activeCart.payments;
+	paymentsElem.addEventListener('change', () =>
+		activeCart.payments = activeCart.setPayments(paymentsElem.value));
+
+	// Add interest% hint next to the payments count
+	paymentsElem.childNodes.forEach(child => {
+		let payments = child.value;
+		let interest = Math.round(activeCart.monthInterestRate * payments * 100);
+		if (payments > 1) {
+			child.innerHTML =
+				`${payments} <span class="cart__payments-interest"> (${interest}%)</span>`;
+		}
+	});
+})();
