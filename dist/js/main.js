@@ -6,7 +6,7 @@
 
 	// TODO: make this a function
 	// Prods in case fetch request fails
-	fetch('/dist/data/products.json')
+	fetch('../data/products.json')
 		.then(res => res.json())
 		.then(json =>  {
 			products = [];

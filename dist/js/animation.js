@@ -13,7 +13,7 @@
 		heroLeft = '#hero-img-left',
 		heroRight = '#hero-img-right';
 
-	//#region Logo animation ------------------------------------------------ //
+	// Logo animation ========================================================//
 	if (document.querySelector(logo)) {
 		// Hide cursor
 		gsap.to(line, { duration: 0, opacity: 0 });
@@ -31,10 +31,9 @@
 		tl = gsap.timeline({ repeat: -1, yoyo: true, delay: tl.totalDuration() * 0.75 })
 			.to(line, { opacity: 0, duration: 0.25 })
 			.to(line, { opacity: 1, duration: 0.5 });
-		//#endregion
 	}
 
-	//#region Background animation ------------------------------------------ //
+	// Background animation ==================================================//
 	if (document.querySelector(heroBackground)) {
 		// Hero order images animation
 		gsap.from(heroLeft, { x: '-100%' });
@@ -59,10 +58,9 @@
 			});
 		}
 	}
-	//#endregion
 })();
 
-// Typewriter --------------------------------------------------------------- //
+// Typewriter ================================================================//
 // XXX: delete if not enough time to implement
 function typeWriter(elem, text, timeout = 75) {
 	elem.innerText = ' ';
