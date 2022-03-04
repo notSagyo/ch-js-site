@@ -79,6 +79,7 @@ $max-column-width: 48rem;
 		width: 100%;
 		max-width: $max-column-width;
 		margin: 0 auto;
+		padding: 0;
 	}
 
 	@include sm-down { flex-direction: column; }
@@ -98,6 +99,8 @@ $max-column-width: 48rem;
 .product-li {
 	display: flex;
 	margin-bottom: flex.$gutter * 2;
+
+	&:last-of-type { margin-bottom: 0; }
 
 	// LEFT ------------------------- //
 	// ?FIXME: materiaboxed is always 100%
@@ -164,6 +167,6 @@ $max-column-width: 48rem;
 		max-width: 24rem;
 
 		&__details { @include my(flex.$gutter); }
-		&__title, &__description, &__footer { @include px(0); }
+		&__title, &__description, &__footer { padding: 0.5rem 0; }
 	}
 }

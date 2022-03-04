@@ -92,6 +92,7 @@
 .cart-item {
 	flex-wrap: nowrap;
 	padding: flex.$gutter 0;
+	min-height: 10rem;
 	border-bottom: solid 1px M.color('grey', 'lighten-3');
 	color: M.$secondary;
 
@@ -117,6 +118,11 @@
 			max-width: $width;
 			max-height: $height;
 		}
+	}
+
+	&__image-wrapper {
+		display: flex;
+		align-items: center;
 	}
 
 	// Details -------------------------------------------------------------- //
