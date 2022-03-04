@@ -174,6 +174,7 @@ class ProductList {
 	}
 }
 
+// Product list used globally
 let activeProductList = new ProductList();
 
 // TODO: move this to a class method to init listeners

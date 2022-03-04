@@ -272,13 +272,11 @@ class Cart {
 	}
 }
 
-// TODO: make this static
 // Active cart used globally
-/**@type Cart */
-let activeCart = Cart.loadCart() || new Cart();
+let activeCart = Cart.loadCart() || new Cart({ discount: 0.2, tax: 0.21 });
 activeCart.updateDom();
 
-// TODO: put this in an initialization method
+// TODO: put this in an init method
 (() => {
 	// Get the payments <select> and add event listener
 	let paymentsElem = document.querySelector('#cart-payments');
