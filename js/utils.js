@@ -1,6 +1,3 @@
-// Log extra info if debug
-let debugMode = true;
-
 // Media queries
 let mediaSm = 600;
 let mediaMd = 992;
@@ -62,7 +59,7 @@ function hideOnCondition(elem, condition) {
 	return !condition;
 }
 
-// OTHER METHODS =============================================================//
+// OTHER FUNCTIONS ===========================================================//
 function truncateText(text, length) {
 	if (text.length > length) {
 		text = text.substring(0, length);
