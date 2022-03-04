@@ -86,7 +86,7 @@
 					</i>
 				</a></li>
 				<li><a class="waves-effect waves-classic ${sidenavActiveClass('contact')}" href="${setHref('contact', pagesPath)}"><span class="a">CONTACT</span><i class="material-icons ${sidenavActiveClass('contact')}">contact_support</i></a></li>
-				<li><a class="waves-effect waves-classic ${sidenavActiveClass('aobut')}" href="${setHref('about', pagesPath)}"><span class="a">ABOUT</span><i class="material-icons ${sidenavActiveClass('about')}">info</i></a></li>
+				<li><a class="waves-effect waves-classic ${sidenavActiveClass('about')}" href="${setHref('about', pagesPath)}"><span class="a">ABOUT</span><i class="material-icons ${sidenavActiveClass('about')}">info</i></a></li>
 			</ul>
 			<div class="sidenav__footer"><span>© 2022 Webshop</span></div>
 		</div>
