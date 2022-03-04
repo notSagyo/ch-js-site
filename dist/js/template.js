@@ -1,6 +1,6 @@
 // Me cansé de modificar los html todo el rato así que le mando esto
 
-// PAGES HTML --------------------------------------------------------------- //
+// PAGES HTML ================================================================//
 (() => {
 	let currentPage = getCurrentPage();
 	let pagesPath = (currentPage) == 'index' ? 'pages/' : '';
@@ -45,10 +45,10 @@
 					<div class="col l4 s12">
 						<h5 class="footer-header h5 white-text">Links</h5>
 						<ul>
-							<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-							<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-							<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-							<li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+							<li><a class="grey-text text-lighten-3" href="${setHref('index', '../')}">Home</a></li>
+							<li><a class="grey-text text-lighten-3" href="${setHref('products', pagesPath)}">Products</a></li>
+							<li><a class="grey-text text-lighten-3" href="${setHref('contact', pagesPath)}">Contact</a></li>
+							<li><a class="grey-text text-lighten-3" href="${setHref('about', pagesPath)}">About</a></li>
 						</ul>
 					</div>
 					<div class="col l6 s12">
@@ -123,7 +123,7 @@
 	}
 })();
 
-// PRODUCTS HTML ------------------------------------------------------------ //
+// PRODUCTS HTML =============================================================//
 function getProductHtml(product) {
 	let { name, description, image, total } = product;
 	if (total % 1 != 0) total = total.toFixed(2);
