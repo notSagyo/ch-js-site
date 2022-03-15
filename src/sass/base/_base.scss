@@ -19,7 +19,7 @@ main {
 	flex-direction: column;
 }
 
-.main__wrapper {
+.main-wrapper {
 	@include container;
 	margin: 0 auto;
 	padding: $main-wrapper-padding  0;

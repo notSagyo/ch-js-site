@@ -59,22 +59,3 @@
 		}
 	}
 })();
-
-// Typewriter ================================================================//
-// XXX: delete if not enough time to implement
-function typeWriter(elem, text, timeout = 75) {
-	elem.innerText = ' ';
-	gsap.to(elem, {
-		scrollTrigger: elem,
-		onComplete: typewriterEffect,
-		onCompleteParams: [elem, text, timeout]
-	});
-}
-
-// *Don't manually call this. Call typeWriter insted
-function typewriterEffect(elem, text, timeout, i = 0) {
-	if (i == text.length) return;
-	elem.innerText = elem.innerText.replace(' ', '');
-	elem.innerText += text[i];
-	setTimeout(() => typewriterEffect(elem, text, timeout, ++i), timeout);
-}

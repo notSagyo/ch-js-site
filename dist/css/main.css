@@ -7559,7 +7559,7 @@ p {
 
 .section-header {
   display: inline-block;
-  margin: 4rem 0 2rem;
+  margin: 2rem 0;
   padding: 0.5rem 4rem 0.5rem 1rem;
   color: #ffffff;
   background-color: #4355b9;
@@ -7578,7 +7578,7 @@ main {
   flex-direction: column;
 }
 
-.main__wrapper {
+.main-wrapper {
   margin: 0 auto;
   max-width: 1280px;
   width: 90%;
@@ -7586,17 +7586,17 @@ main {
   padding: 2rem 0;
 }
 @media only screen and (min-width: 992px) {
-  .main__wrapper {
+  .main-wrapper {
     width: 85%;
   }
 }
 @media only screen and (min-width: 1200px) {
-  .main__wrapper {
+  .main-wrapper {
     width: 70%;
   }
 }
 @media only screen and (max-width: 350px) {
-  .main__wrapper {
+  .main-wrapper {
     width: 100%;
   }
 }
