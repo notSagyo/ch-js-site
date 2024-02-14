@@ -1,4 +1,4 @@
-(() => {
+(async () => {
 	// Create new product list and add some prods
 	let products = [];
 	let productList = new ProductList();
@@ -6,7 +6,7 @@
 
 	// TODO: make this a function
 	// Prods in case fetch request fails
-	fetch('../data/products.json')
+	await fetch('../data/products.json')
 		.then(res => res.json())
 		.then(json =>  {
 			products = [];
@@ -19,7 +19,7 @@
 		.catch((err) => console.error(err));
 
 	// Products API request
-	fetch('https://fakestoreapi.com/products')
+	await fetch('https://fakestoreapi.com/products')
 		.then(res => res.json())
 		.then(json =>  {
 			products = [];
